@@ -1,0 +1,24 @@
+name: Feature request
+description: Suggest an improvement or a new provider
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve?
+      description: Describe the situation where you miss this feature.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What would you like to happen?
+    validations:
+      required: true
+  - type: input
+    id: provider
+    attributes:
+      label: If this is a new provider request, which one?
+      description: |
+        Note: providers need a documented or inspectable way to read usage
+        (local CLI files, or an API reachable with locally stored credentials).

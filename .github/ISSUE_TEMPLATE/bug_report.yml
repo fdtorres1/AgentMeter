@@ -1,0 +1,48 @@
+name: Bug report
+description: Something is wrong or broken in AgentMeter
+labels: ["bug"]
+body:
+  - type: input
+    id: macos
+    attributes:
+      label: macOS version
+      placeholder: e.g. macOS 26.2
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: AgentMeter version
+      description: Shown by "Check for Updates…" in the dropdown.
+      placeholder: e.g. 1.0.0
+    validations:
+      required: true
+  - type: checkboxes
+    id: providers
+    attributes:
+      label: Which providers are enabled?
+      options:
+        - label: Codex
+        - label: Cursor
+        - label: Claude
+        - label: Gemini
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect to happen?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened instead?
+      description: Include what the menu bar shows (e.g. "Cu !") and any error text from the dropdown.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Anything else?
+      description: |
+        Helpful context: your provider plan (Pro/Ultra/Max/team), whether the
+        provider's own CLI/app works, screenshots of the dropdown.
