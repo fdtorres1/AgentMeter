@@ -42,7 +42,8 @@ final class UsageStore: ObservableObject {
             withTimeInterval: settings.refreshInterval,
             repeats: true
         ) { [weak self] _ in
-            Task { @MainActor in self?.refresh() }
+            guard let self else { return }
+            Task { @MainActor in self.refresh() }
         }
     }
 
