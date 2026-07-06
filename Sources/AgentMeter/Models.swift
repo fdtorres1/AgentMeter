@@ -1,5 +1,17 @@
 import Foundation
 
+/// Shared cache-free HTTP session. Responses are tiny JSON blobs fetched once
+/// a minute; URLCache would only hold memory for data we never reuse.
+enum HTTP {
+    static let session: URLSession = {
+        let config = URLSessionConfiguration.ephemeral
+        config.urlCache = nil
+        config.requestCachePolicy = .reloadIgnoringLocalCacheData
+        config.httpCookieStorage = nil
+        return URLSession(configuration: config)
+    }()
+}
+
 /// One rate-limit window (e.g. Codex 5h window, Cursor monthly plan usage).
 struct UsageWindow: Equatable {
     let label: String

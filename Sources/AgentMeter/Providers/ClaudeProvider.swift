@@ -104,7 +104,7 @@ struct ClaudeProvider: UsageProvider {
         ]
         request.httpBody = (components.percentEncodedQuery ?? "").data(using: .utf8)
 
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await HTTP.session.data(for: request)
         guard let http = response as? HTTPURLResponse else { throw ClaudeError.badResponse }
         guard http.statusCode == 200 else {
             if http.statusCode == 429 { throw ClaudeError.rateLimited }
@@ -138,7 +138,7 @@ struct ClaudeProvider: UsageProvider {
         request.setValue(betaHeader, forHTTPHeaderField: "anthropic-beta")
         request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
 
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await HTTP.session.data(for: request)
         guard let http = response as? HTTPURLResponse else { throw ClaudeError.badResponse }
         if http.statusCode == 401 { throw ClaudeError.notSignedIn }
         if http.statusCode == 429 { throw ClaudeError.rateLimited }

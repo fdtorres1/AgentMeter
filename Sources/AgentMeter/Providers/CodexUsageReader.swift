@@ -62,16 +62,64 @@ struct CodexUsageReader {
     }
 
     /// Scans a rollout jsonl file backwards for the newest rate_limits snapshot.
+    ///
+    /// Session files grow to hundreds of MB, and rate-limit events are appended
+    /// with every response, so the snapshot we want is near the end. Reading
+    /// the file tail in small chunks keeps memory flat regardless of file size.
     static func latestRateLimits(inFileAt url: URL) throws -> ProviderUsage {
-        let data = try Data(contentsOf: url)
-        guard let text = String(data: data, encoding: .utf8) else {
-            throw CodexReadError.unreadableFile
-        }
-        for line in text.split(separator: "\n").reversed() {
-            guard line.contains("\"rate_limits\"") else { continue }
-            if let usage = parse(line: String(line)) {
-                return usage
+        let chunkSize = 256 * 1024
+        // Bail out after scanning this much from the end; a file whose last 8 MB
+        // has no rate_limits event won't have a newer one than the next file.
+        let maxScanBytes: UInt64 = 8 * 1024 * 1024
+
+        let handle = try FileHandle(forReadingFrom: url)
+        defer { try? handle.close() }
+        let fileSize = try handle.seekToEnd()
+
+        var offset = fileSize
+        // Bytes of the (possibly partial) line carried over from the previous
+        // chunk; prepended to the next chunk read so lines split across chunk
+        // boundaries are reassembled.
+        var carry = Data()
+        let needle = Data("\"rate_limits\"".utf8)
+        let newline = UInt8(ascii: "\n")
+
+        while offset > 0, fileSize - offset < maxScanBytes {
+            let readSize = min(UInt64(chunkSize), offset)
+            offset -= readSize
+            try handle.seek(toOffset: offset)
+            guard var chunk = try handle.read(upToCount: Int(readSize)) else { break }
+            chunk.append(carry)
+
+            var usage: ProviderUsage?
+            autoreleasepool {
+                var lineEnd = chunk.endIndex
+                var searchEnd = chunk.endIndex
+                while searchEnd > chunk.startIndex {
+                    let lineStart: Data.Index
+                    if let nl = chunk[chunk.startIndex..<searchEnd].lastIndex(of: newline) {
+                        lineStart = chunk.index(after: nl)
+                        searchEnd = nl
+                    } else if offset == 0 {
+                        lineStart = chunk.startIndex
+                        searchEnd = chunk.startIndex
+                    } else {
+                        // Partial line at chunk start; defer to the next iteration.
+                        carry = chunk[chunk.startIndex..<lineEnd]
+                        return
+                    }
+                    let lineData = chunk[lineStart..<lineEnd]
+                    lineEnd = searchEnd
+                    guard lineData.range(of: needle) != nil,
+                          let line = String(data: lineData, encoding: .utf8) else { continue }
+                    if let parsed = parse(line: line) {
+                        usage = parsed
+                        return
+                    }
+                }
+                carry = Data()
             }
+            if let usage { return usage }
         }
         throw CodexReadError.noRateLimitsFound
     }

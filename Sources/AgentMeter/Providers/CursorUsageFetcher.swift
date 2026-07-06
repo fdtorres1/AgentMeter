@@ -24,7 +24,7 @@ struct CursorUsageFetcher: Sendable {
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue(cookie, forHTTPHeaderField: "Cookie")
 
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await HTTP.session.data(for: request)
         guard let http = response as? HTTPURLResponse else {
             throw CursorFetchError.badResponse
         }

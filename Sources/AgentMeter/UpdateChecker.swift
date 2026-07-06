@@ -25,7 +25,7 @@ struct UpdateChecker {
         request.timeoutInterval = 15
         request.setValue("application/vnd.github+json", forHTTPHeaderField: "Accept")
 
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await HTTP.session.data(for: request)
         guard let http = response as? HTTPURLResponse, http.statusCode == 200 else {
             throw UpdateError.unavailable
         }

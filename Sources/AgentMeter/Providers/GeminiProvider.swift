@@ -85,7 +85,7 @@ struct GeminiProvider: UsageProvider {
         ]
         request.httpBody = (components.percentEncodedQuery ?? "").data(using: .utf8)
 
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await HTTP.session.data(for: request)
         guard let http = response as? HTTPURLResponse, http.statusCode == 200 else {
             throw GeminiError.notSignedIn
         }
@@ -110,7 +110,7 @@ struct GeminiProvider: UsageProvider {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = Data(#"{"metadata":{"ideType":"GEMINI_CLI","pluginType":"GEMINI"}}"#.utf8)
 
-        guard let (data, response) = try? await URLSession.shared.data(for: request),
+        guard let (data, response) = try? await HTTP.session.data(for: request),
               let http = response as? HTTPURLResponse, http.statusCode == 200,
               let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {
             return TierInfo()
@@ -146,7 +146,7 @@ struct GeminiProvider: UsageProvider {
             request.httpBody = Data("{}".utf8)
         }
 
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await HTTP.session.data(for: request)
         guard let http = response as? HTTPURLResponse else { throw GeminiError.badResponse }
         if http.statusCode == 401 { throw GeminiError.notSignedIn }
         guard http.statusCode == 200 else { throw GeminiError.httpStatus(http.statusCode) }
