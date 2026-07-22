@@ -72,7 +72,7 @@ Use the "Launch at Login" checkbox in the dropdown to start it automatically.
 ## Support
 
 If AgentMeter saves you from a surprise rate limit, you can
-[buy me a coffee](https://www.buymeacoffee.com/felixtorres). Entirely optional.
+[buy me a coffee](https://www.buymeacoffee.com/fdtorres). Entirely optional.
 
 ## Credits
 

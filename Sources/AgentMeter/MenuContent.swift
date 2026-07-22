@@ -8,8 +8,7 @@ struct MenuContent: View {
     @State private var launchAtLogin = SMAppService.mainApp.status == .enabled
     @State private var updateMessage: String?
 
-    /// Buy Me a Coffee link. Replace the slug once you create the account.
-    private let tipJarURL = URL(string: "https://www.buymeacoffee.com/felixtorres")!
+    private let tipJarURL = URL(string: "https://www.buymeacoffee.com/fdtorres")!
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {

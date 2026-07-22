@@ -1,8 +1,10 @@
 name: Release
 
+# Releases are currently cut locally via scripts/release.sh (see
+# docs/RELEASING.md). This workflow is kept for CI-based releasing and runs
+# manually once the signing/notarization secrets are configured in the repo.
 on:
-  push:
-    tags: ["v*"]
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -13,9 +15,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Derive version from tag
+      - name: Derive version from ref
         id: version
         run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+        # When dispatched from a branch this yields the branch name; run this
+        # workflow from a version tag (Actions → Release → Run workflow → tag).
 
       - name: Import Developer ID certificate
         env:
