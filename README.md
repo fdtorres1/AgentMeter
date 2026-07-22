@@ -10,6 +10,11 @@ The menu bar shows the most constrained window per enabled provider, e.g.:
 Cx 5% · Cu 20% · Cl 40% · Ge 12%
 ```
 
+<p align="center">
+  <img src="Resources/screenshot-dropdown.png" alt="AgentMeter dropdown showing Codex and Cursor usage meters with reset countdowns" width="360" />
+  <img src="Resources/screenshot-settings.png" alt="AgentMeter settings with per-provider Auto/On/Off toggles and refresh interval" width="360" />
+</p>
+
 ## Providers
 
 | Provider | Source | How usage is read |
