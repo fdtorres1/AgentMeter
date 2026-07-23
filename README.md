@@ -26,7 +26,7 @@ Cx 5% · Cu 20% · Cl 40% · Ge 12%
 | **OpenRouter** (`OR`) | `openrouter.ai/api/v1/credits` + `/api/v1/key` | Connect via OAuth (provisions a dedicated, revocable key) or paste a key; shows account credits when permitted, otherwise the key's limit/remaining balance or current-month spend. |
 | **DeepSeek** (`DS`) | `api.deepseek.com/user/balance` | Paste an API key; shows prepaid balance. |
 | **Kimi** (`Ki`) | `api.moonshot.ai/v1/users/me/balance` | Paste an API key; shows available balance. |
-| **Z.ai** (`Zg`) | `api.z.ai` quota API | Paste an API key; shows coding-plan time/token quota percentages. |
+| **Z.ai** (`Zg`) | `api.z.ai` quota API | GLM Coding Plan only: paste the plan's API key to show time/token quota percentages. Z.ai does not expose standard pay-as-you-go balance via a public API. |
 | **Venice** (`Ve`) | `api.venice.ai/api/v1/billing/balance` | Paste an API key; shows USD/DIEM balance. |
 
 Subscription-style providers show percent-of-limit meters; pay-as-you-go

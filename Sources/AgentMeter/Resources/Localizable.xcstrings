@@ -1349,6 +1349,54 @@
         }
       }
     },
+    "Z.ai API returned code %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Z.ai API returned code %lld"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La API de Z.ai devolvió el código %lld"
+          }
+        }
+      }
+    },
+    "Z.ai API returned code %lld: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Z.ai API returned code %lld: %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La API de Z.ai devolvió el código %lld: %@"
+          }
+        }
+      }
+    },
+    "Z.ai key is valid, but this account has no GLM Coding Plan": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Z.ai key is valid, but this account has no GLM Coding Plan"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La clave de Z.ai es válida, pero esta cuenta no tiene un plan GLM Coding"
+          }
+        }
+      }
+    },
     "Z.ai key rejected — check the key in Settings": {
       "localizations": {
         "es": {

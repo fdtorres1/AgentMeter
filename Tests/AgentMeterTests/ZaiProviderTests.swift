@@ -37,4 +37,28 @@ final class ZaiProviderTests: XCTestCase {
             Date(timeIntervalSince1970: 1000)
         )
     }
+
+    func testValidKeyWithoutCodingPlanGetsAccurateError() throws {
+        let json = #"{"code":500,"msg":"当前用户不存在coding plan","success":false}"#
+        let response = try JSONDecoder().decode(
+            ZaiProvider.QuotaResponse.self,
+            from: Data(json.utf8)
+        )
+        guard case .noCodingPlan = ZaiProvider.responseError(response) else {
+            return XCTFail("Expected noCodingPlan")
+        }
+    }
+
+    func testOtherBodyErrorIsNotClassifiedAsInvalidKey() throws {
+        let json = #"{"code":503,"msg":"service unavailable","success":false}"#
+        let response = try JSONDecoder().decode(
+            ZaiProvider.QuotaResponse.self,
+            from: Data(json.utf8)
+        )
+        guard case .apiError(let code, let message) = ZaiProvider.responseError(response) else {
+            return XCTFail("Expected apiError")
+        }
+        XCTAssertEqual(code, 503)
+        XCTAssertEqual(message, "service unavailable")
+    }
 }

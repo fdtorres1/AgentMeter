@@ -37,16 +37,15 @@ struct ZaiProvider: UsageProvider {
         guard http.statusCode == 200 else { throw ZaiError.httpStatus(http.statusCode) }
 
         let quota = try JSONDecoder().decode(QuotaResponse.self, from: data)
-        // Reject only an explicit non-200 body code; a missing code field on an
-        // otherwise-valid response should not read as an auth failure.
-        if let code = quota.code, code != 200 {
-            throw ZaiError.invalidKey
+        if let error = Self.responseError(quota) {
+            throw error
         }
         return Self.usage(from: quota, now: Date())
     }
 
     struct QuotaResponse: Decodable {
         let code: Int?
+        let msg: String?
         let data: QuotaData?
         let success: Bool?
 
@@ -60,6 +59,16 @@ struct ZaiProvider: UsageProvider {
             let percentage: Double?
             let nextResetTime: Int64?
         }
+    }
+
+    nonisolated static func responseError(_ response: QuotaResponse) -> ZaiError? {
+        guard let code = response.code, code != 200 else { return nil }
+        let message = response.msg ?? ""
+        if message.localizedCaseInsensitiveContains("coding plan")
+            || message.contains("不存在coding plan") {
+            return .noCodingPlan
+        }
+        return .apiError(code, message)
     }
 
     nonisolated static func usage(from response: QuotaResponse, now: Date) -> ProviderUsage {
@@ -91,13 +100,21 @@ struct ZaiProvider: UsageProvider {
 enum ZaiError: LocalizedError {
     case badResponse
     case invalidKey
+    case noCodingPlan
+    case apiError(Int, String)
     case httpStatus(Int)
 
     var errorDescription: String? {
         switch self {
         case .badResponse: return L("Unexpected response from Z.ai")
         case .invalidKey: return L("Z.ai key rejected — check the key in Settings")
-        case .httpStatus(let code): return L("Z.ai returned HTTP \(code))")
+        case .noCodingPlan:
+            return L("Z.ai key is valid, but this account has no GLM Coding Plan")
+        case .apiError(let code, let message):
+            return message.isEmpty
+                ? L("Z.ai API returned code \(code)")
+                : L("Z.ai API returned code \(code): \(message)")
+        case .httpStatus(let code): return L("Z.ai returned HTTP \(code)")
         }
     }
 }

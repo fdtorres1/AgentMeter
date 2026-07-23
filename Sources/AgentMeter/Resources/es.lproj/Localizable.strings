@@ -256,6 +256,12 @@
 	<string>Límite semanal</string>
 	<key>Window</key>
 	<string>Ventana</string>
+	<key>Z.ai API returned code %lld</key>
+	<string>La API de Z.ai devolvió el código %lld</string>
+	<key>Z.ai API returned code %lld: %@</key>
+	<string>La API de Z.ai devolvió el código %lld: %@</string>
+	<key>Z.ai key is valid, but this account has no GLM Coding Plan</key>
+	<string>La clave de Z.ai es válida, pero esta cuenta no tiene un plan GLM Coding</string>
 	<key>Z.ai key rejected — check the key in Settings</key>
 	<string>Clave de Z.ai rechazada — revisa la clave en Ajustes</string>
 	<key>Z.ai returned HTTP %lld</key>

@@ -3,6 +3,13 @@
 All notable changes to AgentMeter. Format follows [Keep a Changelog](https://keepachangelog.com);
 versions follow semantic-ish `MAJOR.MINOR.PATCH`.
 
+## [1.6.4] — 2026-07-23
+
+### Fixed
+- Z.ai no longer reports a valid standard API key as rejected when the account
+  has no GLM Coding Plan. It now explains that quota monitoring is Coding
+  Plan–only. Other API body errors are also reported accurately.
+
 ## [1.6.3] — 2026-07-23
 
 ### Fixed

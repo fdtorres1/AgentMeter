@@ -28,5 +28,11 @@
 	<string>Waiting for browser authorization…</string>
 	<key>Website &amp; source code</key>
 	<string>Website &amp; source code</string>
+	<key>Z.ai API returned code %lld</key>
+	<string>Z.ai API returned code %lld</string>
+	<key>Z.ai API returned code %lld: %@</key>
+	<string>Z.ai API returned code %lld: %@</string>
+	<key>Z.ai key is valid, but this account has no GLM Coding Plan</key>
+	<string>Z.ai key is valid, but this account has no GLM Coding Plan</string>
 </dict>
 </plist>
