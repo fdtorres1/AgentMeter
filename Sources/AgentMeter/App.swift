@@ -20,6 +20,10 @@ struct AgentMeterApp: App {
                 .font(.system(size: 12).monospacedDigit())
         }
         .menuBarExtraStyle(.window)
+
+        Settings {
+            SettingsRootView(store: store, settings: settings)
+        }
     }
 }
 
