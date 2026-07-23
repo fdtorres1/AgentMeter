@@ -1,5 +1,6 @@
 import Foundation
 import AppKit
+import Combine
 import CryptoKit
 
 /// OpenRouter credits, authenticated by a key stored in the app's Keychain.
@@ -15,6 +16,7 @@ struct OpenRouterProvider: UsageProvider {
     let shortCode = "OR"
 
     static let creditsURL = URL(string: "https://openrouter.ai/api/v1/credits")!
+    static let keyURL = URL(string: "https://openrouter.ai/api/v1/key")!
 
     var isDetected: Bool {
         KeychainStore.exists(keychainAccount)
@@ -31,20 +33,41 @@ struct OpenRouterProvider: UsageProvider {
             throw ProviderKeyError.missingKey(displayName)
         }
 
-        var request = URLRequest(url: Self.creditsURL)
+        // OAuth provisions a normal user-controlled API key. Validate and read
+        // that key's usage through /key first; /credits is an optional
+        // account-level enrichment and may require a management key.
+        let keyInfo = try await Self.fetchKeyInfo(key: key)
+        if let credits = try? await Self.fetchCredits(key: key) {
+            return Self.usage(from: credits, now: Date())
+        }
+        return Self.usage(from: keyInfo, now: Date())
+    }
+
+    private static func request(url: URL, key: String) -> URLRequest {
+        var request = URLRequest(url: url)
         request.timeoutInterval = 15
         request.setValue("Bearer \(key)", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Accept")
+        return request
+    }
 
+    private static func fetchCredits(key: String) async throws -> CreditsResponse {
+        let request = request(url: creditsURL, key: key)
+        let (data, response) = try await HTTP.session.data(for: request)
+        guard let http = response as? HTTPURLResponse else { throw OpenRouterError.badResponse }
+        guard http.statusCode == 200 else { throw OpenRouterError.httpStatus(http.statusCode) }
+        return try JSONDecoder().decode(CreditsResponse.self, from: data)
+    }
+
+    private static func fetchKeyInfo(key: String) async throws -> KeyResponse {
+        let request = request(url: keyURL, key: key)
         let (data, response) = try await HTTP.session.data(for: request)
         guard let http = response as? HTTPURLResponse else { throw OpenRouterError.badResponse }
         if http.statusCode == 401 || http.statusCode == 403 {
             throw OpenRouterError.invalidKey
         }
         guard http.statusCode == 200 else { throw OpenRouterError.httpStatus(http.statusCode) }
-
-        let credits = try JSONDecoder().decode(CreditsResponse.self, from: data)
-        return Self.usage(from: credits, now: Date())
+        return try JSONDecoder().decode(KeyResponse.self, from: data)
     }
 
     struct CreditsResponse: Decodable {
@@ -59,7 +82,28 @@ struct OpenRouterProvider: UsageProvider {
         let data: Payload
     }
 
-    static func usage(from response: CreditsResponse, now: Date) -> ProviderUsage {
+    struct KeyResponse: Decodable {
+        struct Payload: Decodable {
+            let limit: Double?
+            let limitRemaining: Double?
+            let usage: Double?
+            let usageDaily: Double?
+            let usageWeekly: Double?
+            let usageMonthly: Double?
+
+            enum CodingKeys: String, CodingKey {
+                case limit
+                case limitRemaining = "limit_remaining"
+                case usage
+                case usageDaily = "usage_daily"
+                case usageWeekly = "usage_weekly"
+                case usageMonthly = "usage_monthly"
+            }
+        }
+        let data: Payload
+    }
+
+    nonisolated static func usage(from response: CreditsResponse, now: Date) -> ProviderUsage {
         let remaining = max(0, response.data.totalCredits - response.data.totalUsage)
         return ProviderUsage(
             planName: L("Credits"),
@@ -69,6 +113,37 @@ struct OpenRouterProvider: UsageProvider {
                 remaining: remaining,
                 used: response.data.totalUsage,
                 currencySymbol: "$"
+            )
+        )
+    }
+
+    nonisolated static func usage(from response: KeyResponse, now: Date) -> ProviderUsage {
+        let data = response.data
+        let used = data.usage ?? 0
+
+        if let limit = data.limit, limit > 0 {
+            let remaining = max(0, data.limitRemaining ?? (limit - used))
+            let percent = min(100, max(0, used / limit * 100))
+            return ProviderUsage(
+                planName: L("API key"),
+                windows: [UsageWindow(label: L("Key limit"), usedPercent: percent, resetsAt: nil)],
+                asOf: now,
+                balance: BalanceInfo(remaining: remaining, used: used, currencySymbol: "$")
+            )
+        }
+
+        // Uncapped keys report spend but have no meaningful "remaining"
+        // amount. Prefer the current month for a useful, bounded readout.
+        let periodSpend = data.usageMonthly ?? data.usageWeekly ?? data.usageDaily ?? used
+        return ProviderUsage(
+            planName: L("API key"),
+            windows: [],
+            asOf: now,
+            balance: BalanceInfo(
+                remaining: periodSpend,
+                used: nil,
+                currencySymbol: "$",
+                kind: .spent
             )
         )
     }
@@ -84,7 +159,7 @@ enum OpenRouterError: LocalizedError {
         switch self {
         case .badResponse: return L("Unexpected response from OpenRouter")
         case .invalidKey: return L("OpenRouter key rejected — reconnect in Settings")
-        case .httpStatus(let code): return L("OpenRouter returned HTTP \(code))")
+        case .httpStatus(let code): return L("OpenRouter returned HTTP \(code)")
         case .authFlowFailed(let message): return message
         }
     }
@@ -97,16 +172,25 @@ enum OpenRouterError: LocalizedError {
 /// approval the browser opens that URL with a `code`, which we exchange for an
 /// API key and store in the Keychain. The verifier never leaves this process.
 @MainActor
-final class OpenRouterAuthFlow {
+final class OpenRouterAuthFlow: ObservableObject {
+    enum Status: Equatable {
+        case idle
+        case connecting
+        case connected
+        case failed(String)
+    }
+
     static let shared = OpenRouterAuthFlow()
     static let callbackScheme = "agentmeter"
     static let callbackHost = "openrouter"
+    private static let verifierDefaultsKey = "openRouter.pendingPKCEVerifier"
 
-    private var pendingVerifier: String?
+    @Published private(set) var status: Status = .idle
 
     func start() {
         let verifier = Self.randomVerifier()
-        pendingVerifier = verifier
+        UserDefaults.standard.set(verifier, forKey: Self.verifierDefaultsKey)
+        status = .connecting
         let challenge = Self.challenge(for: verifier)
 
         var components = URLComponents(string: "https://openrouter.ai/auth")!
@@ -122,22 +206,29 @@ final class OpenRouterAuthFlow {
     /// Returns true if the URL was consumed.
     func handleCallback(_ url: URL, onComplete: @escaping (Result<Void, Error>) -> Void) -> Bool {
         guard url.scheme == Self.callbackScheme, url.host == Self.callbackHost else { return false }
-        guard let verifier = pendingVerifier,
+        guard let verifier = UserDefaults.standard.string(forKey: Self.verifierDefaultsKey),
               let code = URLComponents(url: url, resolvingAgainstBaseURL: false)?
                   .queryItems?.first(where: { $0.name == "code" })?.value else {
-            onComplete(.failure(OpenRouterError.authFlowFailed(
+            let error = OpenRouterError.authFlowFailed(
                 L("OpenRouter connect failed: missing code")
-            )))
+            )
+            status = .failed(error.localizedDescription)
+            onComplete(.failure(error))
             return true
         }
-        pendingVerifier = nil
+        UserDefaults.standard.removeObject(forKey: Self.verifierDefaultsKey)
 
         Task {
             do {
                 let key = try await Self.exchange(code: code, verifier: verifier)
-                KeychainStore.set(key, account: OpenRouterProvider().keychainAccount)
+                guard !key.isEmpty,
+                      KeychainStore.set(key, account: OpenRouterProvider().keychainAccount) else {
+                    throw OpenRouterError.authFlowFailed(L("OpenRouter connect failed: key could not be saved"))
+                }
+                status = .connected
                 onComplete(.success(()))
             } catch {
+                status = .failed(error.localizedDescription)
                 onComplete(.failure(error))
             }
         }

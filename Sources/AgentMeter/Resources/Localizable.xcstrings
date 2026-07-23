@@ -71,6 +71,22 @@
         }
       }
     },
+    "%@%@ used": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@%@ used"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@%@ usado"
+          }
+        }
+      }
+    },
     "%@%@ used all-time": {
       "localizations": {
         "es": {
@@ -623,6 +639,22 @@
         }
       }
     },
+    "Key limit": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Key limit"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Límite de la clave"
+          }
+        }
+      }
+    },
     "Kimi key rejected — check the key in Settings": {
       "localizations": {
         "es": {
@@ -819,6 +851,22 @@
         }
       }
     },
+    "OpenRouter connect failed: key could not be saved": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenRouter connect failed: key could not be saved"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Falló la conexión con OpenRouter: no se pudo guardar la clave"
+          }
+        }
+      }
+    },
     "OpenRouter connect failed: key exchange rejected": {
       "localizations": {
         "es": {
@@ -855,6 +903,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "OpenRouter devolvió HTTP %lld"
+          }
+        }
+      }
+    },
+    "Or paste an API key": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Or paste an API key"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O pega una clave de API"
           }
         }
       }
@@ -1171,6 +1235,22 @@
         }
       }
     },
+    "Usage": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usage"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uso"
+          }
+        }
+      }
+    },
     "Venice key rejected — check the key in Settings": {
       "localizations": {
         "es": {
@@ -1203,6 +1283,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Versión %@"
+          }
+        }
+      }
+    },
+    "Waiting for browser authorization…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waiting for browser authorization…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esperando autorización en el navegador…"
           }
         }
       }

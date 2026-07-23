@@ -23,7 +23,7 @@ enum MenuBarTitleRenderer {
                 default: return .critical
                 }
             }
-            if let balance = usage.balance {
+            if let balance = usage.balance, balance.kind == .remaining {
                 return balance.remaining < balanceThreshold ? .warning : .normal
             }
             return .normal

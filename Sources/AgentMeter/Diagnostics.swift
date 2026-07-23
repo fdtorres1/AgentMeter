@@ -72,7 +72,8 @@ enum Diagnostics {
                 parts.append("\(window.label): \(Int(window.usedPercent.rounded()))% used")
             }
             if let balance = usage.balance {
-                parts.append("balance: \(balance.currencySymbol)\(BalanceInfo.format(balance.remaining)) left")
+                let meaning = balance.kind == .remaining ? "left" : "used"
+                parts.append("balance: \(balance.currencySymbol)\(BalanceInfo.format(balance.remaining)) \(meaning)")
             }
             if let asOf = usage.asOf {
                 let formatter = Date.FormatStyle().hour().minute().second()

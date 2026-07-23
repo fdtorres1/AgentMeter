@@ -2,18 +2,30 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>%@%@ used</key>
+	<string>%@%@ used</string>
 	<key>About AgentMeter</key>
 	<string>About AgentMeter</string>
 	<key>Auto-updates powered by Sparkle (MIT License).</key>
 	<string>Auto-updates powered by Sparkle (MIT License).</string>
+	<key>Key limit</key>
+	<string>Key limit</string>
 	<key>Menu bar monitor for AI coding usage limits.</key>
 	<string>Menu bar monitor for AI coding usage limits.</string>
+	<key>OpenRouter connect failed: key could not be saved</key>
+	<string>OpenRouter connect failed: key could not be saved</string>
+	<key>Or paste an API key</key>
+	<string>Or paste an API key</string>
 	<key>Provider endpoint research credits CodexBar by Peter Steinberger.</key>
 	<string>Provider endpoint research credits CodexBar by Peter Steinberger.</string>
 	<key>Report an issue</key>
 	<string>Report an issue</string>
+	<key>Usage</key>
+	<string>Usage</string>
 	<key>Version %@</key>
 	<string>Version %@</string>
+	<key>Waiting for browser authorization…</key>
+	<string>Waiting for browser authorization…</string>
 	<key>Website &amp; source code</key>
 	<string>Website &amp; source code</string>
 </dict>

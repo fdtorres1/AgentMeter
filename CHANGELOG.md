@@ -3,6 +3,18 @@
 All notable changes to AgentMeter. Format follows [Keep a Changelog](https://keepachangelog.com);
 versions follow semantic-ish `MAJOR.MINOR.PATCH`.
 
+## [1.6.3] — 2026-07-23
+
+### Fixed
+- OpenRouter OAuth-provisioned keys now use the regular-key `/api/v1/key`
+  endpoint, with account credits as optional enrichment. The previous
+  implementation depended only on `/credits`, which OpenRouter documents as a
+  management-key endpoint.
+- OpenRouter PKCE verifier persists across app activation/relaunch during the
+  browser callback; connection progress and failures are visible in Settings.
+- OpenRouter Settings now offers manual API-key paste as a fallback.
+- Fixed an extra parenthesis in the OpenRouter HTTP error message.
+
 ## [1.6.2] — 2026-07-23
 
 ### Changed

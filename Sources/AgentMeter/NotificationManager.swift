@@ -58,6 +58,7 @@ struct ThresholdTracker {
         balance: BalanceInfo,
         threshold: Double
     ) -> Bool {
+        guard balance.kind == .remaining else { return false }
         let key = "balance.\(providerID)"
         let remaining = balance.remaining
 

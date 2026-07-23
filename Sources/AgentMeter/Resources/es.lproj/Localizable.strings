@@ -16,6 +16,8 @@
 	<string>%@%@ restante</string>
 	<key>%@%@ remaining</key>
 	<string>%@%@ restante</string>
+	<key>%@%@ used</key>
+	<string>%@%@ usado</string>
 	<key>%@%@ used all-time</key>
 	<string>%@%@ usados en total</string>
 	<key>%lld%%</key>
@@ -124,6 +126,8 @@
 	<string>Solo icono</string>
 	<key>Included usage</key>
 	<string>Uso incluido</string>
+	<key>Key limit</key>
+	<string>Límite de la clave</string>
 	<key>Kimi key rejected — check the key in Settings</key>
 	<string>Clave de Kimi rechazada — revisa la clave en Ajustes</string>
 	<key>Kimi returned HTTP %lld</key>
@@ -162,6 +166,8 @@
 	<string>Una notificación por ventana de límite, reactivada cuando la ventana se restablece. "20% restante" es la misma alerta que "80% usado" — sigue tu configuración de Visualización.</string>
 	<key>One notification per limit window, re-armed when the window resets. Balance alerts apply to pay-as-you-go providers.</key>
 	<string>Una notificación por ventana de límite, reactivada cuando la ventana se restablece. Las alertas de saldo aplican a proveedores de pago por uso.</string>
+	<key>OpenRouter connect failed: key could not be saved</key>
+	<string>Falló la conexión con OpenRouter: no se pudo guardar la clave</string>
 	<key>OpenRouter connect failed: key exchange rejected</key>
 	<string>Error al conectar OpenRouter: intercambio de clave rechazado</string>
 	<key>OpenRouter connect failed: missing code</key>
@@ -170,6 +176,8 @@
 	<string>Clave de OpenRouter rechazada — vuelve a conectar en Ajustes</string>
 	<key>OpenRouter returned HTTP %lld</key>
 	<string>OpenRouter devolvió HTTP %lld</string>
+	<key>Or paste an API key</key>
+	<string>O pega una clave de API</string>
 	<key>Personal cap</key>
 	<string>Límite personal</string>
 	<key>Pro (24h)</key>
@@ -230,12 +238,16 @@
 	<string>Respuesta inesperada de cursor.com</string>
 	<key>Updated %@</key>
 	<string>Actualizado %@</string>
+	<key>Usage</key>
+	<string>Uso</string>
 	<key>Venice key rejected — check the key in Settings</key>
 	<string>Clave de Venice rechazada — revisa la clave en Ajustes</string>
 	<key>Venice returned HTTP %lld</key>
 	<string>Venice devolvió HTTP %lld</string>
 	<key>Version %@</key>
 	<string>Versión %@</string>
+	<key>Waiting for browser authorization…</key>
+	<string>Esperando autorización en el navegador…</string>
 	<key>Website &amp; source code</key>
 	<string>Sitio web y código fuente</string>
 	<key>Weekly (Opus)</key>

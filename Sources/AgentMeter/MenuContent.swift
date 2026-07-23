@@ -161,13 +161,17 @@ private struct UsageMetersView: View {
             }
             if let balance = usage.balance {
                 HStack {
-                    Text(L("Balance")).font(.caption)
+                    Text(balance.kind == .remaining ? L("Balance") : L("Usage")).font(.caption)
                     Spacer()
                     Text(balance.display)
                         .font(.caption.monospacedDigit())
-                        .foregroundStyle(balance.remaining > 5 ? Color.green : Color.orange)
+                        .foregroundStyle(
+                            balance.kind == .spent
+                                ? Color.secondary
+                                : (balance.remaining > 5 ? Color.green : Color.orange)
+                        )
                 }
-                if let used = balance.used {
+                if balance.kind == .remaining, let used = balance.used {
                     Text(L("\(balance.currencySymbol)\(BalanceInfo.format(used)) used all-time"))
                         .font(.caption2)
                         .foregroundStyle(.secondary)

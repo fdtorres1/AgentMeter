@@ -142,6 +142,7 @@ private struct ProvidersSettingsTab: View {
 private struct ProviderCredentialSection: View {
     let provider: any UsageProvider
     @ObservedObject var store: UsageStore
+    @ObservedObject private var openRouterAuth = OpenRouterAuthFlow.shared
     @State private var draftKey = ""
     @State private var hasKey: Bool
 
@@ -183,7 +184,29 @@ private struct ProviderCredentialSection: View {
                         }
                     }
                 } else {
-                    Button(L("Connect…")) { OpenRouterAuthFlow.shared.start() }
+                    HStack {
+                        Button(L("Connect…")) { OpenRouterAuthFlow.shared.start() }
+                            .disabled(openRouterAuth.status == .connecting)
+                        if openRouterAuth.status == .connecting {
+                            ProgressView().controlSize(.small)
+                            Text(L("Waiting for browser authorization…"))
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    if case .failed(let message) = openRouterAuth.status {
+                        Text(message)
+                            .font(.caption)
+                            .foregroundStyle(.orange)
+                    }
+                    SecureField(L("Or paste an API key"), text: $draftKey)
+                    HStack {
+                        Button(L("Save")) { saveKey() }
+                            .disabled(draftKey.trimmingCharacters(in: .whitespaces).isEmpty)
+                        if let url = provider.dashboardURL {
+                            Link(L("Get key"), destination: url)
+                        }
+                    }
                 }
             }
             .onReceive(NotificationCenter.default.publisher(for: .providerCredentialsChanged)) { _ in

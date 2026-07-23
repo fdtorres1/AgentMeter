@@ -45,17 +45,40 @@ struct UsageWindow: Equatable {
     }
 }
 
-/// Account balance for pay-as-you-go (API key) providers, where there is no
-/// "percent of limit" to show — the meaningful number is money/credits left.
+enum BalanceKind: Equatable {
+    case remaining
+    case spent
+}
+
+/// Monetary usage for pay-as-you-go providers. Most report a remaining
+/// balance; key-scoped APIs may only report spend.
 struct BalanceInfo: Equatable {
     let remaining: Double
     /// Lifetime or period spend, when the provider reports it.
     let used: Double?
     /// e.g. "$", "¥", or "VCU " — prefixed to amounts as-is.
     let currencySymbol: String
+    let kind: BalanceKind
+
+    init(
+        remaining: Double,
+        used: Double?,
+        currencySymbol: String,
+        kind: BalanceKind = .remaining
+    ) {
+        self.remaining = remaining
+        self.used = used
+        self.currencySymbol = currencySymbol
+        self.kind = kind
+    }
 
     var display: String {
-        L("\(currencySymbol)\(Self.format(remaining)) left")
+        switch kind {
+        case .remaining:
+            L("\(currencySymbol)\(Self.format(remaining)) left")
+        case .spent:
+            L("\(currencySymbol)\(Self.format(remaining)) used")
+        }
     }
 
     /// Compact form for the menu bar, e.g. "$12".
