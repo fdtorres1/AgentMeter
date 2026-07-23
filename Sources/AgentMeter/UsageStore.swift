@@ -40,7 +40,8 @@ final class UsageStore: ObservableObject {
     nonisolated static var defaultProviders: [any UsageProvider] {
         [
             CodexProvider(), CursorProvider(), ClaudeProvider(), GeminiProvider(),
-            OpenRouterProvider(),
+            OpenRouterProvider(), DeepSeekProvider(), MoonshotProvider(),
+            ZaiProvider(), VeniceProvider(),
         ]
     }
 

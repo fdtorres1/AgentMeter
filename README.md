@@ -23,6 +23,15 @@ Cx 5% · Cu 20% · Cl 40% · Ge 12%
 | **Cursor** (`Cu`) | `cursor.com/api/usage-summary` | Uses the session token Cursor stores locally; included/auto/API usage + billing reset. Team/enterprise pools supported. |
 | **Claude** (`Cl`) | `api.anthropic.com/api/oauth/usage` | Uses the Claude Code OAuth token (credentials file or Keychain); 5h + weekly (+Opus) windows. |
 | **Gemini** (`Ge`) | Cloud Code quota API | Uses the Gemini CLI OAuth token (`~/.gemini/oauth_creds.json`); Pro/Flash/Flash-Lite daily quotas. |
+| **OpenRouter** (`OR`) | `openrouter.ai/api/v1/credits` | Connect via OAuth (provisions a dedicated, revocable key) or paste a key; shows credits remaining. |
+| **DeepSeek** (`DS`) | `api.deepseek.com/user/balance` | Paste an API key; shows prepaid balance. |
+| **Kimi** (`Ki`) | `api.moonshot.ai/v1/users/me/balance` | Paste an API key; shows available balance. |
+| **Z.ai** (`Zg`) | `api.z.ai` quota API | Paste an API key; shows coding-plan time/token quota percentages. |
+| **Venice** (`Ve`) | `api.venice.ai/api/v1/billing/balance` | Paste an API key; shows USD/DIEM balance. |
+
+Subscription-style providers show percent-of-limit meters; pay-as-you-go
+(API-key) providers show the balance that remains, since there is no limit
+percentage to measure.
 
 Each provider can be set to **Auto** (show only if detected on this machine),
 **On**, or **Off** in Settings. Refresh runs every 30s/1m/5m (configurable), and
@@ -32,10 +41,18 @@ Codex also refreshes instantly after CLI activity via a file watcher.
 
 AgentMeter is open source (MIT) so you can verify exactly what it does:
 
-- Credentials are **read fresh on each refresh** from the locations the official
-  CLIs/apps already use. They are **never written anywhere** by AgentMeter and
-  never leave your machine except as the `Authorization`/`Cookie` header on the
-  request to that provider's own API.
+- For Codex, Cursor, Claude, and Gemini, credentials are **read fresh on each
+  refresh** from the locations the official CLIs/apps already use. They are
+  **never written anywhere** by AgentMeter and never leave your machine except
+  as the `Authorization`/`Cookie` header on the request to that provider's own
+  API.
+- For API-key providers (OpenRouter, DeepSeek, Kimi, Z.ai, Venice), the key you
+  provide is stored **only in your macOS Keychain** as an item private to
+  AgentMeter, shown masked in Settings, removable with one click, and sent
+  only to that provider's own API. We recommend creating a dedicated key named
+  "AgentMeter" so you can revoke it independently. OpenRouter can instead be
+  connected via OAuth, which provisions its own revocable key without you
+  handling one at all.
 - Codex data is parsed entirely locally and makes **no network calls**.
 - No analytics, no telemetry, no accounts.
 
