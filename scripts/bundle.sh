@@ -50,6 +50,17 @@ cat > "$APP/Contents/Info.plist" <<PLIST
 	<string>14.0</string>
 	<key>LSUIElement</key>
 	<true/>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>${BUNDLE_ID}.oauth</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>agentmeter</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>
 PLIST

@@ -31,16 +31,61 @@ struct UsageWindow: Equatable {
     }
 }
 
+/// Account balance for pay-as-you-go (API key) providers, where there is no
+/// "percent of limit" to show — the meaningful number is money/credits left.
+struct BalanceInfo: Equatable {
+    let remaining: Double
+    /// Lifetime or period spend, when the provider reports it.
+    let used: Double?
+    /// e.g. "$", "¥", or "VCU " — prefixed to amounts as-is.
+    let currencySymbol: String
+
+    var display: String {
+        "\(currencySymbol)\(Self.format(remaining)) left"
+    }
+
+    /// Compact form for the menu bar, e.g. "$12".
+    var shortDisplay: String {
+        "\(currencySymbol)\(Self.format(remaining, compact: true))"
+    }
+
+    static func format(_ value: Double, compact: Bool = false) -> String {
+        if compact, value >= 10 {
+            return String(format: "%.0f", value)
+        }
+        return value == value.rounded() && value < 1000
+            ? String(format: "%.0f", value)
+            : String(format: "%.2f", value)
+    }
+}
+
 /// Normalized usage snapshot for one provider.
 struct ProviderUsage: Equatable {
     let planName: String?
     let windows: [UsageWindow]
     /// When the underlying data was produced (not when we read it).
     let asOf: Date?
+    /// Balance readout for pay-as-you-go providers (may coexist with windows).
+    var balance: BalanceInfo?
+
+    init(planName: String?, windows: [UsageWindow], asOf: Date?, balance: BalanceInfo? = nil) {
+        self.planName = planName
+        self.windows = windows
+        self.asOf = asOf
+        self.balance = balance
+    }
 
     /// The most constrained window, used for the menu bar summary.
     var worstWindow: UsageWindow? {
         windows.max(by: { $0.usedPercent < $1.usedPercent })
+    }
+
+    /// Menu bar summary: percent when windows exist, balance otherwise.
+    var menuSummary: String? {
+        if let worst = worstWindow {
+            return "\(Int(worst.usedPercent.rounded()))%"
+        }
+        return balance?.shortDisplay
     }
 }
 

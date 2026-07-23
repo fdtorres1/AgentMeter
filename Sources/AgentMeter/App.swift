@@ -23,9 +23,27 @@ struct AgentMeterApp: App {
     }
 }
 
+extension Notification.Name {
+    /// Posted when a provider credential changes (e.g. OAuth connect finished),
+    /// so usage refreshes without waiting for the next timer tick.
+    static let providerCredentialsChanged = Notification.Name("providerCredentialsChanged")
+}
+
 final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Menu-bar-only app: no Dock icon even when run unbundled via swift run.
         NSApp.setActivationPolicy(.accessory)
+    }
+
+    /// URL-scheme callbacks (agentmeter://...) arrive here; MenuBarExtra views
+    /// may not exist at that moment, so this cannot live in onOpenURL.
+    func application(_ application: NSApplication, open urls: [URL]) {
+        for url in urls {
+            _ = OpenRouterAuthFlow.shared.handleCallback(url) { result in
+                if case .success = result {
+                    NotificationCenter.default.post(name: .providerCredentialsChanged, object: nil)
+                }
+            }
+        }
     }
 }

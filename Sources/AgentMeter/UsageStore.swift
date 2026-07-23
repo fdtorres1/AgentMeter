@@ -18,6 +18,8 @@ final class UsageStore: ObservableObject {
     private var sessionWatcher: DispatchSourceFileSystemObject?
     private var watchedFile: URL?
 
+    private var credentialsObserver: NSObjectProtocol?
+
     init(settings: SettingsStore, providers: [any UsageProvider] = UsageStore.defaultProviders) {
         self.settings = settings
         self.providers = providers
@@ -26,15 +28,28 @@ final class UsageStore: ObservableObject {
         }
         refresh()
         rescheduleTimer()
+        credentialsObserver = NotificationCenter.default.addObserver(
+            forName: .providerCredentialsChanged,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor in self?.refresh() }
+        }
     }
 
     nonisolated static var defaultProviders: [any UsageProvider] {
-        [CodexProvider(), CursorProvider(), ClaudeProvider(), GeminiProvider()]
+        [
+            CodexProvider(), CursorProvider(), ClaudeProvider(), GeminiProvider(),
+            OpenRouterProvider(),
+        ]
     }
 
     deinit {
         timer?.invalidate()
         sessionWatcher?.cancel()
+        if let credentialsObserver {
+            NotificationCenter.default.removeObserver(credentialsObserver)
+        }
     }
 
     func rescheduleTimer() {
@@ -88,8 +103,8 @@ final class UsageStore: ObservableObject {
             case .loading: return "\(provider.shortCode) …"
             case .error: return "\(provider.shortCode) !"
             case .ready(let usage):
-                guard let worst = usage.worstWindow else { return "\(provider.shortCode) ?" }
-                return "\(provider.shortCode) \(Int(worst.usedPercent.rounded()))%"
+                guard let summary = usage.menuSummary else { return "\(provider.shortCode) ?" }
+                return "\(provider.shortCode) \(summary)"
             }
         }.joined(separator: " · ")
     }
