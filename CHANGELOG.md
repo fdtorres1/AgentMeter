@@ -3,6 +3,11 @@
 All notable changes to AgentMeter. Format follows [Keep a Changelog](https://keepachangelog.com);
 versions follow semantic-ish `MAJOR.MINOR.PATCH`.
 
+## [1.6.1] — 2026-07-23
+
+### Fixed
+- App icon was distorted (non-square source stretched into the iconset); replaced with a correctly proportioned square icon.
+
 ## [1.6.0] — 2026-07-23
 
 ### Added
