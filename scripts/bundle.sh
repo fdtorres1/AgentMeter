@@ -20,12 +20,21 @@ swift build -c release
 
 APP="${APP_NAME}.app"
 rm -rf "$APP"
-mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
+mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources" "$APP/Contents/Frameworks"
 
 cp ".build/release/${APP_NAME}" "$APP/Contents/MacOS/${APP_NAME}"
 if [[ -f Resources/AppIcon.icns ]]; then
     cp Resources/AppIcon.icns "$APP/Contents/Resources/AppIcon.icns"
 fi
+
+# Embed Sparkle.framework (SwiftPM links it via @rpath but does not bundle it).
+SPARKLE_FRAMEWORK=$(find .build/artifacts/sparkle -type d -name "Sparkle.framework" -path "*macos*" | head -1)
+if [[ -z "$SPARKLE_FRAMEWORK" ]]; then
+    echo "error: Sparkle.framework not found in .build/artifacts (run swift build first)" >&2
+    exit 1
+fi
+cp -R "$SPARKLE_FRAMEWORK" "$APP/Contents/Frameworks/"
+install_name_tool -add_rpath "@executable_path/../Frameworks" "$APP/Contents/MacOS/${APP_NAME}" 2>/dev/null || true
 
 cat > "$APP/Contents/Info.plist" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
@@ -61,15 +70,31 @@ cat > "$APP/Contents/Info.plist" <<PLIST
 			</array>
 		</dict>
 	</array>
+	<key>SUFeedURL</key>
+	<string>https://github.com/fdtorres1/AgentMeter/releases/latest/download/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>pwHih7xHwBmiGn3ky45I4HSoDDJEYPxB3ltBcptRnwE=</string>
+	<key>SUEnableAutomaticChecks</key>
+	<true/>
 </dict>
 </plist>
 PLIST
 
 # Sign. Ad-hoc ("-") for local dev; Developer ID for distribution.
 # --options runtime enables the hardened runtime required for notarization.
+# Sparkle.framework (including its XPC services) must be signed before the app;
+# --deep is discouraged, so sign inside-out.
 if [[ "$SIGN_IDENTITY" == "-" ]]; then
+    codesign --force --sign - "$APP/Contents/Frameworks/Sparkle.framework"
     codesign --force --sign - "$APP"
 else
+    for xpc in "$APP/Contents/Frameworks/Sparkle.framework/Versions/B/XPCServices/"*.xpc; do
+        codesign --force --options runtime --timestamp --sign "$SIGN_IDENTITY" "$xpc"
+    done
+    codesign --force --options runtime --timestamp --sign "$SIGN_IDENTITY" \
+        "$APP/Contents/Frameworks/Sparkle.framework/Versions/B/Autoupdate" \
+        "$APP/Contents/Frameworks/Sparkle.framework/Versions/B/Updater.app" \
+        "$APP/Contents/Frameworks/Sparkle.framework"
     codesign --force --options runtime --timestamp --sign "$SIGN_IDENTITY" "$APP"
 fi
 

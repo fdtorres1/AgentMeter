@@ -3,7 +3,6 @@ import SwiftUI
 struct MenuContent: View {
     @ObservedObject var store: UsageStore
     @ObservedObject var settings: SettingsStore
-    @State private var updateMessage: String?
 
     private let tipJarURL = URL(string: "https://www.buymeacoffee.com/fdtorres")!
 
@@ -40,9 +39,7 @@ struct MenuContent: View {
     private var footer: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                if let updateMessage {
-                    Text(updateMessage).font(.caption).foregroundStyle(.secondary)
-                } else if let refreshed = store.lastRefreshed {
+                if let refreshed = store.lastRefreshed {
                     Text("Updated \(refreshed.formatted(date: .omitted, time: .shortened))")
                         .font(.caption)
                         .foregroundStyle(.secondary)
@@ -68,9 +65,12 @@ struct MenuContent: View {
                     Self.closeMenuBarWindow()
                 })
                 Spacer()
-                Button("Check for Updates…") { checkForUpdates() }
-                    .buttonStyle(.plain)
-                    .font(.caption)
+                Button("Check for Updates…") {
+                    Self.closeMenuBarWindow()
+                    Updater.shared.checkForUpdates()
+                }
+                .buttonStyle(.plain)
+                .font(.caption)
                 Spacer()
                 Link("Support ♥", destination: tipJarURL)
                     .font(.caption)
@@ -90,22 +90,6 @@ struct MenuContent: View {
         }
     }
 
-    private func checkForUpdates() {
-        updateMessage = "Checking for updates…"
-        Task {
-            do {
-                let result = try await UpdateChecker.check()
-                if result.isNewer {
-                    updateMessage = "Version \(result.latestVersion) available"
-                    NSWorkspace.shared.open(result.url)
-                } else {
-                    updateMessage = "You're up to date (\(UpdateChecker.currentVersion))"
-                }
-            } catch {
-                updateMessage = "Update check failed"
-            }
-        }
-    }
 }
 
 private struct ProviderSection: View {

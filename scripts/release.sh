@@ -47,5 +47,22 @@ xcrun stapler staple "$APP"
 rm -f "$ZIP"
 /usr/bin/ditto -c -k --keepParent "$APP" "$ZIP"
 
+# 5. Generate the Sparkle appcast, signed with the EdDSA key in the Keychain.
+#    The enclosure URL must point at the versioned release asset.
+VERSION="${AGENTMETER_VERSION:-1.0}"
+GENERATE_APPCAST=$(find .build/artifacts/sparkle -name generate_appcast -type f | head -1)
+if [[ -n "$GENERATE_APPCAST" ]]; then
+    APPCAST_DIR=$(mktemp -d)
+    cp "$ZIP" "$APPCAST_DIR/"
+    "$GENERATE_APPCAST" \
+        --download-url-prefix "https://github.com/fdtorres1/AgentMeter/releases/download/v${VERSION}/" \
+        --maximum-versions 1 \
+        "$APPCAST_DIR"
+    cp "$APPCAST_DIR/appcast.xml" appcast.xml
+    echo "Appcast written to $PWD/appcast.xml"
+else
+    echo "warning: generate_appcast not found; skipping appcast" >&2
+fi
+
 echo "Release artifact ready: $PWD/$ZIP"
 xcrun stapler validate "$APP"
