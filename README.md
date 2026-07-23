@@ -11,8 +11,8 @@ Cx 5% · Cu 20% · Cl 40% · Ge 12%
 ```
 
 <p align="center">
-  <img src="Resources/screenshot-dropdown.png" alt="AgentMeter dropdown showing Codex and Cursor usage meters with reset countdowns" width="360" />
-  <img src="Resources/screenshot-settings.png" alt="AgentMeter settings with per-provider Auto/On/Off toggles and refresh interval" width="360" />
+  <img src="Resources/screenshot-dropdown.png" alt="AgentMeter dropdown showing Codex and Cursor usage meters with provider badges, percent-left display, and exact reset times" width="360" />
+  <img src="Resources/screenshot-settings.png" alt="AgentMeter Settings window, Providers tab, with per-provider mode, menu bar visibility, and credential status" width="400" />
 </p>
 
 ## Providers
@@ -94,6 +94,17 @@ Use the "Launch at Login" checkbox in the dropdown to start it automatically.
 - `Sources/AgentMeter/UpdateChecker.swift` — GitHub Releases update check.
 - `scripts/bundle.sh` / `scripts/release.sh` — bundling and signed/notarized release.
 - `.github/workflows/` — CI tests and tagged release automation.
+
+## En español
+
+AgentMeter habla español — la interfaz sigue el idioma de macOS. Translations
+for other languages are welcome: all strings live in a single
+[String Catalog](Sources/AgentMeter/Resources/Localizable.xcstrings), so adding
+a language is a JSON-only pull request.
+
+<p align="center">
+  <img src="Resources/screenshot-dropdown-es.png" alt="AgentMeter en español: medidores de uso con tiempos de restablecimiento" width="360" />
+</p>
 
 ## Support
 
