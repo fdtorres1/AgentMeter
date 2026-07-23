@@ -31,7 +31,9 @@ struct SettingsRootView: View {
 private struct GeneralSettingsTab: View {
     @ObservedObject var store: UsageStore
     @ObservedObject var settings: SettingsStore
+    @Environment(\.openWindow) private var openWindow
     @State private var launchAtLogin = SMAppService.mainApp.status == .enabled
+    @State private var diagnosticsCopied = false
 
     var body: some View {
         Form {
@@ -53,8 +55,34 @@ private struct GeneralSettingsTab: View {
                 }
                 .pickerStyle(.menu)
             }
+            Section {
+                Button(diagnosticsCopied ? L("Copied") : L("Copy Diagnostics")) {
+                    copyDiagnostics()
+                }
+            } footer: {
+                Text(L("Copies redacted troubleshooting info to the clipboard — never includes keys or tokens."))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            Section {
+                Button(L("About AgentMeter")) {
+                    openWindow(id: "about")
+                    NSApp.activate(ignoringOtherApps: true)
+                }
+            }
         }
         .formStyle(.grouped)
+    }
+
+    private func copyDiagnostics() {
+        let report = Diagnostics.report(store: store, settings: settings)
+        NSPasteboard.general.clearContents()
+        NSPasteboard.general.setString(report, forType: .string)
+        diagnosticsCopied = true
+        Task {
+            try? await Task.sleep(for: .seconds(2))
+            diagnosticsCopied = false
+        }
     }
 
     private func setLaunchAtLogin(_ enabled: Bool) {
@@ -198,7 +226,12 @@ private struct DisplaySettingsTab: View {
                 }
                 .pickerStyle(.segmented)
 
-                Toggle(L("Compact menu bar (worst only)"), isOn: $settings.compactMenuBar)
+                Picker(L("Menu bar style"), selection: $settings.menuBarStyle) {
+                    Text(L("Full")).tag(MenuBarStyle.full)
+                    Text(L("Compact (worst only)")).tag(MenuBarStyle.compact)
+                    Text(L("Icon only")).tag(MenuBarStyle.icon)
+                }
+                .pickerStyle(.segmented)
             }
         }
         .formStyle(.grouped)

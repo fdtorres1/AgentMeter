@@ -40,6 +40,8 @@
 	<string>Clave de API</string>
 	<key>API usage</key>
 	<string>Uso de API</string>
+	<key>About AgentMeter</key>
+	<string>Acerca de AgentMeter</string>
 	<key>Alert when remaining falls below</key>
 	<string>Avisar cuando lo restante baje de</string>
 	<key>Alert when usage crosses threshold</key>
@@ -56,6 +58,8 @@
 	<string>Automático</string>
 	<key>Auto usage</key>
 	<string>Uso automático</string>
+	<key>Auto-updates powered by Sparkle (MIT License).</key>
+	<string>Actualizaciones automáticas con Sparkle (licencia MIT).</string>
 	<key>Balance</key>
 	<string>Saldo</string>
 	<key>Balance alert below</key>
@@ -64,12 +68,20 @@
 	<string>Buscar actualizaciones…</string>
 	<key>Claude token refresh failed (HTTP %lld)</key>
 	<string>Error al actualizar el token de Claude (HTTP %lld)</string>
+	<key>Compact (worst only)</key>
+	<string>Compacto (solo el peor)</string>
 	<key>Compact menu bar (worst only)</key>
 	<string>Barra de menús compacta (solo el peor)</string>
 	<key>Connected</key>
 	<string>Conectado</string>
 	<key>Connect…</key>
 	<string>Conectar…</string>
+	<key>Copied</key>
+	<string>Copiado</string>
+	<key>Copies redacted troubleshooting info to the clipboard — never includes keys or tokens.</key>
+	<string>Copia información de diagnóstico redactada al portapapeles — nunca incluye claves ni tokens.</string>
+	<key>Copy Diagnostics</key>
+	<string>Copiar diagnóstico</string>
 	<key>Could not read session file</key>
 	<string>No se pudo leer el archivo de sesión</string>
 	<key>Count direction</key>
@@ -100,12 +112,16 @@
 	<string>Flash (24 h)</string>
 	<key>Flash-Lite (24h)</key>
 	<string>Flash-Lite (24 h)</string>
+	<key>Full</key>
+	<string>Completo</string>
 	<key>General</key>
 	<string>General</string>
 	<key>Get key</key>
 	<string>Obtener clave</string>
 	<key>Google returned HTTP %lld</key>
 	<string>Google devolvió HTTP %lld</string>
+	<key>Icon only</key>
+	<string>Solo icono</string>
 	<key>Included usage</key>
 	<string>Uso incluido</string>
 	<key>Kimi key rejected — check the key in Settings</key>
@@ -116,6 +132,10 @@
 	<string>Abrir al iniciar sesión</string>
 	<key>Loading…</key>
 	<string>Cargando…</string>
+	<key>Menu bar monitor for AI coding usage limits.</key>
+	<string>Monitor de límites de uso de IA para programación en la barra de menús.</string>
+	<key>Menu bar style</key>
+	<string>Estilo de barra de menús</string>
 	<key>Mode</key>
 	<string>Modo</string>
 	<key>No %@ API key set — add one in Settings</key>
@@ -154,6 +174,8 @@
 	<string>Límite personal</string>
 	<key>Pro (24h)</key>
 	<string>Pro (24 h)</string>
+	<key>Provider endpoint research credits CodexBar by Peter Steinberger.</key>
+	<string>La investigación de endpoints se basa en CodexBar de Peter Steinberger.</string>
 	<key>Providers</key>
 	<string>Proveedores</string>
 	<key>Quit</key>
@@ -166,6 +188,8 @@
 	<string>Relativo</string>
 	<key>Remove</key>
 	<string>Eliminar</string>
+	<key>Report an issue</key>
+	<string>Reportar un problema</string>
 	<key>Reset times</key>
 	<string>Tiempos de restablecimiento</string>
 	<key>Save</key>
@@ -176,6 +200,8 @@
 	<string>Ajustes…</string>
 	<key>Show in menu bar</key>
 	<string>Mostrar en la barra de menús</string>
+	<key>Stale since %@</key>
+	<string>Obsoleto desde %@</string>
 	<key>Status</key>
 	<string>Estado</string>
 	<key>Support ♥</key>
@@ -208,6 +234,10 @@
 	<string>Clave de Venice rechazada — revisa la clave en Ajustes</string>
 	<key>Venice returned HTTP %lld</key>
 	<string>Venice devolvió HTTP %lld</string>
+	<key>Version %@</key>
+	<string>Versión %@</string>
+	<key>Website &amp; source code</key>
+	<string>Sitio web y código fuente</string>
 	<key>Weekly (Opus)</key>
 	<string>Semanal (Opus)</string>
 	<key>Weekly limit</key>

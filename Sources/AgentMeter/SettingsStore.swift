@@ -24,6 +24,10 @@ enum ResetTimeStyle: String {
     case relative, absolute
 }
 
+enum MenuBarStyle: String {
+    case full, compact, icon
+}
+
 /// User preferences: per-provider visibility and refresh cadence.
 @MainActor
 final class SettingsStore: ObservableObject {
@@ -51,8 +55,8 @@ final class SettingsStore: ObservableObject {
         didSet { defaults.set(balanceNotificationThreshold, forKey: Keys.balanceNotificationThreshold) }
     }
 
-    @Published var compactMenuBar: Bool {
-        didSet { defaults.set(compactMenuBar, forKey: Keys.compactMenuBar) }
+    @Published var menuBarStyle: MenuBarStyle {
+        didSet { defaults.set(menuBarStyle.rawValue, forKey: Keys.menuBarStyle) }
     }
 
     private let defaults: UserDefaults
@@ -75,6 +79,7 @@ final class SettingsStore: ObservableObject {
         static let countDirection = "countDirection"
         static let resetTimeStyle = "resetTimeStyle"
         static let balanceNotificationThreshold = "balanceNotificationThreshold"
+        static let menuBarStyle = "menuBarStyle"
         static let compactMenuBar = "compactMenuBar"
         static func mode(_ id: String) -> String { "provider.\(id).mode" }
         static func inMenuBar(_ id: String) -> String { "provider.\(id).inMenuBar" }
@@ -97,10 +102,14 @@ final class SettingsStore: ObservableObject {
         self.balanceNotificationThreshold = Self.balanceThresholdOptions.contains(storedBalanceThreshold)
             ? storedBalanceThreshold
             : 5
-        if defaults.object(forKey: Keys.compactMenuBar) == nil {
-            self.compactMenuBar = false
+        if let storedStyle = defaults.string(forKey: Keys.menuBarStyle),
+           let style = MenuBarStyle(rawValue: storedStyle) {
+            self.menuBarStyle = style
+        } else if defaults.object(forKey: Keys.compactMenuBar) != nil,
+                  defaults.bool(forKey: Keys.compactMenuBar) {
+            self.menuBarStyle = .compact
         } else {
-            self.compactMenuBar = defaults.bool(forKey: Keys.compactMenuBar)
+            self.menuBarStyle = .full
         }
     }
 

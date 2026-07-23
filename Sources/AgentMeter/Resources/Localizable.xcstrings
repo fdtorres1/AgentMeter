@@ -1,584 +1,1356 @@
 {
   "sourceLanguage": "en",
   "strings": {
-    "% used": {
-      "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "% usado" } }
-      }
-    },
     "% left": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "% restante" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "% restante"
+          }
+        }
+      }
+    },
+    "% used": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "% usado"
+          }
+        }
       }
     },
     "%@ at %@%%": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "%@ al %@%%" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ al %@%%"
+          }
+        }
       }
     },
     "%@ balance alert": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Alerta de saldo de %@" } }
-      }
-    },
-    "%@%@ left": {
-      "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "%@%@ restante" } }
-      }
-    },
-    "%@%@ remaining": {
-      "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "%@%@ restante" } }
-      }
-    },
-    "%@%@ used all-time": {
-      "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "%@%@ usados en total" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alerta de saldo de %@"
+          }
+        }
       }
     },
     "%@ usage alert": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Alerta de uso de %@" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alerta de uso de %@"
+          }
+        }
+      }
+    },
+    "%@%@ left": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@%@ restante"
+          }
+        }
+      }
+    },
+    "%@%@ remaining": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@%@ restante"
+          }
+        }
+      }
+    },
+    "%@%@ used all-time": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@%@ usados en total"
+          }
+        }
       }
     },
     "%lld%%": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "%lld%%" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld%%"
+          }
+        }
       }
     },
     "%lld%% left": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "%lld%% restante" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld%% restante"
+          }
+        }
       }
     },
     "%lldd limit": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Límite de %lld d" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Límite de %lld d"
+          }
+        }
       }
     },
     "%lldh limit": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Límite de %lld h" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Límite de %lld h"
+          }
+        }
       }
     },
     "%lldm limit": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Límite de %lld m" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Límite de %lld m"
+          }
+        }
       }
     },
     "1 minute": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "1 minuto" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 minuto"
+          }
+        }
       }
     },
     "30 seconds": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "30 segundos" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "30 segundos"
+          }
+        }
       }
     },
     "5 minutes": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "5 minutos" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "5 minutos"
+          }
+        }
       }
     },
     "5h limit": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Límite de 5 h" } }
-      }
-    },
-    "Alert when remaining falls below": {
-      "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Avisar cuando lo restante baje de" } }
-      }
-    },
-    "Alert when usage crosses threshold": {
-      "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Avisar cuando el uso cruce el umbral" } }
-      }
-    },
-    "Alert when usage reaches": {
-      "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Avisar cuando el uso alcance" } }
-      }
-    },
-    "Alerts": {
-      "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Alertas" } }
-      }
-    },
-    "Anthropic rate-limited the usage request": {
-      "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Anthropic limitó la solicitud de uso" } }
-      }
-    },
-    "Anthropic returned HTTP %lld": {
-      "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Anthropic devolvió HTTP %lld" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Límite de 5 h"
+          }
+        }
       }
     },
     "API key": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Clave de API" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clave de API"
+          }
+        }
       }
     },
     "API usage": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Uso de API" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uso de API"
+          }
+        }
+      }
+    },
+    "About AgentMeter": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "About AgentMeter"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acerca de AgentMeter"
+          }
+        }
+      }
+    },
+    "Alert when remaining falls below": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avisar cuando lo restante baje de"
+          }
+        }
+      }
+    },
+    "Alert when usage crosses threshold": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avisar cuando el uso cruce el umbral"
+          }
+        }
+      }
+    },
+    "Alert when usage reaches": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avisar cuando el uso alcance"
+          }
+        }
+      }
+    },
+    "Alerts": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alertas"
+          }
+        }
+      }
+    },
+    "Anthropic rate-limited the usage request": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anthropic limitó la solicitud de uso"
+          }
+        }
+      }
+    },
+    "Anthropic returned HTTP %lld": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anthropic devolvió HTTP %lld"
+          }
+        }
       }
     },
     "Auto": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Automático" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automático"
+          }
+        }
       }
     },
     "Auto usage": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Uso automático" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uso automático"
+          }
+        }
+      }
+    },
+    "Auto-updates powered by Sparkle (MIT License).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Auto-updates powered by Sparkle (MIT License)."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Actualizaciones automáticas con Sparkle (licencia MIT)."
+          }
+        }
       }
     },
     "Balance": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Saldo" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saldo"
+          }
+        }
       }
     },
     "Balance alert below": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Alerta de saldo por debajo de" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alerta de saldo por debajo de"
+          }
+        }
       }
     },
     "Check for Updates…": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Buscar actualizaciones…" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buscar actualizaciones…"
+          }
+        }
       }
     },
     "Claude token refresh failed (HTTP %lld)": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Error al actualizar el token de Claude (HTTP %lld)" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Error al actualizar el token de Claude (HTTP %lld)"
+          }
+        }
+      }
+    },
+    "Compact (worst only)": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compacto (solo el peor)"
+          }
+        }
       }
     },
     "Compact menu bar (worst only)": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Barra de menús compacta (solo el peor)" } }
-      }
-    },
-    "Connect…": {
-      "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Conectar…" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Barra de menús compacta (solo el peor)"
+          }
+        }
       }
     },
     "Connected": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Conectado" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conectado"
+          }
+        }
+      }
+    },
+    "Connect…": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conectar…"
+          }
+        }
+      }
+    },
+    "Copied": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copiado"
+          }
+        }
+      }
+    },
+    "Copies redacted troubleshooting info to the clipboard — never includes keys or tokens.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copia información de diagnóstico redactada al portapapeles — nunca incluye claves ni tokens."
+          }
+        }
+      }
+    },
+    "Copy Diagnostics": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copiar diagnóstico"
+          }
+        }
       }
     },
     "Could not read session file": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "No se pudo leer el archivo de sesión" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo leer el archivo de sesión"
+          }
+        }
       }
     },
     "Count direction": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Dirección del conteo" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dirección del conteo"
+          }
+        }
       }
     },
     "Credits": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Créditos" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Créditos"
+          }
+        }
       }
     },
     "Cursor session expired — sign in to Cursor again": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "La sesión de Cursor expiró — inicia sesión en Cursor de nuevo" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La sesión de Cursor expiró — inicia sesión en Cursor de nuevo"
+          }
+        }
       }
     },
     "Cursor session token has an unexpected format": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "El token de sesión de Cursor tiene un formato inesperado" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El token de sesión de Cursor tiene un formato inesperado"
+          }
+        }
       }
     },
     "Cursor session token not found (is Cursor signed in?)": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "No se encontró el token de sesión de Cursor (¿estás conectado en Cursor?)" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se encontró el token de sesión de Cursor (¿estás conectado en Cursor?)"
+          }
+        }
       }
     },
     "Data as of %@": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Datos al %@" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Datos al %@"
+          }
+        }
       }
     },
     "DeepSeek key rejected — check the key in Settings": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Clave de DeepSeek rechazada — revisa la clave en Ajustes" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clave de DeepSeek rechazada — revisa la clave en Ajustes"
+          }
+        }
       }
     },
     "DeepSeek returned HTTP %lld": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "DeepSeek devolvió HTTP %lld" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DeepSeek devolvió HTTP %lld"
+          }
+        }
       }
     },
     "Detected": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Detectado" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Detectado"
+          }
+        }
       }
     },
     "Disconnect": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Desconectar" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desconectar"
+          }
+        }
       }
     },
     "Display": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Visualización" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Visualización"
+          }
+        }
       }
     },
     "Exact": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Exacto" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exacto"
+          }
+        }
       }
     },
     "Flash (24h)": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Flash (24 h)" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Flash (24 h)"
+          }
+        }
       }
     },
     "Flash-Lite (24h)": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Flash-Lite (24 h)" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Flash-Lite (24 h)"
+          }
+        }
+      }
+    },
+    "Full": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Completo"
+          }
+        }
       }
     },
     "General": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "General" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "General"
+          }
+        }
       }
     },
     "Get key": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Obtener clave" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Obtener clave"
+          }
+        }
       }
     },
     "Google returned HTTP %lld": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Google devolvió HTTP %lld" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Google devolvió HTTP %lld"
+          }
+        }
+      }
+    },
+    "Icon only": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solo icono"
+          }
+        }
       }
     },
     "Included usage": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Uso incluido" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uso incluido"
+          }
+        }
       }
     },
     "Kimi key rejected — check the key in Settings": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Clave de Kimi rechazada — revisa la clave en Ajustes" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clave de Kimi rechazada — revisa la clave en Ajustes"
+          }
+        }
       }
     },
     "Kimi returned HTTP %lld": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Kimi devolvió HTTP %lld" } }
-      }
-    },
-    "key exchange rejected": {
-      "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "intercambio de clave rechazado" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kimi devolvió HTTP %lld"
+          }
+        }
       }
     },
     "Launch at Login": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Abrir al iniciar sesión" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abrir al iniciar sesión"
+          }
+        }
       }
     },
     "Loading…": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Cargando…" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cargando…"
+          }
+        }
       }
     },
-    "missing code": {
+    "Menu bar monitor for AI coding usage limits.": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "falta el código" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Menu bar monitor for AI coding usage limits."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Monitor de límites de uso de IA para programación en la barra de menús."
+          }
+        }
+      }
+    },
+    "Menu bar style": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estilo de barra de menús"
+          }
+        }
       }
     },
     "Mode": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Modo" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modo"
+          }
+        }
       }
     },
     "No %@ API key set — add one in Settings": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "No hay clave de API de %@ — agrega una en Ajustes" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No hay clave de API de %@ — agrega una en Ajustes"
+          }
+        }
       }
     },
     "No Codex session logs found": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "No se encontraron registros de sesión de Codex" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se encontraron registros de sesión de Codex"
+          }
+        }
       }
     },
     "No providers enabled. Open Settings to turn some on.": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "No hay proveedores habilitados. Abre Ajustes para activar algunos." } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No hay proveedores habilitados. Abre Ajustes para activar algunos."
+          }
+        }
       }
     },
     "No rate-limit data in recent sessions": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "No hay datos de límites en sesiones recientes" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No hay datos de límites en sesiones recientes"
+          }
+        }
       }
     },
     "No usage data": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Sin datos de uso" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sin datos de uso"
+          }
+        }
       }
     },
     "Not detected": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "No detectado" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No detectado"
+          }
+        }
       }
     },
     "Not signed in to Claude Code": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "No has iniciado sesión en Claude Code" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No has iniciado sesión en Claude Code"
+          }
+        }
       }
     },
     "Not signed in to Gemini (run 'gemini' to authenticate)": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "No has iniciado sesión en Gemini (ejecuta 'gemini' para autenticarte)" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No has iniciado sesión en Gemini (ejecuta 'gemini' para autenticarte)"
+          }
+        }
       }
     },
     "Off": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Desactivado" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desactivado"
+          }
+        }
       }
     },
     "On": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Activado" } }
-      }
-    },
-    "One notification per limit window, re-armed when the window resets. Balance alerts apply to pay-as-you-go providers.": {
-      "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Una notificación por ventana de límite, reactivada cuando la ventana se restablece. Las alertas de saldo aplican a proveedores de pago por uso." } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Activado"
+          }
+        }
       }
     },
     "One notification per limit window, re-armed when the window resets. \"20% left\" is the same alert as \"80% used\" — it follows your Display setting.": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Una notificación por ventana de límite, reactivada cuando la ventana se restablece. \"20% restante\" es la misma alerta que \"80% usado\" — sigue tu configuración de Visualización." } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Una notificación por ventana de límite, reactivada cuando la ventana se restablece. \"20% restante\" es la misma alerta que \"80% usado\" — sigue tu configuración de Visualización."
+          }
+        }
+      }
+    },
+    "One notification per limit window, re-armed when the window resets. Balance alerts apply to pay-as-you-go providers.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Una notificación por ventana de límite, reactivada cuando la ventana se restablece. Las alertas de saldo aplican a proveedores de pago por uso."
+          }
+        }
       }
     },
     "OpenRouter connect failed: key exchange rejected": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Error al conectar OpenRouter: intercambio de clave rechazado" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Error al conectar OpenRouter: intercambio de clave rechazado"
+          }
+        }
       }
     },
     "OpenRouter connect failed: missing code": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Error al conectar OpenRouter: falta el código" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Error al conectar OpenRouter: falta el código"
+          }
+        }
       }
     },
     "OpenRouter key rejected — reconnect in Settings": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Clave de OpenRouter rechazada — vuelve a conectar en Ajustes" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clave de OpenRouter rechazada — vuelve a conectar en Ajustes"
+          }
+        }
       }
     },
     "OpenRouter returned HTTP %lld": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "OpenRouter devolvió HTTP %lld" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenRouter devolvió HTTP %lld"
+          }
+        }
       }
     },
     "Personal cap": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Límite personal" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Límite personal"
+          }
+        }
       }
     },
     "Pro (24h)": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Pro (24 h)" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pro (24 h)"
+          }
+        }
+      }
+    },
+    "Provider endpoint research credits CodexBar by Peter Steinberger.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Provider endpoint research credits CodexBar by Peter Steinberger."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La investigación de endpoints se basa en CodexBar de Peter Steinberger."
+          }
+        }
       }
     },
     "Providers": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Proveedores" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Proveedores"
+          }
+        }
       }
     },
     "Quit": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Salir" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Salir"
+          }
+        }
       }
     },
     "Refresh": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Actualizar" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Actualizar"
+          }
+        }
       }
     },
     "Refresh interval": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Intervalo de actualización" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Intervalo de actualización"
+          }
+        }
       }
     },
     "Relative": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Relativo" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Relativo"
+          }
+        }
       }
     },
     "Remove": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Eliminar" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eliminar"
+          }
+        }
+      }
+    },
+    "Report an issue": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Report an issue"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reportar un problema"
+          }
+        }
       }
     },
     "Reset times": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Tiempos de restablecimiento" } }
-      }
-    },
-    "resets %@": {
-      "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "se restablece %@" } }
-      }
-    },
-    "resets in %@d %@h": {
-      "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "se restablece en %@d %@h" } }
-      }
-    },
-    "resets in %@h %@m": {
-      "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "se restablece en %@h %@m" } }
-      }
-    },
-    "resets in %@m": {
-      "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "se restablece en %@m" } }
-      }
-    },
-    "resets soon": {
-      "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "se restablece pronto" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tiempos de restablecimiento"
+          }
+        }
       }
     },
     "Save": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Guardar" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Guardar"
+          }
+        }
       }
     },
     "Saved": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Guardada" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Guardada"
+          }
+        }
       }
     },
     "Settings…": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Ajustes…" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajustes…"
+          }
+        }
       }
     },
     "Show in menu bar": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Mostrar en la barra de menús" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar en la barra de menús"
+          }
+        }
+      }
+    },
+    "Stale since %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Obsoleto desde %@"
+          }
+        }
       }
     },
     "Status": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Estado" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estado"
+          }
+        }
       }
     },
     "Support ♥": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Apoyar ♥" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apoyar ♥"
+          }
+        }
       }
     },
     "Team pool": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Pool del equipo" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pool del equipo"
+          }
+        }
       }
     },
     "Time quota": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Cuota de tiempo" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cuota de tiempo"
+          }
+        }
       }
     },
     "Token quota": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Cuota de tokens" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cuota de tokens"
+          }
+        }
       }
     },
     "Unexpected response from Anthropic": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Respuesta inesperada de Anthropic" } }
-      }
-    },
-    "Unexpected response from cursor.com": {
-      "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Respuesta inesperada de cursor.com" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Respuesta inesperada de Anthropic"
+          }
+        }
       }
     },
     "Unexpected response from DeepSeek": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Respuesta inesperada de DeepSeek" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Respuesta inesperada de DeepSeek"
+          }
+        }
       }
     },
     "Unexpected response from Google": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Respuesta inesperada de Google" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Respuesta inesperada de Google"
+          }
+        }
       }
     },
     "Unexpected response from Kimi": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Respuesta inesperada de Kimi" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Respuesta inesperada de Kimi"
+          }
+        }
       }
     },
     "Unexpected response from OpenRouter": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Respuesta inesperada de OpenRouter" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Respuesta inesperada de OpenRouter"
+          }
+        }
       }
     },
     "Unexpected response from Venice": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Respuesta inesperada de Venice" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Respuesta inesperada de Venice"
+          }
+        }
       }
     },
     "Unexpected response from Z.ai": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Respuesta inesperada de Z.ai" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Respuesta inesperada de Z.ai"
+          }
+        }
+      }
+    },
+    "Unexpected response from cursor.com": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Respuesta inesperada de cursor.com"
+          }
+        }
       }
     },
     "Updated %@": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Actualizado %@" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Actualizado %@"
+          }
+        }
       }
     },
     "Venice key rejected — check the key in Settings": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Clave de Venice rechazada — revisa la clave en Ajustes" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clave de Venice rechazada — revisa la clave en Ajustes"
+          }
+        }
       }
     },
     "Venice returned HTTP %lld": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Venice devolvió HTTP %lld" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Venice devolvió HTTP %lld"
+          }
+        }
+      }
+    },
+    "Version %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Version %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Versión %@"
+          }
+        }
+      }
+    },
+    "Website & source code": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Website & source code"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sitio web y código fuente"
+          }
+        }
       }
     },
     "Weekly (Opus)": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Semanal (Opus)" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Semanal (Opus)"
+          }
+        }
       }
     },
     "Weekly limit": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Límite semanal" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Límite semanal"
+          }
+        }
       }
     },
     "Window": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Ventana" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ventana"
+          }
+        }
       }
     },
     "Z.ai key rejected — check the key in Settings": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Clave de Z.ai rechazada — revisa la clave en Ajustes" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clave de Z.ai rechazada — revisa la clave en Ajustes"
+          }
+        }
       }
     },
     "Z.ai returned HTTP %lld": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "Z.ai devolvió HTTP %lld" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Z.ai devolvió HTTP %lld"
+          }
+        }
       }
     },
     "cursor.com returned HTTP %lld": {
       "localizations": {
-        "es": { "stringUnit": { "state": "translated", "value": "cursor.com devolvió HTTP %lld" } }
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "cursor.com devolvió HTTP %lld"
+          }
+        }
+      }
+    },
+    "key exchange rejected": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "intercambio de clave rechazado"
+          }
+        }
+      }
+    },
+    "missing code": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "falta el código"
+          }
+        }
+      }
+    },
+    "resets %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "se restablece %@"
+          }
+        }
+      }
+    },
+    "resets in %@d %@h": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "se restablece en %@d %@h"
+          }
+        }
+      }
+    },
+    "resets in %@h %@m": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "se restablece en %@h %@m"
+          }
+        }
+      }
+    },
+    "resets in %@m": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "se restablece en %@m"
+          }
+        }
+      }
+    },
+    "resets soon": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "se restablece pronto"
+          }
+        }
       }
     }
   },

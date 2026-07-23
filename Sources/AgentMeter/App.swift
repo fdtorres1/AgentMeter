@@ -16,10 +16,21 @@ struct AgentMeterApp: App {
         MenuBarExtra {
             MenuContent(store: store, settings: settings)
         } label: {
-            Text(store.menuBarTitle)
-                .font(.system(size: 12).monospacedDigit())
+            Group {
+                if settings.menuBarStyle == .icon {
+                    Image(nsImage: MenuBarTitleRenderer.iconImage(severity: store.worstMenuBarSeverity))
+                } else {
+                    Image(nsImage: MenuBarTitleRenderer.image(entries: store.menuBarEntries))
+                }
+            }
         }
         .menuBarExtraStyle(.window)
+
+        Window("About AgentMeter", id: "about") {
+            AboutView()
+        }
+        .windowResizability(.contentSize)
+        .defaultPosition(.center)
 
         Settings {
             SettingsRootView(store: store, settings: settings)

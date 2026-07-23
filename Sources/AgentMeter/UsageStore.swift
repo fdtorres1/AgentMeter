@@ -103,29 +103,90 @@ final class UsageStore: ObservableObject {
                 settings: settings
             )
         } catch {
-            states[provider.id] = .error(error.localizedDescription)
+            let previous = states[provider.id] ?? .loading
+            states[provider.id] = ProviderState.nextState(
+                after: previous,
+                failure: error.localizedDescription,
+                at: Date()
+            )
         }
+    }
+
+    private var titleProviders: [any UsageProvider] {
+        visibleProviders.filter { settings.showsInMenuBar($0.id) }
+    }
+
+    /// Colored menu bar segments with per-provider severity.
+    var menuBarEntries: [(text: String, severity: MenuBarSeverity)] {
+        let providers = titleProviders
+        guard !providers.isEmpty else { return [("AgentMeter", .normal)] }
+
+        switch settings.menuBarStyle {
+        case .full:
+            return providers.map { providerMenuBarEntry(for: $0) }
+        case .compact:
+            if let entry = mostConstrainedMenuBarEntry(from: providers) {
+                return [entry]
+            }
+            return providers.map { providerMenuBarEntry(for: $0) }
+        case .icon:
+            return []
+        }
+    }
+
+    /// Worst severity across title providers (for icon-only menu bar style).
+    var worstMenuBarSeverity: MenuBarSeverity {
+        let providers = titleProviders
+        guard !providers.isEmpty else { return .normal }
+
+        let severities = providers.map {
+            MenuBarTitleRenderer.severity(
+                for: state(for: $0.id),
+                balanceThreshold: settings.balanceNotificationThreshold
+            )
+        }
+        return Self.worstSeverity(severities)
     }
 
     /// Menu bar text, e.g. "Cx 5% · Cu 20%". Only visible providers with menu-bar
     /// visibility appear; compact mode shows the single most constrained entry.
     var menuBarTitle: String {
-        let titleProviders = visibleProviders.filter { settings.showsInMenuBar($0.id) }
-        guard !titleProviders.isEmpty else { return "AgentMeter" }
-
-        if settings.compactMenuBar {
-            return compactMenuBarTitle(for: titleProviders)
-        }
-
-        return titleProviders.map { providerEntry(for: $0) }.joined(separator: " · ")
+        menuBarEntries.map(\.text).joined(separator: " · ")
     }
 
-    private func compactMenuBarTitle(for providers: [any UsageProvider]) -> String {
+    private func providerMenuBarEntry(for provider: any UsageProvider) -> (text: String, severity: MenuBarSeverity) {
+        let providerState = state(for: provider.id)
+        return (
+            providerEntryText(for: provider, state: providerState),
+            MenuBarTitleRenderer.severity(
+                for: providerState,
+                balanceThreshold: settings.balanceNotificationThreshold
+            )
+        )
+    }
+
+    private func providerEntryText(for provider: any UsageProvider, state: ProviderState) -> String {
+        switch state {
+        case .loading:
+            return "\(provider.shortCode) …"
+        case .error:
+            return "\(provider.shortCode) !"
+        case .ready(let usage), .stale(let usage, _, _):
+            guard let summary = usage.menuSummary(direction: settings.countDirection) else {
+                return "\(provider.shortCode) ?"
+            }
+            return "\(provider.shortCode) \(summary)"
+        }
+    }
+
+    private func mostConstrainedMenuBarEntry(
+        from providers: [any UsageProvider]
+    ) -> (text: String, severity: MenuBarSeverity)? {
         var bestPercent: (provider: any UsageProvider, used: Double)?
         var firstBalance: (provider: any UsageProvider, usage: ProviderUsage)?
 
         for provider in providers {
-            guard case .ready(let usage) = state(for: provider.id) else { continue }
+            guard let usage = state(for: provider.id).usage else { continue }
             if let worst = usage.worstWindow {
                 if bestPercent == nil || worst.usedPercent > bestPercent!.used {
                     bestPercent = (provider, worst.usedPercent)
@@ -136,25 +197,24 @@ final class UsageStore: ObservableObject {
         }
 
         if let best = bestPercent {
-            return providerEntry(for: best.provider)
+            return providerMenuBarEntry(for: best.provider)
         }
         if let balance = firstBalance {
-            return providerEntry(for: balance.provider)
+            return providerMenuBarEntry(for: balance.provider)
         }
-
-        return providers.map { providerEntry(for: $0) }.joined(separator: " · ")
+        return nil
     }
 
-    private func providerEntry(for provider: any UsageProvider) -> String {
-        switch state(for: provider.id) {
-        case .loading: return "\(provider.shortCode) …"
-        case .error: return "\(provider.shortCode) !"
-        case .ready(let usage):
-            guard let summary = usage.menuSummary(direction: settings.countDirection) else {
-                return "\(provider.shortCode) ?"
+    nonisolated private static func worstSeverity(_ severities: [MenuBarSeverity]) -> MenuBarSeverity {
+        let rank: (MenuBarSeverity) -> Int = { severity in
+            switch severity {
+            case .critical: return 3
+            case .warning: return 2
+            case .stale: return 1
+            case .normal: return 0
             }
-            return "\(provider.shortCode) \(summary)"
         }
+        return severities.max(by: { rank($0) < rank($1) }) ?? .normal
     }
 
     // MARK: - Codex session file watching

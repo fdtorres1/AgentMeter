@@ -113,7 +113,7 @@ private struct ProviderSection: View {
                     Text(provider.displayName).font(.headline)
                 }
                 Spacer()
-                if case .ready(let usage) = state, let plan = usage.planName {
+                if let usage = state.usage, let plan = usage.planName {
                     Text(plan)
                         .font(.caption)
                         .padding(.horizontal, 6)
@@ -130,31 +130,53 @@ private struct ProviderSection: View {
                     .font(.caption)
                     .foregroundStyle(.orange)
             case .ready(let usage):
-                if usage.windows.isEmpty && usage.balance == nil {
-                    Text(L("No usage data")).font(.caption).foregroundStyle(.secondary)
-                }
-                ForEach(usage.windows, id: \.label) { window in
-                    WindowMeter(window: window, settings: settings)
-                }
-                if let balance = usage.balance {
-                    HStack {
-                        Text(L("Balance")).font(.caption)
-                        Spacer()
-                        Text(balance.display)
-                            .font(.caption.monospacedDigit())
-                            .foregroundStyle(balance.remaining > 5 ? Color.green : Color.orange)
-                    }
-                    if let used = balance.used {
-                        Text(L("\(balance.currencySymbol)\(BalanceInfo.format(used)) used all-time"))
-                            .font(.caption2)
-                            .foregroundStyle(.secondary)
-                    }
-                }
-                if let asOf = usage.asOf {
-                    Text(L("Data as of \(asOf.formatted(date: .omitted, time: .shortened))"))
+                UsageMetersView(usage: usage, settings: settings)
+            case .stale(let usage, let error, let since):
+                UsageMetersView(usage: usage, settings: settings)
+                    .opacity(0.55)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(L("Stale since \(since.formatted(date: .omitted, time: .shortened))"))
+                        .font(.caption)
+                        .foregroundStyle(.orange)
+                    Text(error)
                         .font(.caption2)
-                        .foregroundStyle(.tertiary)
+                        .foregroundStyle(.secondary)
                 }
+            }
+        }
+    }
+}
+
+private struct UsageMetersView: View {
+    let usage: ProviderUsage
+    @ObservedObject var settings: SettingsStore
+
+    var body: some View {
+        Group {
+            if usage.windows.isEmpty && usage.balance == nil {
+                Text(L("No usage data")).font(.caption).foregroundStyle(.secondary)
+            }
+            ForEach(usage.windows, id: \.label) { window in
+                WindowMeter(window: window, settings: settings)
+            }
+            if let balance = usage.balance {
+                HStack {
+                    Text(L("Balance")).font(.caption)
+                    Spacer()
+                    Text(balance.display)
+                        .font(.caption.monospacedDigit())
+                        .foregroundStyle(balance.remaining > 5 ? Color.green : Color.orange)
+                }
+                if let used = balance.used {
+                    Text(L("\(balance.currencySymbol)\(BalanceInfo.format(used)) used all-time"))
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                }
+            }
+            if let asOf = usage.asOf {
+                Text(L("Data as of \(asOf.formatted(date: .omitted, time: .shortened))"))
+                    .font(.caption2)
+                    .foregroundStyle(.tertiary)
             }
         }
     }

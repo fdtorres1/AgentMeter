@@ -106,10 +106,32 @@ struct ProviderUsage: Equatable {
 enum ProviderState: Equatable {
     case loading
     case ready(ProviderUsage)
+    /// Last-known data shown dimmed after a fetch failure.
+    case stale(ProviderUsage, error: String, since: Date)
     case error(String)
 
     var usage: ProviderUsage? {
-        if case .ready(let usage) = self { return usage }
-        return nil
+        switch self {
+        case .ready(let usage), .stale(let usage, _, _):
+            return usage
+        case .loading, .error:
+            return nil
+        }
+    }
+
+    /// Pure transition when a provider fetch fails.
+    nonisolated static func nextState(
+        after previous: ProviderState,
+        failure message: String,
+        at date: Date
+    ) -> ProviderState {
+        switch previous {
+        case .ready(let usage):
+            return .stale(usage, error: message, since: date)
+        case .stale(let usage, _, let since):
+            return .stale(usage, error: message, since: since)
+        case .loading, .error:
+            return .error(message)
+        }
     }
 }
