@@ -71,6 +71,42 @@ struct MoonshotProvider: UsageProvider {
             )
         )
     }
+
+    enum MoonshotCredentialProbeResult: Equatable {
+        case valid
+    }
+
+    static let manageKeysURL = URL(string: "https://platform.moonshot.ai/console/api-keys")!
+
+    func assessCredential() async -> CredentialAssessment? {
+        guard let key = KeychainStore.get(keychainAccount) else { return nil }
+
+        var request = URLRequest(url: Self.balanceURL)
+        request.timeoutInterval = 15
+        request.setValue("Bearer \(key)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+
+        do {
+            let (data, response) = try await HTTP.session.data(for: request)
+            guard let http = response as? HTTPURLResponse, http.statusCode == 200 else {
+                return CredentialAssessmentSupport.probeFailed(manageURL: Self.manageKeysURL)
+            }
+            _ = try JSONDecoder().decode(BalanceResponse.self, from: data)
+            return Self.assessment(from: .valid)
+        } catch {
+            return CredentialAssessmentSupport.probeFailed(manageURL: Self.manageKeysURL)
+        }
+    }
+
+    nonisolated static func assessment(from probe: MoonshotCredentialProbeResult) -> CredentialAssessment {
+        CredentialAssessment(
+            keyTypeLabel: L("Valid key"),
+            summary: L("Reads prepaid balance only."),
+            detail: L("This key lets apps call Kimi models using your prepaid balance. AgentMeter only reads how much balance is left; it cannot spend money or change your account."),
+            upgradeHint: nil,
+            manageURL: manageKeysURL
+        )
+    }
 }
 
 enum MoonshotError: LocalizedError {

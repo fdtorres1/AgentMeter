@@ -145,6 +145,7 @@ private struct ProviderCredentialSection: View {
     @ObservedObject private var openRouterAuth = OpenRouterAuthFlow.shared
     @State private var draftKey = ""
     @State private var hasKey: Bool
+    @State private var assessmentGeneration = 0
 
     init(provider: any UsageProvider, store: UsageStore) {
         self.provider = provider
@@ -170,6 +171,10 @@ private struct ProviderCredentialSection: View {
                             Button(L("Remove")) { removeKey() }
                         }
                     }
+                    CredentialAssessmentView(
+                        provider: provider,
+                        assessmentGeneration: assessmentGeneration
+                    )
                 } else {
                     SecureField(provider.apiKeyPlaceholder, text: $draftKey)
                     HStack {
@@ -190,6 +195,10 @@ private struct ProviderCredentialSection: View {
                             Button(L("Disconnect")) { removeKey() }
                         }
                     }
+                    CredentialAssessmentView(
+                        provider: provider,
+                        assessmentGeneration: assessmentGeneration
+                    )
                 } else {
                     HStack {
                         Button(L("Connect…")) { OpenRouterAuthFlow.shared.start() }
@@ -217,7 +226,11 @@ private struct ProviderCredentialSection: View {
                 }
             }
             .onReceive(NotificationCenter.default.publisher(for: .providerCredentialsChanged)) { _ in
-                hasKey = KeychainStore.exists(provider.keychainAccount)
+                let connected = KeychainStore.exists(provider.keychainAccount)
+                if connected && !hasKey {
+                    assessmentGeneration += 1
+                }
+                hasKey = connected
             }
         }
     }
@@ -228,6 +241,7 @@ private struct ProviderCredentialSection: View {
         KeychainStore.set(key, account: provider.keychainAccount)
         draftKey = ""
         hasKey = true
+        assessmentGeneration += 1
         store.refresh()
     }
 
@@ -235,6 +249,72 @@ private struct ProviderCredentialSection: View {
         KeychainStore.delete(provider.keychainAccount)
         hasKey = false
         store.refresh()
+    }
+}
+
+private struct CredentialAssessmentView: View {
+    let provider: any UsageProvider
+    let assessmentGeneration: Int
+    @State private var assessment: CredentialAssessment?
+    @State private var isAssessing = false
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            if isAssessing {
+                HStack(spacing: 6) {
+                    ProgressView()
+                        .controlSize(.small)
+                    Text(L("Checking key…"))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            } else if let assessment {
+                HStack(alignment: .firstTextBaseline, spacing: 8) {
+                    Text(assessment.keyTypeLabel)
+                        .font(.caption2)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 2)
+                        .background(.quaternary, in: Capsule())
+                        .help(assessment.summary)
+                    Text(assessment.summary)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel(
+                    String(
+                        format: L("Key type: %@. %@"),
+                        assessment.keyTypeLabel,
+                        assessment.summary
+                    )
+                )
+
+                DisclosureGroup(L("About this key")) {
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text(assessment.detail)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                        if let hint = assessment.upgradeHint {
+                            Text(hint)
+                                .font(.caption)
+                                .foregroundStyle(.orange)
+                        }
+                        if let url = assessment.manageURL {
+                            Link(L("Manage keys"), destination: url)
+                                .font(.caption)
+                        }
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.top, 4)
+                }
+                .font(.caption)
+            }
+        }
+        .task(id: assessmentGeneration) {
+            isAssessing = true
+            assessment = await provider.assessCredential()
+            isAssessing = false
+        }
     }
 }
 

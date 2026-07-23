@@ -196,6 +196,66 @@ struct VeniceProvider: UsageProvider {
         struct Response: Decodable { let error: String? }
         return (try? JSONDecoder().decode(Response.self, from: data))?.error
     }
+
+    enum VeniceCredentialProbeResult: Equatable {
+        case adminKey
+        case inferenceKey
+        case notWorking
+    }
+
+    static let manageKeysURL = URL(string: "https://venice.ai/settings/api")!
+
+    func assessCredential() async -> CredentialAssessment? {
+        guard let storedKey = KeychainStore.get(keychainAccount) else { return nil }
+        let key = storedKey.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !key.isEmpty else { return nil }
+
+        do {
+            let billing = try await Self.get(Self.balanceURL, key: key)
+            if billing.statusCode == 200 {
+                return Self.assessment(from: .adminKey)
+            }
+            if billing.statusCode == 401 || billing.statusCode == 403 {
+                let fallback = try await Self.get(Self.rateLimitsURL, key: key)
+                if fallback.statusCode == 200 {
+                    return Self.assessment(from: .inferenceKey)
+                }
+                return Self.assessment(from: .notWorking)
+            }
+            return CredentialAssessmentSupport.probeFailed(manageURL: Self.manageKeysURL)
+        } catch {
+            return CredentialAssessmentSupport.probeFailed(manageURL: Self.manageKeysURL)
+        }
+    }
+
+    nonisolated static func assessment(from probe: VeniceCredentialProbeResult) -> CredentialAssessment {
+        switch probe {
+        case .adminKey:
+            return CredentialAssessment(
+                keyTypeLabel: L("Admin key"),
+                summary: L("Full access including billing and key management."),
+                detail: L("An Admin key can see billing details and manage other keys. AgentMeter only reads your balance; it cannot spend credits or change settings. An Inference key is safer and also works with AgentMeter."),
+                upgradeHint: nil,
+                manageURL: manageKeysURL
+            )
+        case .inferenceKey:
+            return CredentialAssessment(
+                keyTypeLabel: L("Inference key"),
+                summary: L("Balance works through the limited rate-limits endpoint."),
+                detail: L("An Inference key is the safer default — it lets apps run models but limits access to billing and key management. AgentMeter only reads your balance through a read-only endpoint; it cannot spend credits."),
+                upgradeHint: L("An Admin key shows richer billing detail but is more powerful — only switch if you need that extra detail."),
+                manageURL: manageKeysURL
+            )
+        case .notWorking:
+            return CredentialAssessment(
+                keyTypeLabel: L("Key not working"),
+                summary: L("The key was rejected by Venice."),
+                detail: L("Venice did not accept this key. Try pasting it again, or create a new Inference or Admin key on Venice's website."),
+                upgradeHint: nil,
+                manageURL: manageKeysURL
+            )
+        }
+    }
 }
 
 private extension KeyedDecodingContainer {

@@ -3,6 +3,20 @@
 All notable changes to AgentMeter. Format follows [Keep a Changelog](https://keepachangelog.com);
 versions follow semantic-ish `MAJOR.MINOR.PATCH`.
 
+## [1.7.0] — 2026-07-23
+
+### Added
+- Key type detection: after saving or connecting an API key, Settings shows
+  what kind of key it is (e.g. Venice Admin vs. Inference, OpenRouter
+  management/limited/standard, Z.ai GLM Coding Plan vs. standard) with a
+  plain-language summary written for non-technical users.
+- An expandable "About this key" section under each saved credential explains
+  what the key can do, confirms AgentMeter only reads usage/balance and can
+  never spend, and links directly to the provider's key-management page.
+- Least-privilege guidance: when a safer key type would work equally well
+  (e.g. a Venice Inference key), AgentMeter says so instead of pushing users
+  toward more powerful keys.
+
 ## [1.6.6] — 2026-07-23
 
 ### Fixed

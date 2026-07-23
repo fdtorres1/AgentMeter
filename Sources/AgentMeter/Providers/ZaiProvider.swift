@@ -103,6 +103,68 @@ struct ZaiProvider: UsageProvider {
         default: return nil
         }
     }
+
+    enum ZaiCredentialProbeResult: Equatable {
+        case codingPlan
+        case standardAPIKey
+    }
+
+    static let manageKeysURL = URL(string: "https://z.ai/manage-apikey/apikey-list")!
+
+    func assessCredential() async -> CredentialAssessment? {
+        guard let key = KeychainStore.get(keychainAccount) else { return nil }
+
+        var request = URLRequest(url: Self.quotaURL)
+        request.timeoutInterval = 15
+        request.setValue("Bearer \(key)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+
+        do {
+            let (data, response) = try await HTTP.session.data(for: request)
+            guard let http = response as? HTTPURLResponse else {
+                return CredentialAssessmentSupport.probeFailed(manageURL: Self.manageKeysURL)
+            }
+            if http.statusCode == 401 || http.statusCode == 403 {
+                return CredentialAssessmentSupport.probeFailed(manageURL: Self.manageKeysURL)
+            }
+            guard http.statusCode == 200 else {
+                return CredentialAssessmentSupport.probeFailed(manageURL: Self.manageKeysURL)
+            }
+
+            let quota = try JSONDecoder().decode(QuotaResponse.self, from: data)
+            switch ZaiProvider.responseError(quota) {
+            case .noCodingPlan:
+                return Self.assessment(from: .standardAPIKey)
+            case .some:
+                return CredentialAssessmentSupport.probeFailed(manageURL: Self.manageKeysURL)
+            case nil:
+                return Self.assessment(from: .codingPlan)
+            }
+        } catch {
+            return CredentialAssessmentSupport.probeFailed(manageURL: Self.manageKeysURL)
+        }
+    }
+
+    nonisolated static func assessment(from probe: ZaiCredentialProbeResult) -> CredentialAssessment {
+        switch probe {
+        case .codingPlan:
+            return CredentialAssessment(
+                keyTypeLabel: L("GLM Coding Plan key"),
+                summary: L("Shows your 5-hour and token quotas."),
+                detail: L("This key is tied to a GLM Coding Plan subscription. AgentMeter reads your time and token quotas (they reset every few hours). It cannot spend money, call models, or change your account."),
+                upgradeHint: nil,
+                manageURL: manageKeysURL
+            )
+        case .standardAPIKey:
+            return CredentialAssessment(
+                keyTypeLabel: L("Standard API key"),
+                summary: L("Valid key, but Z.ai only exposes usage for GLM Coding Plans"),
+                detail: L("Your key is valid, but Z.ai does not publish usage or balance data for pay-as-you-go API keys. AgentMeter can only show numbers for GLM Coding Plan keys. Your key is fine for calling models — AgentMeter just has nothing to display."),
+                upgradeHint: nil,
+                manageURL: manageKeysURL
+            )
+        }
+    }
 }
 
 enum ZaiError: LocalizedError {

@@ -84,6 +84,42 @@ struct DeepSeekProvider: UsageProvider {
         default: return "\(currency) "
         }
     }
+
+    enum DeepSeekCredentialProbeResult: Equatable {
+        case valid
+    }
+
+    static let manageKeysURL = URL(string: "https://platform.deepseek.com/api_keys")!
+
+    func assessCredential() async -> CredentialAssessment? {
+        guard let key = KeychainStore.get(keychainAccount) else { return nil }
+
+        var request = URLRequest(url: Self.balanceURL)
+        request.timeoutInterval = 15
+        request.setValue("Bearer \(key)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+
+        do {
+            let (data, response) = try await HTTP.session.data(for: request)
+            guard let http = response as? HTTPURLResponse, http.statusCode == 200 else {
+                return CredentialAssessmentSupport.probeFailed(manageURL: Self.manageKeysURL)
+            }
+            _ = try JSONDecoder().decode(BalanceResponse.self, from: data)
+            return Self.assessment(from: .valid)
+        } catch {
+            return CredentialAssessmentSupport.probeFailed(manageURL: Self.manageKeysURL)
+        }
+    }
+
+    nonisolated static func assessment(from probe: DeepSeekCredentialProbeResult) -> CredentialAssessment {
+        CredentialAssessment(
+            keyTypeLabel: L("Valid key"),
+            summary: L("Reads prepaid balance only."),
+            detail: L("This key lets apps call DeepSeek models using your prepaid balance. AgentMeter only reads how much balance is left; it cannot spend money or change your account."),
+            upgradeHint: nil,
+            manageURL: manageKeysURL
+        )
+    }
 }
 
 enum DeepSeekError: LocalizedError {

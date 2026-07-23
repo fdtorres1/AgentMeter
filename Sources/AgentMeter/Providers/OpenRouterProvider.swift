@@ -90,6 +90,8 @@ struct OpenRouterProvider: UsageProvider {
             let usageDaily: Double?
             let usageWeekly: Double?
             let usageMonthly: Double?
+            let isManagementKey: Bool?
+            let isProvisioningKey: Bool?
 
             enum CodingKeys: String, CodingKey {
                 case limit
@@ -98,9 +100,64 @@ struct OpenRouterProvider: UsageProvider {
                 case usageDaily = "usage_daily"
                 case usageWeekly = "usage_weekly"
                 case usageMonthly = "usage_monthly"
+                case isManagementKey = "is_management_key"
+                case isProvisioningKey = "is_provisioning_key"
             }
         }
         let data: Payload
+    }
+
+    struct OpenRouterCredentialFacts: Equatable {
+        let isManagementKey: Bool
+        let isProvisioningKey: Bool
+        let limit: Double?
+    }
+
+    static let manageKeysURL = URL(string: "https://openrouter.ai/settings/keys")!
+
+    func assessCredential() async -> CredentialAssessment? {
+        guard let key = KeychainStore.get(keychainAccount) else { return nil }
+        do {
+            let response = try await Self.fetchKeyInfo(key: key)
+            let facts = OpenRouterCredentialFacts(
+                isManagementKey: response.data.isManagementKey ?? false,
+                isProvisioningKey: response.data.isProvisioningKey ?? false,
+                limit: response.data.limit
+            )
+            return Self.assessment(from: facts)
+        } catch {
+            return CredentialAssessmentSupport.probeFailed(manageURL: Self.manageKeysURL)
+        }
+    }
+
+    nonisolated static func assessment(from facts: OpenRouterCredentialFacts) -> CredentialAssessment {
+        if facts.isManagementKey || facts.isProvisioningKey {
+            return CredentialAssessment(
+                keyTypeLabel: L("Management key"),
+                summary: L("Full account access — more powerful than AgentMeter needs."),
+                detail: L("A management key can control your whole OpenRouter account, including creating and deleting other API keys. AgentMeter only reads usage and balance — it cannot spend credits or change anything. A regular API key is safer; use Connect to get a dedicated key for AgentMeter that you can revoke anytime."),
+                upgradeHint: nil,
+                manageURL: manageKeysURL
+            )
+        }
+
+        if let limit = facts.limit, limit > 0 {
+            return CredentialAssessment(
+                keyTypeLabel: L("Limited key"),
+                summary: L("Spending capped — AgentMeter can read usage within this limit."),
+                detail: L("This API key lets apps use your OpenRouter credits up to a spending limit you set. AgentMeter only reads how much has been used; it cannot spend money or change your account. If you used Connect, OpenRouter created a dedicated key just for AgentMeter that you can revoke anytime."),
+                upgradeHint: nil,
+                manageURL: manageKeysURL
+            )
+        }
+
+        return CredentialAssessment(
+            keyTypeLabel: L("Standard key"),
+            summary: L("Works for usage monitoring."),
+            detail: L("This API key lets apps use your OpenRouter credits. AgentMeter only reads usage; it cannot spend money or change your account. If you used Connect, OpenRouter created a dedicated key just for AgentMeter that you can revoke anytime."),
+            upgradeHint: nil,
+            manageURL: manageKeysURL
+        )
     }
 
     nonisolated static func usage(from response: CreditsResponse, now: Date) -> ProviderUsage {
