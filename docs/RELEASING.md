@@ -39,6 +39,23 @@ Add these under Settings → Secrets and variables → Actions:
 | `APPLE_API_KEY_ID` | the Key ID |
 | `APPLE_API_ISSUER` | the Issuer ID |
 
+## Sparkle auto-updates
+
+Releases from v1.4.0 onward include a Sparkle appcast:
+
+- `scripts/release.sh` runs `generate_appcast` (from the SPM Sparkle artifact),
+  which signs the zip with the **EdDSA private key stored in the login
+  Keychain** (item: "Private key for signing Sparkle updates"). The matching
+  public key is embedded in Info.plist (`SUPublicEDKey` in `scripts/bundle.sh`).
+- Upload **both** `AgentMeter.zip` and `appcast.xml` as release assets. The
+  app's feed URL is `releases/latest/download/appcast.xml`, so the newest
+  release's appcast is always the one served.
+- **Back up the private key** (`generate_keys -x backup-file` from
+  `.build/artifacts/sparkle/Sparkle/bin/`). If it is lost, shipped apps can
+  never auto-update again (the public key baked into them won't match) and
+  users would need one manual reinstall. Store the backup somewhere safe
+  (e.g. 1Password), never in the repo.
+
 ## Cutting a release
 
 ```bash
