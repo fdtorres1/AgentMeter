@@ -48,15 +48,25 @@ struct MenuContent: View {
                         .foregroundStyle(.secondary)
                 }
                 Spacer()
-                Button("Refresh") { store.refresh() }
-                    .font(.caption)
+                Button {
+                    store.refresh()
+                } label: {
+                    Label("Refresh", systemImage: "arrow.clockwise")
+                        .labelStyle(.titleAndIcon)
+                }
+                .buttonStyle(.plain)
+                .font(.caption)
             }
             HStack {
                 SettingsLink {
                     Text("Settings…")
                 }
+                .buttonStyle(.plain)
                 .font(.caption)
-                .simultaneousGesture(TapGesture().onEnded { NSApp.activate(ignoringOtherApps: true) })
+                .simultaneousGesture(TapGesture().onEnded {
+                    NSApp.activate(ignoringOtherApps: true)
+                    Self.closeMenuBarWindow()
+                })
                 Spacer()
                 Button("Check for Updates…") { checkForUpdates() }
                     .buttonStyle(.plain)
@@ -69,6 +79,14 @@ struct MenuContent: View {
                     .buttonStyle(.plain)
                     .font(.caption)
             }
+        }
+    }
+
+    /// MenuBarExtra's window doesn't auto-dismiss when another window opens;
+    /// close it explicitly so Settings doesn't appear behind the dropdown.
+    private static func closeMenuBarWindow() {
+        for window in NSApp.windows where window.className.contains("MenuBarExtraWindow") {
+            window.close()
         }
     }
 
@@ -98,6 +116,7 @@ private struct ProviderSection: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
+                ProviderBadge(provider: provider, size: 18)
                 if let url = provider.dashboardURL {
                     Button(provider.displayName) {
                         NSWorkspace.shared.open(url)

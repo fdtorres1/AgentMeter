@@ -77,7 +77,7 @@ private struct ProvidersSettingsTab: View {
     var body: some View {
         Form {
             ForEach(store.providers, id: \.id) { provider in
-                Section(provider.displayName) {
+                Section {
                     Picker("Mode", selection: Binding(
                         get: { settings.mode(for: provider.id) },
                         set: { newValue in
@@ -99,6 +99,11 @@ private struct ProvidersSettingsTab: View {
                     }
 
                     ProviderCredentialSection(provider: provider, store: store)
+                } header: {
+                    HStack(spacing: 6) {
+                        ProviderBadge(provider: provider, size: 18)
+                        Text(provider.displayName)
+                    }
                 }
             }
         }
@@ -204,6 +209,8 @@ private struct AlertsSettingsTab: View {
     @ObservedObject var store: UsageStore
     @ObservedObject var settings: SettingsStore
 
+    private var countsDown: Bool { settings.countDirection == .remaining }
+
     var body: some View {
         Form {
             Section {
@@ -214,9 +221,15 @@ private struct AlertsSettingsTab: View {
                         }
                     }
 
-                Picker("Threshold", selection: $settings.notificationThreshold) {
+                // Thresholds are stored as used-percent; only the labels adapt
+                // to the count direction, so the alert fires at the same real
+                // usage level in either display mode.
+                Picker(
+                    countsDown ? "Alert when remaining falls below" : "Alert when usage reaches",
+                    selection: $settings.notificationThreshold
+                ) {
                     ForEach(SettingsStore.notificationThresholdOptions, id: \.self) { value in
-                        Text("\(Int(value))%").tag(value)
+                        Text(countsDown ? "\(Int(100 - value))% left" : "\(Int(value))%").tag(value)
                     }
                 }
                 .pickerStyle(.segmented)
@@ -229,6 +242,12 @@ private struct AlertsSettingsTab: View {
                 }
                 .pickerStyle(.segmented)
                 .disabled(!settings.notificationsEnabled)
+            } footer: {
+                Text(countsDown
+                    ? "One notification per limit window, re-armed when the window resets. \"20% left\" is the same alert as \"80% used\" — it follows your Display setting."
+                    : "One notification per limit window, re-armed when the window resets. Balance alerts apply to pay-as-you-go providers.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
             }
         }
         .formStyle(.grouped)
