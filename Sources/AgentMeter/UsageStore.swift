@@ -11,6 +11,7 @@ final class UsageStore: ObservableObject {
 
     let providers: [any UsageProvider]
     let settings: SettingsStore
+    lazy var notificationManager = NotificationManager()
 
     private let codexReader = CodexUsageReader()
     private var timer: Timer?
@@ -68,6 +69,11 @@ final class UsageStore: ObservableObject {
         do {
             let usage = try await provider.fetch()
             states[provider.id] = .ready(usage)
+            notificationManager.notifyIfNeeded(
+                provider: provider,
+                usage: usage,
+                settings: settings
+            )
         } catch {
             states[provider.id] = .error(error.localizedDescription)
         }

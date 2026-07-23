@@ -227,6 +227,25 @@ private struct SettingsView: View {
             }
             .pickerStyle(.segmented)
             .labelsHidden()
+
+            Divider()
+            Text("Notifications").font(.caption).foregroundStyle(.secondary)
+            Toggle("Alert when usage crosses threshold", isOn: $settings.notificationsEnabled)
+                .toggleStyle(.checkbox)
+                .font(.caption)
+                .onChange(of: settings.notificationsEnabled) { _, enabled in
+                    if enabled {
+                        store.notificationManager.requestAuthorizationIfNeeded()
+                    }
+                }
+            Picker("", selection: $settings.notificationThreshold) {
+                ForEach(SettingsStore.notificationThresholdOptions, id: \.self) { value in
+                    Text("\(Int(value))%").tag(value)
+                }
+            }
+            .pickerStyle(.segmented)
+            .labelsHidden()
+            .disabled(!settings.notificationsEnabled)
         }
     }
 }
