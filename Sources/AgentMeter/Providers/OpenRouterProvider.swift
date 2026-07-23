@@ -138,7 +138,7 @@ final class OpenRouterAuthFlow {
         return true
     }
 
-    static func exchange(code: String, verifier: String) async throws -> String {
+    nonisolated static func exchange(code: String, verifier: String) async throws -> String {
         var request = URLRequest(url: URL(string: "https://openrouter.ai/api/v1/auth/keys")!)
         request.httpMethod = "POST"
         request.timeoutInterval = 20
@@ -157,13 +157,13 @@ final class OpenRouterAuthFlow {
         return try JSONDecoder().decode(KeyResponse.self, from: data).key
     }
 
-    static func randomVerifier() -> String {
+    nonisolated static func randomVerifier() -> String {
         var bytes = [UInt8](repeating: 0, count: 64)
         _ = SecRandomCopyBytes(kSecRandomDefault, bytes.count, &bytes)
         return Data(bytes).base64URLEncoded()
     }
 
-    static func challenge(for verifier: String) -> String {
+    nonisolated static func challenge(for verifier: String) -> String {
         Data(SHA256.hash(data: Data(verifier.utf8))).base64URLEncoded()
     }
 }
