@@ -15,6 +15,10 @@ struct DeepSeekProvider: UsageProvider {
 
     var authKind: ProviderAuthKind { .apiKey(keyURL: Self.keyURL) }
 
+    var dashboardURL: URL? {
+        URL(string: "https://platform.deepseek.com/usage")
+    }
+
     func fetch() async throws -> ProviderUsage {
         guard let key = KeychainStore.get(keychainAccount) else {
             throw ProviderKeyError.missingKey(displayName)

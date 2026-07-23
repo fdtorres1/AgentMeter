@@ -53,6 +53,29 @@ struct ThresholdTracker {
         return result
     }
 
+    mutating func balanceCrossings(
+        providerID: String,
+        balance: BalanceInfo,
+        threshold: Double
+    ) -> Bool {
+        let key = "balance.\(providerID)"
+        let remaining = balance.remaining
+
+        if remaining >= threshold {
+            lastNotifiedPercents.removeValue(forKey: key)
+        }
+
+        let wasAbove = lastNotifiedPercents[key].map { $0 >= threshold } ?? true
+        if remaining < threshold, wasAbove {
+            lastNotifiedPercents[key] = remaining
+            defaults.set(lastNotifiedPercents, forKey: Self.stateKey)
+            return true
+        }
+
+        defaults.set(lastNotifiedPercents, forKey: Self.stateKey)
+        return false
+    }
+
     private func windowDidReset(
         key: String,
         newPercent: Double,
@@ -90,6 +113,15 @@ final class NotificationManager {
         for window in crossings {
             postNotification(provider: provider, window: window)
         }
+
+        if let balance = usage.balance,
+           tracker.balanceCrossings(
+               providerID: provider.id,
+               balance: balance,
+               threshold: settings.balanceNotificationThreshold
+           ) {
+            postBalanceNotification(provider: provider, balance: balance)
+        }
     }
 
     func requestAuthorizationIfNeeded() {
@@ -110,6 +142,20 @@ final class NotificationManager {
 
         let request = UNNotificationRequest(
             identifier: "\(provider.id)-\(window.label)-\(Date().timeIntervalSince1970)",
+            content: content,
+            trigger: nil
+        )
+        UNUserNotificationCenter.current().add(request)
+    }
+
+    private func postBalanceNotification(provider: any UsageProvider, balance: BalanceInfo) {
+        let content = UNMutableNotificationContent()
+        content.title = "\(provider.displayName) balance alert"
+        content.body = "\(balance.currencySymbol)\(BalanceInfo.format(balance.remaining)) remaining"
+        content.sound = .default
+
+        let request = UNNotificationRequest(
+            identifier: "\(provider.id)-balance-\(Date().timeIntervalSince1970)",
             content: content,
             trigger: nil
         )

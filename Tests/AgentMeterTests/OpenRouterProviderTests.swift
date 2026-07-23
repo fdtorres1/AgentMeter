@@ -13,7 +13,7 @@ final class OpenRouterProviderTests: XCTestCase {
         let balance = try XCTUnwrap(usage.balance)
         XCTAssertEqual(balance.remaining, 12.4, accuracy: 0.001)
         XCTAssertEqual(balance.used, 12.6)
-        XCTAssertEqual(usage.menuSummary, "$12")
+        XCTAssertEqual(usage.menuSummary(direction: .used), "$12")
     }
 
     func testNegativeBalanceClampsToZero() throws {

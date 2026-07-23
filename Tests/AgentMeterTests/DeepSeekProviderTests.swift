@@ -15,7 +15,7 @@ final class DeepSeekProviderTests: XCTestCase {
         XCTAssertEqual(balance.remaining, 12.50, accuracy: 0.001)
         XCTAssertNil(balance.used)
         XCTAssertEqual(balance.currencySymbol, "$")
-        XCTAssertEqual(usage.menuSummary, "$12")
+        XCTAssertEqual(usage.menuSummary(direction: .used), "$12")
     }
 
     func testCNYFallbackWhenNoUSD() throws {
@@ -28,6 +28,6 @@ final class DeepSeekProviderTests: XCTestCase {
         let balance = try XCTUnwrap(usage.balance)
         XCTAssertEqual(balance.remaining, 88.0, accuracy: 0.001)
         XCTAssertEqual(balance.currencySymbol, "¥")
-        XCTAssertEqual(usage.menuSummary, "¥88")
+        XCTAssertEqual(usage.menuSummary(direction: .used), "¥88")
     }
 }

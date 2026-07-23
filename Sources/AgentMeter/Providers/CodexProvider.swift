@@ -12,6 +12,10 @@ struct CodexProvider: UsageProvider {
         FileManager.default.fileExists(atPath: reader.sessionsRoot.path)
     }
 
+    var dashboardURL: URL? {
+        URL(string: "https://chatgpt.com/codex/settings/usage")
+    }
+
     func fetch() async throws -> ProviderUsage {
         try reader.readUsage()
     }

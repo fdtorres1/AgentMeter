@@ -14,7 +14,7 @@ final class VeniceProviderTests: XCTestCase {
         XCTAssertEqual(balance.remaining, 10.0, accuracy: 0.001)
         XCTAssertNil(balance.used)
         XCTAssertEqual(balance.currencySymbol, "$")
-        XCTAssertEqual(usage.menuSummary, "$10")
+        XCTAssertEqual(usage.menuSummary(direction: .used), "$10")
     }
 
     func testDIEMConsumptionCurrencySelection() throws {
@@ -27,6 +27,6 @@ final class VeniceProviderTests: XCTestCase {
         let balance = try XCTUnwrap(usage.balance)
         XCTAssertEqual(balance.remaining, 27.5, accuracy: 0.001)
         XCTAssertEqual(balance.currencySymbol, "DIEM ")
-        XCTAssertEqual(usage.menuSummary, "DIEM 28")
+        XCTAssertEqual(usage.menuSummary(direction: .used), "DIEM 28")
     }
 }

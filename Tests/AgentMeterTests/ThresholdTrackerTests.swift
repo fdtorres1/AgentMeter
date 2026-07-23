@@ -98,6 +98,35 @@ final class ThresholdTrackerTests: XCTestCase {
         XCTAssertTrue(tracker.crossings(providerID: providerID, usage: usage, threshold: 80).isEmpty)
     }
 
+    func testRearmsWhenBalanceRisesToThreshold() {
+        var tracker = ThresholdTracker(defaults: testDefaults)
+        let low = BalanceInfo(remaining: 3, used: nil, currencySymbol: "$")
+        let high = BalanceInfo(remaining: 8, used: nil, currencySymbol: "$")
+
+        XCTAssertTrue(tracker.balanceCrossings(providerID: "openrouter", balance: low, threshold: 5))
+        XCTAssertFalse(tracker.balanceCrossings(providerID: "openrouter", balance: low, threshold: 5))
+        XCTAssertFalse(tracker.balanceCrossings(providerID: "openrouter", balance: high, threshold: 5))
+        XCTAssertTrue(tracker.balanceCrossings(providerID: "openrouter", balance: low, threshold: 5))
+    }
+
+    func testBalanceCrossingsPersistsAcrossRestart() {
+        var tracker = ThresholdTracker(defaults: testDefaults)
+        let low = BalanceInfo(remaining: 2, used: nil, currencySymbol: "$")
+        XCTAssertTrue(tracker.balanceCrossings(providerID: "deepseek", balance: low, threshold: 5))
+
+        var restarted = ThresholdTracker(defaults: testDefaults)
+        XCTAssertFalse(restarted.balanceCrossings(providerID: "deepseek", balance: low, threshold: 5))
+    }
+
+    func testBalanceCrossingsFiresWhenDroppingBelowThreshold() {
+        var tracker = ThresholdTracker(defaults: testDefaults)
+        let above = BalanceInfo(remaining: 10, used: nil, currencySymbol: "$")
+        let below = BalanceInfo(remaining: 4, used: nil, currencySymbol: "$")
+
+        XCTAssertFalse(tracker.balanceCrossings(providerID: "venice", balance: above, threshold: 5))
+        XCTAssertTrue(tracker.balanceCrossings(providerID: "venice", balance: below, threshold: 5))
+    }
+
     private func usage(percent: Double, resetsAt: Date? = nil) -> ProviderUsage {
         ProviderUsage(
             planName: nil,

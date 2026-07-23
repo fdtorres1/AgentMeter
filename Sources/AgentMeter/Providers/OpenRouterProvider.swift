@@ -22,6 +22,10 @@ struct OpenRouterProvider: UsageProvider {
 
     var authKind: ProviderAuthKind { .oauth }
 
+    var dashboardURL: URL? {
+        URL(string: "https://openrouter.ai/settings/credits")
+    }
+
     func fetch() async throws -> ProviderUsage {
         guard let key = KeychainStore.get(keychainAccount) else {
             throw ProviderKeyError.missingKey(displayName)

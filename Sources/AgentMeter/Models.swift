@@ -19,15 +19,29 @@ struct UsageWindow: Equatable {
     let resetsAt: Date?
 
     var remainingDescription: String? {
+        resetDescription(style: .relative)
+    }
+
+    func resetDescription(style: ResetTimeStyle) -> String? {
         guard let resetsAt else { return nil }
-        let interval = resetsAt.timeIntervalSinceNow
-        guard interval > 0 else { return "resets soon" }
-        let days = Int(interval) / 86400
-        let hours = (Int(interval) % 86400) / 3600
-        let minutes = (Int(interval) % 3600) / 60
-        if days > 0 { return "resets in \(days)d \(hours)h" }
-        if hours > 0 { return "resets in \(hours)h \(minutes)m" }
-        return "resets in \(minutes)m"
+        switch style {
+        case .relative:
+            let interval = resetsAt.timeIntervalSinceNow
+            guard interval > 0 else { return "resets soon" }
+            let days = Int(interval) / 86400
+            let hours = (Int(interval) % 86400) / 3600
+            let minutes = (Int(interval) % 3600) / 60
+            if days > 0 { return "resets in \(days)d \(hours)h" }
+            if hours > 0 { return "resets in \(hours)h \(minutes)m" }
+            return "resets in \(minutes)m"
+        case .absolute:
+            let calendar = Calendar.current
+            let includeYear = calendar.component(.year, from: resetsAt)
+                != calendar.component(.year, from: Date())
+            var format = Date.FormatStyle().month(.abbreviated).day().hour().minute()
+            if includeYear { format = format.year() }
+            return "resets \(resetsAt.formatted(format))"
+        }
     }
 }
 
@@ -81,9 +95,9 @@ struct ProviderUsage: Equatable {
     }
 
     /// Menu bar summary: percent when windows exist, balance otherwise.
-    var menuSummary: String? {
+    func menuSummary(direction: CountDirection) -> String? {
         if let worst = worstWindow {
-            return "\(Int(worst.usedPercent.rounded()))%"
+            return direction.percentLabel(worst.usedPercent, menuBar: true)
         }
         return balance?.shortDisplay
     }

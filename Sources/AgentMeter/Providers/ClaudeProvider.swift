@@ -25,6 +25,10 @@ struct ClaudeProvider: UsageProvider {
             || Self.keychainItemExists(service: keychainService)
     }
 
+    var dashboardURL: URL? {
+        URL(string: "https://claude.ai/settings/usage")
+    }
+
     func fetch() async throws -> ProviderUsage {
         var creds = try loadCredentials()
         if creds.isExpired {

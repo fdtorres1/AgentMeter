@@ -25,6 +25,7 @@ protocol UsageProvider: Sendable {
     var isDetected: Bool { get }
     var authKind: ProviderAuthKind { get }
     func fetch() async throws -> ProviderUsage
+    var dashboardURL: URL? { get }
 }
 
 extension UsageProvider {
@@ -32,6 +33,8 @@ extension UsageProvider {
 
     /// Keychain account name for API-key providers.
     var keychainAccount: String { "apikey.\(id)" }
+
+    var dashboardURL: URL? { nil }
 }
 
 enum ProviderKeyError: LocalizedError {

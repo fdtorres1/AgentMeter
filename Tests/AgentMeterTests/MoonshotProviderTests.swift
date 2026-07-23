@@ -14,7 +14,7 @@ final class MoonshotProviderTests: XCTestCase {
         XCTAssertEqual(balance.remaining, 8.13, accuracy: 0.001)
         XCTAssertNil(balance.used)
         XCTAssertEqual(balance.currencySymbol, "$")
-        XCTAssertEqual(usage.menuSummary, "$8.13")
+        XCTAssertEqual(usage.menuSummary(direction: .used), "$8.13")
     }
 
     func testNegativeAvailableBalanceClampsToZero() throws {
@@ -25,6 +25,6 @@ final class MoonshotProviderTests: XCTestCase {
         )
         let usage = MoonshotProvider.usage(from: response, now: Date())
         XCTAssertEqual(usage.balance?.remaining, 0)
-        XCTAssertEqual(usage.menuSummary, "$0")
+        XCTAssertEqual(usage.menuSummary(direction: .used), "$0")
     }
 }

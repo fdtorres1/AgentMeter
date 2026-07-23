@@ -16,7 +16,7 @@ final class ZaiProviderTests: XCTestCase {
         XCTAssertEqual(usage.windows[0].usedPercent, 34.0, accuracy: 0.001)
         XCTAssertEqual(usage.windows[1].label, "Token quota")
         XCTAssertEqual(usage.windows[1].usedPercent, 12.0, accuracy: 0.001)
-        XCTAssertEqual(usage.menuSummary, "34%")
+        XCTAssertEqual(usage.menuSummary(direction: .used), "34%")
 
         let expectedReset = Date(timeIntervalSince1970: 1_784_800_000)
         XCTAssertEqual(usage.windows[0].resetsAt, expectedReset)

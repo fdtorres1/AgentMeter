@@ -12,6 +12,10 @@ struct CursorProvider: UsageProvider {
         FileManager.default.fileExists(atPath: fetcher.stateDBPath)
     }
 
+    var dashboardURL: URL? {
+        URL(string: "https://cursor.com/dashboard")
+    }
+
     func fetch() async throws -> ProviderUsage {
         try await fetcher.fetchUsage()
     }

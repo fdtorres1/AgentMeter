@@ -5,7 +5,6 @@ struct MenuContent: View {
     @ObservedObject var store: UsageStore
     @ObservedObject var settings: SettingsStore
     @State private var showingSettings = false
-    @State private var launchAtLogin = SMAppService.mainApp.status == .enabled
     @State private var updateMessage: String?
 
     private let tipJarURL = URL(string: "https://www.buymeacoffee.com/fdtorres")!
@@ -32,7 +31,11 @@ struct MenuContent: View {
             } else {
                 ForEach(Array(visible.enumerated()), id: \.element.id) { index, provider in
                     if index > 0 { Divider() }
-                    ProviderSection(name: provider.displayName, state: store.state(for: provider.id))
+                    ProviderSection(
+                        provider: provider,
+                        state: store.state(for: provider.id),
+                        settings: settings
+                    )
                 }
             }
             Divider()
@@ -42,30 +45,34 @@ struct MenuContent: View {
 
     private var footer: some View {
         VStack(alignment: .leading, spacing: 8) {
-            if let updateMessage {
-                Text(updateMessage).font(.caption).foregroundStyle(.secondary)
-            } else if let refreshed = store.lastRefreshed {
-                Text("Updated \(refreshed.formatted(date: .omitted, time: .shortened))")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-            }
             HStack {
-                Button("Refresh") { store.refresh() }
+                if let updateMessage {
+                    Text(updateMessage).font(.caption).foregroundStyle(.secondary)
+                } else if let refreshed = store.lastRefreshed {
+                    Text("Updated \(refreshed.formatted(date: .omitted, time: .shortened))")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
                 Spacer()
-                Button("Settings…") { showingSettings = true }
+                Button("Refresh") { store.refresh() }
+                    .font(.caption)
             }
             HStack {
+                Button("Settings…") { showingSettings = true }
+                    .buttonStyle(.plain)
+                    .font(.caption)
+                Spacer()
                 Button("Check for Updates…") { checkForUpdates() }
+                    .buttonStyle(.plain)
+                    .font(.caption)
                 Spacer()
                 Link("Support ♥", destination: tipJarURL)
                     .font(.caption)
+                Spacer()
+                Button("Quit") { NSApp.terminate(nil) }
+                    .buttonStyle(.plain)
+                    .font(.caption)
             }
-            Toggle("Launch at Login", isOn: $launchAtLogin)
-                .toggleStyle(.checkbox)
-                .font(.caption)
-                .onChange(of: launchAtLogin) { _, enabled in setLaunchAtLogin(enabled) }
-            Button("Quit AgentMeter") { NSApp.terminate(nil) }
-                .foregroundStyle(.secondary)
         }
     }
 
@@ -85,28 +92,25 @@ struct MenuContent: View {
             }
         }
     }
-
-    private func setLaunchAtLogin(_ enabled: Bool) {
-        do {
-            if enabled {
-                try SMAppService.mainApp.register()
-            } else {
-                try SMAppService.mainApp.unregister()
-            }
-        } catch {
-            launchAtLogin = SMAppService.mainApp.status == .enabled
-        }
-    }
 }
 
 private struct ProviderSection: View {
-    let name: String
+    let provider: any UsageProvider
     let state: ProviderState
+    @ObservedObject var settings: SettingsStore
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                Text(name).font(.headline)
+                if let url = provider.dashboardURL {
+                    Button(provider.displayName) {
+                        NSWorkspace.shared.open(url)
+                    }
+                    .buttonStyle(.plain)
+                    .font(.headline)
+                } else {
+                    Text(provider.displayName).font(.headline)
+                }
                 Spacer()
                 if case .ready(let usage) = state, let plan = usage.planName {
                     Text(plan)
@@ -129,7 +133,7 @@ private struct ProviderSection: View {
                     Text("No usage data").font(.caption).foregroundStyle(.secondary)
                 }
                 ForEach(usage.windows, id: \.label) { window in
-                    WindowMeter(window: window)
+                    WindowMeter(window: window, settings: settings)
                 }
                 if let balance = usage.balance {
                     HStack {
@@ -157,24 +161,29 @@ private struct ProviderSection: View {
 
 private struct WindowMeter: View {
     let window: UsageWindow
+    @ObservedObject var settings: SettingsStore
 
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
             HStack {
                 Text(window.label).font(.caption)
                 Spacer()
-                Text("\(window.usedPercent, specifier: "%.0f")%")
+                Text(settings.countDirection.percentLabel(window.usedPercent))
                     .font(.caption.monospacedDigit())
                     .foregroundStyle(color)
             }
-            ProgressView(value: window.usedPercent, total: 100)
+            ProgressView(value: progressValue, total: 100)
                 .tint(color)
-            if let remaining = window.remainingDescription {
-                Text(remaining)
+            if let reset = window.resetDescription(style: settings.resetTimeStyle) {
+                Text(reset)
                     .font(.caption2)
                     .foregroundStyle(.secondary)
             }
         }
+    }
+
+    private var progressValue: Double {
+        settings.countDirection.displayPercent(window.usedPercent)
     }
 
     private var color: Color {
@@ -190,6 +199,7 @@ private struct SettingsView: View {
     @ObservedObject var store: UsageStore
     @ObservedObject var settings: SettingsStore
     let onDone: () -> Void
+    @State private var launchAtLogin = SMAppService.mainApp.status == .enabled
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -199,6 +209,13 @@ private struct SettingsView: View {
                 Button("Done") { onDone() }
             }
 
+            Text("General").font(.caption).foregroundStyle(.secondary)
+            Toggle("Launch at Login", isOn: $launchAtLogin)
+                .toggleStyle(.checkbox)
+                .font(.caption)
+                .onChange(of: launchAtLogin) { _, enabled in setLaunchAtLogin(enabled) }
+
+            Divider()
             Text("Providers").font(.caption).foregroundStyle(.secondary)
             ForEach(store.providers, id: \.id) { provider in
                 VStack(alignment: .leading, spacing: 4) {
@@ -225,9 +242,33 @@ private struct SettingsView: View {
                         .frame(width: 150)
                         .labelsHidden()
                     }
+                    if settings.mode(for: provider.id) != .off {
+                        Toggle("Show in menu bar", isOn: Binding(
+                            get: { settings.showsInMenuBar(provider.id) },
+                            set: { settings.setShowsInMenuBar($0, for: provider.id) }
+                        ))
+                        .toggleStyle(.checkbox)
+                        .font(.caption2)
+                    }
                     ProviderCredentialRow(provider: provider, store: store)
                 }
             }
+
+            Divider()
+            Text("Display").font(.caption).foregroundStyle(.secondary)
+            Picker("Count", selection: $settings.countDirection) {
+                Text("% used").tag(CountDirection.used)
+                Text("% left").tag(CountDirection.remaining)
+            }
+            .pickerStyle(.segmented)
+            Picker("Reset times", selection: $settings.resetTimeStyle) {
+                Text("Relative").tag(ResetTimeStyle.relative)
+                Text("Exact").tag(ResetTimeStyle.absolute)
+            }
+            .pickerStyle(.segmented)
+            Toggle("Compact menu bar (worst only)", isOn: $settings.compactMenuBar)
+                .toggleStyle(.checkbox)
+                .font(.caption)
 
             Divider()
             Text("Refresh interval").font(.caption).foregroundStyle(.secondary)
@@ -263,6 +304,25 @@ private struct SettingsView: View {
             .pickerStyle(.segmented)
             .labelsHidden()
             .disabled(!settings.notificationsEnabled)
+            Picker("Balance alert below", selection: $settings.balanceNotificationThreshold) {
+                ForEach(SettingsStore.balanceThresholdOptions, id: \.self) { value in
+                    Text("$\(Int(value))").tag(value)
+                }
+            }
+            .pickerStyle(.segmented)
+            .disabled(!settings.notificationsEnabled)
+        }
+    }
+
+    private func setLaunchAtLogin(_ enabled: Bool) {
+        do {
+            if enabled {
+                try SMAppService.mainApp.register()
+            } else {
+                try SMAppService.mainApp.unregister()
+            }
+        } catch {
+            launchAtLogin = SMAppService.mainApp.status == .enabled
         }
     }
 

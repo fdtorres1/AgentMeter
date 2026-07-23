@@ -1,5 +1,6 @@
 import Foundation
 import Combine
+import AppKit
 
 /// Holds the latest usage for all providers and refreshes them on a timer,
 /// plus a file watcher so Codex numbers update right after CLI activity.
@@ -19,6 +20,7 @@ final class UsageStore: ObservableObject {
     private var watchedFile: URL?
 
     private var credentialsObserver: NSObjectProtocol?
+    private var wakeObserver: NSObjectProtocol?
 
     init(settings: SettingsStore, providers: [any UsageProvider] = UsageStore.defaultProviders) {
         self.settings = settings
@@ -30,6 +32,13 @@ final class UsageStore: ObservableObject {
         rescheduleTimer()
         credentialsObserver = NotificationCenter.default.addObserver(
             forName: .providerCredentialsChanged,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor in self?.refresh() }
+        }
+        wakeObserver = NSWorkspace.shared.notificationCenter.addObserver(
+            forName: NSWorkspace.didWakeNotification,
             object: nil,
             queue: .main
         ) { [weak self] _ in
@@ -50,6 +59,9 @@ final class UsageStore: ObservableObject {
         sessionWatcher?.cancel()
         if let credentialsObserver {
             NotificationCenter.default.removeObserver(credentialsObserver)
+        }
+        if let wakeObserver {
+            NSWorkspace.shared.notificationCenter.removeObserver(wakeObserver)
         }
     }
 
@@ -95,19 +107,54 @@ final class UsageStore: ObservableObject {
         }
     }
 
-    /// Menu bar text, e.g. "Cx 5% · Cu 20%". Only visible providers appear.
+    /// Menu bar text, e.g. "Cx 5% · Cu 20%". Only visible providers with menu-bar
+    /// visibility appear; compact mode shows the single most constrained entry.
     var menuBarTitle: String {
-        let visible = visibleProviders
-        guard !visible.isEmpty else { return "AgentMeter" }
-        return visible.map { provider in
-            switch state(for: provider.id) {
-            case .loading: return "\(provider.shortCode) …"
-            case .error: return "\(provider.shortCode) !"
-            case .ready(let usage):
-                guard let summary = usage.menuSummary else { return "\(provider.shortCode) ?" }
-                return "\(provider.shortCode) \(summary)"
+        let titleProviders = visibleProviders.filter { settings.showsInMenuBar($0.id) }
+        guard !titleProviders.isEmpty else { return "AgentMeter" }
+
+        if settings.compactMenuBar {
+            return compactMenuBarTitle(for: titleProviders)
+        }
+
+        return titleProviders.map { providerEntry(for: $0) }.joined(separator: " · ")
+    }
+
+    private func compactMenuBarTitle(for providers: [any UsageProvider]) -> String {
+        var bestPercent: (provider: any UsageProvider, used: Double)?
+        var firstBalance: (provider: any UsageProvider, usage: ProviderUsage)?
+
+        for provider in providers {
+            guard case .ready(let usage) = state(for: provider.id) else { continue }
+            if let worst = usage.worstWindow {
+                if bestPercent == nil || worst.usedPercent > bestPercent!.used {
+                    bestPercent = (provider, worst.usedPercent)
+                }
+            } else if usage.balance != nil, firstBalance == nil {
+                firstBalance = (provider, usage)
             }
-        }.joined(separator: " · ")
+        }
+
+        if let best = bestPercent {
+            return providerEntry(for: best.provider)
+        }
+        if let balance = firstBalance {
+            return providerEntry(for: balance.provider)
+        }
+
+        return providers.map { providerEntry(for: $0) }.joined(separator: " · ")
+    }
+
+    private func providerEntry(for provider: any UsageProvider) -> String {
+        switch state(for: provider.id) {
+        case .loading: return "\(provider.shortCode) …"
+        case .error: return "\(provider.shortCode) !"
+        case .ready(let usage):
+            guard let summary = usage.menuSummary(direction: settings.countDirection) else {
+                return "\(provider.shortCode) ?"
+            }
+            return "\(provider.shortCode) \(summary)"
+        }
     }
 
     // MARK: - Codex session file watching
