@@ -67,25 +67,58 @@ https://github.com/fdtorres1/AgentMeter
   "Safe Storage" keys; decrypting them is fragile and trust-damaging. The CLI
   credential files are the intended source.
 
-## Build / test / release
+## Build / test
 
 ```bash
 swift build                 # NOTE: run outside the tool sandbox; SwiftPM's own
                             # sandbox conflicts and errors with "sandbox_apply:
                             # Operation not permitted". Use full permissions.
-swift test                  # 16 tests; live-network tests are opt-in via env
+swift test                  # live-network tests are opt-in via env
                             # (CURSOR_LIVE_TEST=1) and skip by default.
 scripts/bundle.sh [--install]   # builds AgentMeter.app (ad-hoc signed by default)
-scripts/release.sh          # Developer ID sign + notarize; needs SIGN_IDENTITY
-                            # and notarization creds (see docs/RELEASING.md)
 ```
 
-- CI: `.github/workflows/ci.yml` runs build+test on `macos-15` for push/PR.
-- Release: `.github/workflows/release.yml` triggers on `v*` tags; needs the six
-  signing secrets listed in `docs/RELEASING.md` (not yet added to the repo).
-- A Developer ID cert exists in the local keychain:
-  `Developer ID Application: Felix Torres (77Z6XS8JU8)`. Signed + hardened
-  runtime builds verified locally; notarization not yet run (needs API key).
+- CI (`.github/workflows/ci.yml`) runs build+test on `macos-15` for push/PR.
+- `.github/workflows/release.yml` is manual-dispatch only; releases are cut
+  LOCALLY (see runbook below), so its signing secrets are not configured.
+
+## Release runbook (the actual, tested end-to-end flow)
+
+Releases are cut locally. This is the exact sequence run each time — reproduce
+it faithfully. Full detail in [docs/RELEASING.md](docs/RELEASING.md).
+
+Credentials already present on Felix's machine (do NOT prompt for them):
+- Signing identity: `Developer ID Application: Felix Torres (77Z6XS8JU8)`
+  (in login keychain).
+- Notarization reuses the felixOS App Store Connect API key:
+  key `~/.appstoreconnect/private_keys/AuthKey_9LL9GWLH6S.p8`, key-id
+  `9LL9GWLH6S`, issuer id is in `~/coding/felixOS/scripts/upload_testflight_ios.sh`.
+- Sparkle EdDSA signing key: login keychain item "Private key for signing
+  Sparkle updates"; backed up in 1Password (`op-sa`, vault Sage-Openclaw, item
+  "AgentMeter Sparkle EdDSA Private Key").
+
+Steps (bump `X.Y.Z`, keep `CHANGELOG.md` updated first):
+1. `git add -A && git commit && git push` on `main`.
+2. Run `scripts/release.sh` with env:
+   `SIGN_IDENTITY`, `APPLE_API_KEY`, `APPLE_API_KEY_ID`, `APPLE_API_ISSUER`,
+   `AGENTMETER_VERSION=X.Y.Z`. It builds, signs (inside-out incl. Sparkle
+   framework), notarizes + waits, staples, zips, and writes a signed
+   `appcast.xml`.
+3. `git tag vX.Y.Z && git push origin vX.Y.Z`.
+4. `gh release create vX.Y.Z AgentMeter.zip appcast.xml --title "AgentMeter X.Y.Z" --notes ...`
+   — BOTH assets; the app's SUFeedURL is `releases/latest/download/appcast.xml`.
+5. Bump the Homebrew cask in the separate repo `fdtorres1/homebrew-tap`
+   (`/tmp/homebrew-tap` clone): update `version` + `sha256`
+   (`shasum -a 256 AgentMeter.zip`), commit, push.
+6. Install locally to verify (`cp -R AgentMeter.app /Applications/`), tick the
+   roadmap (issue #1), close the milestone.
+
+Gotchas:
+- `generate_appcast` (in `release.sh`) may trigger a macOS Keychain prompt for
+  the Sparkle key if the Sparkle tool binary changed (e.g. after an SPM
+  re-resolve). Approve with "Always Allow" — it blocks the release until then.
+- `appcast.xml` is gitignored (build artifact); it lives only as a release asset.
+- `.build/`, `*.app/`, `HANDOFF.md` are gitignored.
 
 ## Conventions
 

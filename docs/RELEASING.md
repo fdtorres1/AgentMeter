@@ -64,29 +64,36 @@ update `version` and `sha256` (`curl -sL <zip url> | shasum -a 256`) in
 `Casks/agentmeter.rb` and push. Existing installs auto-update via Sparkle
 regardless (`auto_updates true`), so the cask matters mainly for new installs.
 
-## Cutting a release
+## Cutting a release (local — the actual flow)
 
-```bash
-# bump the version in the tag; the workflow derives CFBundleShortVersionString from it
-git tag v1.0.1
-git push origin v1.0.1
-```
+Releases are cut locally, not via CI (`.github/workflows/release.yml` is
+manual-dispatch only and its secrets are not configured). On Felix's machine
+the signing identity, the App Store Connect API key (reused from felixOS at
+`~/.appstoreconnect/private_keys/AuthKey_9LL9GWLH6S.p8`, key-id `9LL9GWLH6S`,
+issuer in `~/coding/felixOS/scripts/upload_testflight_ios.sh`), and the Sparkle
+key are all already present.
 
-The Release workflow builds, signs with your Developer ID, notarizes via
-`notarytool`, staples, zips, and uploads `AgentMeter.zip` to the release.
+1. Update `CHANGELOG.md` with the new version.
+2. Commit and push `main`.
+3. Build + sign + notarize + appcast:
+   ```bash
+   export SIGN_IDENTITY="Developer ID Application: Felix Torres (77Z6XS8JU8)"
+   export APPLE_API_KEY="$HOME/.appstoreconnect/private_keys/AuthKey_9LL9GWLH6S.p8"
+   export APPLE_API_KEY_ID="9LL9GWLH6S"
+   export APPLE_API_ISSUER="<issuer id>"
+   export AGENTMETER_VERSION=X.Y.Z
+   scripts/release.sh
+   ```
+   (Approve the Sparkle Keychain prompt with "Always Allow" if it appears.)
+4. Tag and publish with BOTH assets:
+   ```bash
+   git tag vX.Y.Z && git push origin vX.Y.Z
+   gh release create vX.Y.Z AgentMeter.zip appcast.xml \
+     --title "AgentMeter X.Y.Z" --notes "..."
+   ```
+5. Bump the Homebrew cask (see below).
+6. Install locally to verify; tick the roadmap and close the milestone.
 
-## Releasing locally (optional)
+## Before first publish (historical — already done)
 
-```bash
-export SIGN_IDENTITY="Developer ID Application: Your Name (TEAMID)"
-export AGENTMETER_VERSION=1.0.1
-# Either a stored notarytool profile:
-xcrun notarytool store-credentials agentmeter-notary \
-  --key AuthKey_XXX.p8 --key-id KEYID --issuer ISSUERID
-export NOTARY_PROFILE=agentmeter-notary
-scripts/release.sh
-```
-
-## Before first publish
-
-- Replace the Buy Me a Coffee slug in `MenuContent.swift` and the README.
+- Buy Me a Coffee slug is set (`buymeacoffee.com/fdtorres`).
