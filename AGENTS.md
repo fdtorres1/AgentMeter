@@ -87,23 +87,23 @@ scripts/bundle.sh [--install]   # builds AgentMeter.app (ad-hoc signed by defaul
 Releases are cut locally. This is the exact sequence run each time — reproduce
 it faithfully. Full detail in [docs/RELEASING.md](docs/RELEASING.md).
 
-Credentials already present on Felix's machine (do NOT prompt for them):
+Credentials (do NOT prompt for them):
 - Signing identity: `Developer ID Application: Felix Torres (77Z6XS8JU8)`
-  (in login keychain).
-- Notarization reuses the felixOS App Store Connect API key:
-  key `~/.appstoreconnect/private_keys/AuthKey_9LL9GWLH6S.p8`, key-id
-  `9LL9GWLH6S`, issuer id is in `~/coding/felixOS/scripts/upload_testflight_ios.sh`.
+  (login keychain) — pass as `SIGN_IDENTITY`.
+- Notarization (App Store Connect API key, key-id, issuer): stored in 1Password,
+  fetched automatically by `release.sh` via `op-sa` (vault Sage-Openclaw, item
+  "AgentMeter Notarization (App Store Connect API)"; the `.p8` is stored
+  base64 in field `private key b64`). No env vars needed.
 - Sparkle EdDSA signing key: login keychain item "Private key for signing
-  Sparkle updates"; backed up in 1Password (`op-sa`, vault Sage-Openclaw, item
+  Sparkle updates"; backed up in 1Password (vault Sage-Openclaw, item
   "AgentMeter Sparkle EdDSA Private Key").
 
 Steps (bump `X.Y.Z`, keep `CHANGELOG.md` updated first):
 1. `git add -A && git commit && git push` on `main`.
-2. Run `scripts/release.sh` with env:
-   `SIGN_IDENTITY`, `APPLE_API_KEY`, `APPLE_API_KEY_ID`, `APPLE_API_ISSUER`,
-   `AGENTMETER_VERSION=X.Y.Z`. It builds, signs (inside-out incl. Sparkle
-   framework), notarizes + waits, staples, zips, and writes a signed
-   `appcast.xml`.
+2. Run `SIGN_IDENTITY="Developer ID Application: Felix Torres (77Z6XS8JU8)" \
+   AGENTMETER_VERSION=X.Y.Z scripts/release.sh`. It pulls notarization creds
+   from op-sa, builds, signs (inside-out incl. Sparkle framework), notarizes +
+   waits, staples, zips, and writes a signed `appcast.xml`.
 3. `git tag vX.Y.Z && git push origin vX.Y.Z`.
 4. `gh release create vX.Y.Z AgentMeter.zip appcast.xml --title "AgentMeter X.Y.Z" --notes ...`
    — BOTH assets; the app's SUFeedURL is `releases/latest/download/appcast.xml`.

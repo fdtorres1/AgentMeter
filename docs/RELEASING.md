@@ -67,24 +67,22 @@ regardless (`auto_updates true`), so the cask matters mainly for new installs.
 ## Cutting a release (local — the actual flow)
 
 Releases are cut locally, not via CI (`.github/workflows/release.yml` is
-manual-dispatch only and its secrets are not configured). On Felix's machine
-the signing identity, the App Store Connect API key (reused from felixOS at
-`~/.appstoreconnect/private_keys/AuthKey_9LL9GWLH6S.p8`, key-id `9LL9GWLH6S`,
-issuer in `~/coding/felixOS/scripts/upload_testflight_ios.sh`), and the Sparkle
-key are all already present.
+manual-dispatch only and its secrets are not configured). The signing identity
+lives in the login keychain; notarization credentials are fetched from
+1Password by `release.sh` automatically (via `op-sa`, vault Sage-Openclaw, item
+"AgentMeter Notarization (App Store Connect API)").
 
 1. Update `CHANGELOG.md` with the new version.
 2. Commit and push `main`.
 3. Build + sign + notarize + appcast:
    ```bash
    export SIGN_IDENTITY="Developer ID Application: Felix Torres (77Z6XS8JU8)"
-   export APPLE_API_KEY="$HOME/.appstoreconnect/private_keys/AuthKey_9LL9GWLH6S.p8"
-   export APPLE_API_KEY_ID="9LL9GWLH6S"
-   export APPLE_API_ISSUER="<issuer id>"
    export AGENTMETER_VERSION=X.Y.Z
-   scripts/release.sh
+   scripts/release.sh   # notarization creds pulled from op-sa
    ```
    (Approve the Sparkle Keychain prompt with "Always Allow" if it appears.)
+   To override op-sa, set `APPLE_API_KEY`/`APPLE_API_KEY_ID`/`APPLE_API_ISSUER`
+   or `NOTARY_PROFILE` and the script uses those instead.
 4. Tag and publish with BOTH assets:
    ```bash
    git tag vX.Y.Z && git push origin vX.Y.Z
