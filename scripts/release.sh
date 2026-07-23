@@ -3,15 +3,16 @@
 #
 # Prerequisites (see docs/RELEASING.md):
 #   - A "Developer ID Application" certificate in your login keychain
-#   - An App Store Connect API key for notarytool
+#   - App Store Connect API key for notarytool
 #
 # Required environment:
 #   SIGN_IDENTITY        e.g. "Developer ID Application: Your Name (TEAMID)"
 #   AGENTMETER_VERSION   e.g. 1.0.1 (defaults to 1.0)
-# Notarization (either a stored keychain profile OR API key fields):
-#   NOTARY_PROFILE       name of a `notarytool store-credentials` profile
-#   -- or --
-#   APPLE_API_KEY_ID, APPLE_API_ISSUER, APPLE_API_KEY (path to .p8)
+#
+# Notarization credentials are fetched automatically from 1Password via op-sa
+# (item "AgentMeter Notarization (App Store Connect API)" in vault
+# Sage-Openclaw). Override by setting NOTARY_PROFILE, or all of
+# APPLE_API_KEY_ID / APPLE_API_ISSUER / APPLE_API_KEY (path to .p8).
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
@@ -20,6 +21,27 @@ cd "$(dirname "$0")/.."
 
 APP="AgentMeter.app"
 ZIP="AgentMeter.zip"
+
+OP_SA="$HOME/.local/bin/op-sa"
+OP_VAULT="Sage-Openclaw"
+OP_ITEM="AgentMeter Notarization (App Store Connect API)"
+NOTARY_KEY_TMP=""
+
+cleanup() { [[ -n "$NOTARY_KEY_TMP" && -f "$NOTARY_KEY_TMP" ]] && rm -P "$NOTARY_KEY_TMP"; }
+trap cleanup EXIT
+
+# Fetch notarization credentials from 1Password unless already provided.
+if [[ -z "${NOTARY_PROFILE:-}" && -z "${APPLE_API_KEY:-}" ]]; then
+    if [[ -x "$OP_SA" ]]; then
+        echo "Fetching notarization credentials from 1Password (op-sa)…"
+        NOTARY_KEY_TMP="$(mktemp -d)/AuthKey.p8"
+        "$OP_SA" item get "$OP_ITEM" --vault "$OP_VAULT" --fields "private key b64" --reveal \
+            | base64 -d > "$NOTARY_KEY_TMP"
+        export APPLE_API_KEY="$NOTARY_KEY_TMP"
+        export APPLE_API_KEY_ID="$("$OP_SA" item get "$OP_ITEM" --vault "$OP_VAULT" --fields "key id")"
+        export APPLE_API_ISSUER="$("$OP_SA" item get "$OP_ITEM" --vault "$OP_VAULT" --fields "issuer id")"
+    fi
+fi
 
 # 1. Build + sign with hardened runtime.
 SIGN_IDENTITY="$SIGN_IDENTITY" scripts/bundle.sh

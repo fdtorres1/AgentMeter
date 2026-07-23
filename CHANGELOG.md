@@ -3,6 +3,11 @@
 All notable changes to AgentMeter. Format follows [Keep a Changelog](https://keepachangelog.com);
 versions follow semantic-ish `MAJOR.MINOR.PATCH`.
 
+## [1.6.2] — 2026-07-23
+
+### Changed
+- Release tooling: notarization credentials now sourced from 1Password (op-sa) instead of machine-local paths. No user-facing changes.
+
 ## [1.6.1] — 2026-07-23
 
 ### Fixed
