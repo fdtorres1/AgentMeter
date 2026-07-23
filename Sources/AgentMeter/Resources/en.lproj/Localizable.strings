@@ -8,8 +8,14 @@
 	<string>About AgentMeter</string>
 	<key>Auto-updates powered by Sparkle (MIT License).</key>
 	<string>Auto-updates powered by Sparkle (MIT License).</string>
+	<key>Failed to parse Venice response: %@</key>
+	<string>Failed to parse Venice response: %@</string>
 	<key>GLM Coding Plan API key</key>
 	<string>GLM Coding Plan API key</string>
+	<key>Inference and Admin Venice API keys are supported. x402 wallet balances are not supported.</key>
+	<string>Inference and Admin Venice API keys are supported. x402 wallet balances are not supported.</string>
+	<key>Inference key</key>
+	<string>Inference key</string>
 	<key>Key limit</key>
 	<string>Key limit</string>
 	<key>Menu bar monitor for AI coding usage limits.</key>
@@ -24,6 +30,10 @@
 	<string>Report an issue</string>
 	<key>Usage</key>
 	<string>Usage</string>
+	<key>Venice API error: %@</key>
+	<string>Venice API error: %@</string>
+	<key>Venice API key</key>
+	<string>Venice API key</string>
 	<key>Version %@</key>
 	<string>Version %@</string>
 	<key>Waiting for browser authorization…</key>

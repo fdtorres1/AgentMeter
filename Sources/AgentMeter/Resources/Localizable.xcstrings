@@ -559,6 +559,22 @@
         }
       }
     },
+    "Failed to parse Venice response: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Failed to parse Venice response: %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo interpretar la respuesta de Venice: %@"
+          }
+        }
+      }
+    },
     "Flash (24h)": {
       "localizations": {
         "es": {
@@ -651,6 +667,38 @@
           "stringUnit": {
             "state": "translated",
             "value": "Uso incluido"
+          }
+        }
+      }
+    },
+    "Inference and Admin Venice API keys are supported. x402 wallet balances are not supported.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inference and Admin Venice API keys are supported. x402 wallet balances are not supported."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se admiten claves de API de Venice de tipo Inference y Admin. Los saldos de billeteras x402 no son compatibles."
+          }
+        }
+      }
+    },
+    "Inference key": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inference key"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clave de inferencia"
           }
         }
       }
@@ -1263,6 +1311,38 @@
           "stringUnit": {
             "state": "translated",
             "value": "Uso"
+          }
+        }
+      }
+    },
+    "Venice API error: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Venice API error: %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Error de la API de Venice: %@"
+          }
+        }
+      }
+    },
+    "Venice API key": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Venice API key"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clave de API de Venice"
           }
         }
       }

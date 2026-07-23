@@ -27,7 +27,7 @@ Cx 5% · Cu 20% · Cl 40% · Ge 12%
 | **DeepSeek** (`DS`) | `api.deepseek.com/user/balance` | Paste an API key; shows prepaid balance. |
 | **Kimi** (`Ki`) | `api.moonshot.ai/v1/users/me/balance` | Paste an API key; shows available balance. |
 | **Z.ai** (`Zg`) | `api.z.ai` quota API | GLM Coding Plan only: paste the plan's API key to show time/token quota percentages. Z.ai does not expose standard pay-as-you-go balance via a public API. |
-| **Venice** (`Ve`) | `api.venice.ai/api/v1/billing/balance` | Paste an API key; shows USD/DIEM balance. |
+| **Venice** (`Ve`) | Venice billing / key rate-limit APIs | Paste an Inference or Admin API key; shows USD/DIEM balance. Admin keys use the richer billing endpoint, while safer Inference keys use the rate-limits balance fallback. x402 wallet balances are not supported. |
 
 Subscription-style providers show percent-of-limit meters; pay-as-you-go
 (API-key) providers show the balance that remains, since there is no limit

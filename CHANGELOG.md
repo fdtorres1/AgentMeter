@@ -3,6 +3,15 @@
 All notable changes to AgentMeter. Format follows [Keep a Changelog](https://keepachangelog.com);
 versions follow semantic-ish `MAJOR.MINOR.PATCH`.
 
+## [1.6.6] — 2026-07-23
+
+### Fixed
+- Venice Inference API keys now fall back to `/api_keys/rate_limits` for
+  USD/DIEM balances when the Admin-only billing endpoint returns 401.
+- Venice billing responses now decode the production lowercase, nullable, and
+  string-encoded balance fields (not only the older uppercase test fixture).
+- Venice Settings explain supported key types and the x402 wallet limitation.
+
 ## [1.6.5] — 2026-07-23
 
 ### Changed

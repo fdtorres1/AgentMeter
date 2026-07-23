@@ -110,6 +110,8 @@
 	<string>Visualización</string>
 	<key>Exact</key>
 	<string>Exacto</string>
+	<key>Failed to parse Venice response: %@</key>
+	<string>No se pudo interpretar la respuesta de Venice: %@</string>
 	<key>Flash (24h)</key>
 	<string>Flash (24 h)</string>
 	<key>Flash-Lite (24h)</key>
@@ -128,6 +130,10 @@
 	<string>Solo icono</string>
 	<key>Included usage</key>
 	<string>Uso incluido</string>
+	<key>Inference and Admin Venice API keys are supported. x402 wallet balances are not supported.</key>
+	<string>Se admiten claves de API de Venice de tipo Inference y Admin. Los saldos de billeteras x402 no son compatibles.</string>
+	<key>Inference key</key>
+	<string>Clave de inferencia</string>
 	<key>Key limit</key>
 	<string>Límite de la clave</string>
 	<key>Kimi key rejected — check the key in Settings</key>
@@ -242,6 +248,10 @@
 	<string>Actualizado %@</string>
 	<key>Usage</key>
 	<string>Uso</string>
+	<key>Venice API error: %@</key>
+	<string>Error de la API de Venice: %@</string>
+	<key>Venice API key</key>
+	<string>Clave de API de Venice</string>
 	<key>Venice key rejected — check the key in Settings</key>
 	<string>Clave de Venice rechazada — revisa la clave en Ajustes</string>
 	<key>Venice returned HTTP %lld</key>
