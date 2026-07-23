@@ -34,6 +34,11 @@ extension UsageProvider {
     /// Keychain account name for API-key providers.
     var keychainAccount: String { "apikey.\(id)" }
 
+    /// Optional provider-specific guidance shown beside credential setup.
+    var credentialHelpText: String? { nil }
+
+    var apiKeyPlaceholder: String { L("API key") }
+
     var dashboardURL: URL? { nil }
 }
 

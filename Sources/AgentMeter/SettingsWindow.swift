@@ -157,20 +157,27 @@ private struct ProviderCredentialSection: View {
         case .localCredentials:
             LabeledContent(L("Status"), value: provider.isDetected ? L("Detected") : L("Not detected"))
         case .apiKey(let keyURL):
-            if hasKey {
-                LabeledContent(L("API key")) {
-                    HStack {
-                        Text(L("Saved"))
-                        Button(L("Remove")) { removeKey() }
-                    }
+            Group {
+                if let help = provider.credentialHelpText {
+                    Text(help)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
                 }
-            } else {
-                SecureField(L("API key"), text: $draftKey)
-                HStack {
-                    Button(L("Save")) { saveKey() }
-                        .disabled(draftKey.trimmingCharacters(in: .whitespaces).isEmpty)
-                    if let url = URL(string: keyURL) {
-                        Link(L("Get key"), destination: url)
+                if hasKey {
+                    LabeledContent(provider.apiKeyPlaceholder) {
+                        HStack {
+                            Text(L("Saved"))
+                            Button(L("Remove")) { removeKey() }
+                        }
+                    }
+                } else {
+                    SecureField(provider.apiKeyPlaceholder, text: $draftKey)
+                    HStack {
+                        Button(L("Save")) { saveKey() }
+                            .disabled(draftKey.trimmingCharacters(in: .whitespaces).isEmpty)
+                        if let url = URL(string: keyURL) {
+                            Link(L("Get key"), destination: url)
+                        }
                     }
                 }
             }

@@ -116,6 +116,8 @@
 	<string>Flash-Lite (24 h)</string>
 	<key>Full</key>
 	<string>Completo</string>
+	<key>GLM Coding Plan API key</key>
+	<string>Clave de API del plan GLM Coding</string>
 	<key>General</key>
 	<string>General</string>
 	<key>Get key</key>
@@ -264,6 +266,8 @@
 	<string>La clave de Z.ai es válida, pero esta cuenta no tiene un plan GLM Coding</string>
 	<key>Z.ai key rejected — check the key in Settings</key>
 	<string>Clave de Z.ai rechazada — revisa la clave en Ajustes</string>
+	<key>Z.ai monitoring supports GLM Coding Plans only. Standard API billing and balance are not available through an API.</key>
+	<string>El monitoreo de Z.ai solo admite planes GLM Coding. La facturación y el saldo de la API estándar no están disponibles mediante una API.</string>
 	<key>Z.ai returned HTTP %lld</key>
 	<string>Z.ai devolvió HTTP %lld</string>
 	<key>cursor.com returned HTTP %lld</key>

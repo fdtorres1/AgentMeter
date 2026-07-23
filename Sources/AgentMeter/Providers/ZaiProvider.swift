@@ -15,6 +15,14 @@ struct ZaiProvider: UsageProvider {
 
     var authKind: ProviderAuthKind { .apiKey(keyURL: Self.keyURL) }
 
+    var credentialHelpText: String? {
+        L("Z.ai monitoring supports GLM Coding Plans only. Standard API billing and balance are not available through an API.")
+    }
+
+    var apiKeyPlaceholder: String {
+        L("GLM Coding Plan API key")
+    }
+
     var dashboardURL: URL? {
         URL(string: "https://z.ai/model-api")
     }

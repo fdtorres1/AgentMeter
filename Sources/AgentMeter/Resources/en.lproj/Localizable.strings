@@ -8,6 +8,8 @@
 	<string>About AgentMeter</string>
 	<key>Auto-updates powered by Sparkle (MIT License).</key>
 	<string>Auto-updates powered by Sparkle (MIT License).</string>
+	<key>GLM Coding Plan API key</key>
+	<string>GLM Coding Plan API key</string>
 	<key>Key limit</key>
 	<string>Key limit</string>
 	<key>Menu bar monitor for AI coding usage limits.</key>
@@ -34,5 +36,7 @@
 	<string>Z.ai API returned code %lld: %@</string>
 	<key>Z.ai key is valid, but this account has no GLM Coding Plan</key>
 	<string>Z.ai key is valid, but this account has no GLM Coding Plan</string>
+	<key>Z.ai monitoring supports GLM Coding Plans only. Standard API billing and balance are not available through an API.</key>
+	<string>Z.ai monitoring supports GLM Coding Plans only. Standard API billing and balance are not available through an API.</string>
 </dict>
 </plist>

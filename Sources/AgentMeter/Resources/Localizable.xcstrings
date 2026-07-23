@@ -589,6 +589,22 @@
         }
       }
     },
+    "GLM Coding Plan API key": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GLM Coding Plan API key"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clave de API del plan GLM Coding"
+          }
+        }
+      }
+    },
     "General": {
       "localizations": {
         "es": {
@@ -1403,6 +1419,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Clave de Z.ai rechazada — revisa la clave en Ajustes"
+          }
+        }
+      }
+    },
+    "Z.ai monitoring supports GLM Coding Plans only. Standard API billing and balance are not available through an API.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Z.ai monitoring supports GLM Coding Plans only. Standard API billing and balance are not available through an API."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El monitoreo de Z.ai solo admite planes GLM Coding. La facturación y el saldo de la API estándar no están disponibles mediante una API."
           }
         }
       }

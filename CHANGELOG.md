@@ -3,6 +3,13 @@
 All notable changes to AgentMeter. Format follows [Keep a Changelog](https://keepachangelog.com);
 versions follow semantic-ish `MAJOR.MINOR.PATCH`.
 
+## [1.6.5] — 2026-07-23
+
+### Changed
+- Z.ai credential setup is explicitly labeled as a GLM Coding Plan API key and
+  explains that standard API billing/balance cannot be queried. The key field
+  remains because Coding Plan monitoring itself authenticates with that key.
+
 ## [1.6.4] — 2026-07-23
 
 ### Fixed
