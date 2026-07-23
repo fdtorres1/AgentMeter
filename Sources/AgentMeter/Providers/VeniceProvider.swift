@@ -89,9 +89,9 @@ enum VeniceError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .badResponse: return "Unexpected response from Venice"
-        case .invalidKey: return "Venice key rejected — check the key in Settings"
-        case .httpStatus(let code): return "Venice returned HTTP \(code)"
+        case .badResponse: return L("Unexpected response from Venice")
+        case .invalidKey: return L("Venice key rejected — check the key in Settings")
+        case .httpStatus(let code): return L("Venice returned HTTP \(code))")
         }
     }
 }

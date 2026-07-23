@@ -3,6 +3,7 @@ import PackageDescription
 
 let package = Package(
     name: "AgentMeter",
+    defaultLocalization: "en",
     platforms: [.macOS(.v14)],
     dependencies: [
         .package(url: "https://github.com/sparkle-project/Sparkle", from: "2.6.0"),
@@ -13,7 +14,8 @@ let package = Package(
             dependencies: [
                 .product(name: "Sparkle", package: "Sparkle"),
             ],
-            path: "Sources/AgentMeter"
+            path: "Sources/AgentMeter",
+            resources: [.process("Resources")]
         ),
         .testTarget(
             name: "AgentMeterTests",

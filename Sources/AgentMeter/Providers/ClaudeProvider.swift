@@ -183,9 +183,9 @@ struct ClaudeProvider: UsageProvider {
         }
 
         let windows = [
-            window(response.fiveHour, "5h limit"),
-            window(response.sevenDay, "Weekly limit"),
-            window(response.sevenDayOpus, "Weekly (Opus)"),
+            window(response.fiveHour, L("5h limit")),
+            window(response.sevenDay, L("Weekly limit")),
+            window(response.sevenDayOpus, L("Weekly (Opus)")),
         ].compactMap { $0 }
 
         return ProviderUsage(planName: plan?.capitalized, windows: windows, asOf: now)
@@ -225,11 +225,11 @@ enum ClaudeError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .notSignedIn: return "Not signed in to Claude Code"
-        case .rateLimited: return "Anthropic rate-limited the usage request"
-        case .refreshFailed(let code): return "Claude token refresh failed (HTTP \(code))"
-        case .badResponse: return "Unexpected response from Anthropic"
-        case .httpStatus(let code): return "Anthropic returned HTTP \(code)"
+        case .notSignedIn: return L("Not signed in to Claude Code")
+        case .rateLimited: return L("Anthropic rate-limited the usage request")
+        case .refreshFailed(let code): return L("Claude token refresh failed (HTTP \(code))")
+        case .badResponse: return L("Unexpected response from Anthropic")
+        case .httpStatus(let code): return L("Anthropic returned HTTP \(code))")
         }
     }
 }

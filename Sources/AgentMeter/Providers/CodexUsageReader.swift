@@ -167,12 +167,12 @@ struct CodexUsageReader {
 
     static func windowLabel(minutes: Int) -> String {
         switch minutes {
-        case 0: return "Window"
-        case ..<120: return "\(minutes)m limit"
-        case ..<2880: return "\(minutes / 60)h limit"
+        case 0: return L("Window")
+        case ..<120: return L("\(minutes)m limit")
+        case ..<2880: return L("\(minutes / 60)h limit")
         default:
             let days = minutes / 1440
-            return days == 7 ? "Weekly limit" : "\(days)d limit"
+            return days == 7 ? L("Weekly limit") : L("\(days)d limit")
         }
     }
 
@@ -195,9 +195,9 @@ enum CodexReadError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .noSessions: return "No Codex session logs found"
-        case .noRateLimitsFound: return "No rate-limit data in recent sessions"
-        case .unreadableFile: return "Could not read session file"
+        case .noSessions: return L("No Codex session logs found")
+        case .noRateLimitsFound: return L("No rate-limit data in recent sessions")
+        case .unreadableFile: return L("Could not read session file")
         }
     }
 }

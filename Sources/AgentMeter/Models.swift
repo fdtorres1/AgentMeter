@@ -27,20 +27,20 @@ struct UsageWindow: Equatable {
         switch style {
         case .relative:
             let interval = resetsAt.timeIntervalSinceNow
-            guard interval > 0 else { return "resets soon" }
+            guard interval > 0 else { return L("resets soon") }
             let days = Int(interval) / 86400
             let hours = (Int(interval) % 86400) / 3600
             let minutes = (Int(interval) % 3600) / 60
-            if days > 0 { return "resets in \(days)d \(hours)h" }
-            if hours > 0 { return "resets in \(hours)h \(minutes)m" }
-            return "resets in \(minutes)m"
+            if days > 0 { return L("resets in \(String(days))d \(String(hours))h") }
+            if hours > 0 { return L("resets in \(String(hours))h \(String(minutes))m") }
+            return L("resets in \(String(minutes))m")
         case .absolute:
             let calendar = Calendar.current
             let includeYear = calendar.component(.year, from: resetsAt)
                 != calendar.component(.year, from: Date())
             var format = Date.FormatStyle().month(.abbreviated).day().hour().minute()
             if includeYear { format = format.year() }
-            return "resets \(resetsAt.formatted(format))"
+            return L("resets \(resetsAt.formatted(format))")
         }
     }
 }
@@ -55,7 +55,7 @@ struct BalanceInfo: Equatable {
     let currencySymbol: String
 
     var display: String {
-        "\(currencySymbol)\(Self.format(remaining)) left"
+        L("\(currencySymbol)\(Self.format(remaining)) left")
     }
 
     /// Compact form for the menu bar, e.g. "$12".

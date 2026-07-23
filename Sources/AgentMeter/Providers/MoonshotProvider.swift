@@ -80,9 +80,9 @@ enum MoonshotError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .badResponse: return "Unexpected response from Kimi"
-        case .invalidKey: return "Kimi key rejected — check the key in Settings"
-        case .httpStatus(let code): return "Kimi returned HTTP \(code)"
+        case .badResponse: return L("Unexpected response from Kimi")
+        case .invalidKey: return L("Kimi key rejected — check the key in Settings")
+        case .httpStatus(let code): return L("Kimi returned HTTP \(code))")
         }
     }
 }

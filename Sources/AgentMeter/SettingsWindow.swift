@@ -9,19 +9,19 @@ struct SettingsRootView: View {
         TabView {
             GeneralSettingsTab(store: store, settings: settings)
                 .tabItem {
-                    Label("General", systemImage: "gearshape")
+                    Label(L("General"), systemImage: "gearshape")
                 }
             ProvidersSettingsTab(store: store, settings: settings)
                 .tabItem {
-                    Label("Providers", systemImage: "list.bullet")
+                    Label(L("Providers"), systemImage: "list.bullet")
                 }
             DisplaySettingsTab(settings: settings)
                 .tabItem {
-                    Label("Display", systemImage: "eye")
+                    Label(L("Display"), systemImage: "eye")
                 }
             AlertsSettingsTab(store: store, settings: settings)
                 .tabItem {
-                    Label("Alerts", systemImage: "bell")
+                    Label(L("Alerts"), systemImage: "bell")
                 }
         }
         .frame(width: 500, height: 420)
@@ -36,11 +36,11 @@ private struct GeneralSettingsTab: View {
     var body: some View {
         Form {
             Section {
-                Toggle("Launch at Login", isOn: $launchAtLogin)
+                Toggle(L("Launch at Login"), isOn: $launchAtLogin)
                     .onChange(of: launchAtLogin) { _, enabled in setLaunchAtLogin(enabled) }
             }
             Section {
-                Picker("Refresh interval", selection: Binding(
+                Picker(L("Refresh interval"), selection: Binding(
                     get: { settings.refreshInterval },
                     set: { newValue in
                         settings.refreshInterval = newValue
@@ -78,7 +78,7 @@ private struct ProvidersSettingsTab: View {
         Form {
             ForEach(store.providers, id: \.id) { provider in
                 Section {
-                    Picker("Mode", selection: Binding(
+                    Picker(L("Mode"), selection: Binding(
                         get: { settings.mode(for: provider.id) },
                         set: { newValue in
                             settings.setMode(newValue, for: provider.id)
@@ -92,7 +92,7 @@ private struct ProvidersSettingsTab: View {
                     .pickerStyle(.segmented)
 
                     if settings.mode(for: provider.id) != .off {
-                        Toggle("Show in menu bar", isOn: Binding(
+                        Toggle(L("Show in menu bar"), isOn: Binding(
                             get: { settings.showsInMenuBar(provider.id) },
                             set: { settings.setShowsInMenuBar($0, for: provider.id) }
                         ))
@@ -126,36 +126,36 @@ private struct ProviderCredentialSection: View {
     var body: some View {
         switch provider.authKind {
         case .localCredentials:
-            LabeledContent("Status", value: provider.isDetected ? "Detected" : "Not detected")
+            LabeledContent(L("Status"), value: provider.isDetected ? L("Detected") : L("Not detected"))
         case .apiKey(let keyURL):
             if hasKey {
-                LabeledContent("API key") {
+                LabeledContent(L("API key")) {
                     HStack {
-                        Text("Saved")
-                        Button("Remove") { removeKey() }
+                        Text(L("Saved"))
+                        Button(L("Remove")) { removeKey() }
                     }
                 }
             } else {
-                SecureField("API key", text: $draftKey)
+                SecureField(L("API key"), text: $draftKey)
                 HStack {
-                    Button("Save") { saveKey() }
+                    Button(L("Save")) { saveKey() }
                         .disabled(draftKey.trimmingCharacters(in: .whitespaces).isEmpty)
                     if let url = URL(string: keyURL) {
-                        Link("Get key", destination: url)
+                        Link(L("Get key"), destination: url)
                     }
                 }
             }
         case .oauth:
             Group {
                 if hasKey {
-                    LabeledContent("Status") {
+                    LabeledContent(L("Status")) {
                         HStack {
-                            Text("Connected")
-                            Button("Disconnect") { removeKey() }
+                            Text(L("Connected"))
+                            Button(L("Disconnect")) { removeKey() }
                         }
                     }
                 } else {
-                    Button("Connect…") { OpenRouterAuthFlow.shared.start() }
+                    Button(L("Connect…")) { OpenRouterAuthFlow.shared.start() }
                 }
             }
             .onReceive(NotificationCenter.default.publisher(for: .providerCredentialsChanged)) { _ in
@@ -186,19 +186,19 @@ private struct DisplaySettingsTab: View {
     var body: some View {
         Form {
             Section {
-                Picker("Count direction", selection: $settings.countDirection) {
-                    Text("% used").tag(CountDirection.used)
-                    Text("% left").tag(CountDirection.remaining)
+                Picker(L("Count direction"), selection: $settings.countDirection) {
+                    Text(L("% used")).tag(CountDirection.used)
+                    Text(L("% left")).tag(CountDirection.remaining)
                 }
                 .pickerStyle(.segmented)
 
-                Picker("Reset times", selection: $settings.resetTimeStyle) {
-                    Text("Relative").tag(ResetTimeStyle.relative)
-                    Text("Exact").tag(ResetTimeStyle.absolute)
+                Picker(L("Reset times"), selection: $settings.resetTimeStyle) {
+                    Text(L("Relative")).tag(ResetTimeStyle.relative)
+                    Text(L("Exact")).tag(ResetTimeStyle.absolute)
                 }
                 .pickerStyle(.segmented)
 
-                Toggle("Compact menu bar (worst only)", isOn: $settings.compactMenuBar)
+                Toggle(L("Compact menu bar (worst only)"), isOn: $settings.compactMenuBar)
             }
         }
         .formStyle(.grouped)
@@ -214,7 +214,7 @@ private struct AlertsSettingsTab: View {
     var body: some View {
         Form {
             Section {
-                Toggle("Alert when usage crosses threshold", isOn: $settings.notificationsEnabled)
+                Toggle(L("Alert when usage crosses threshold"), isOn: $settings.notificationsEnabled)
                     .onChange(of: settings.notificationsEnabled) { _, enabled in
                         if enabled {
                             store.notificationManager.requestAuthorizationIfNeeded()
@@ -225,17 +225,20 @@ private struct AlertsSettingsTab: View {
                 // to the count direction, so the alert fires at the same real
                 // usage level in either display mode.
                 Picker(
-                    countsDown ? "Alert when remaining falls below" : "Alert when usage reaches",
+                    countsDown ? L("Alert when remaining falls below") : L("Alert when usage reaches"),
                     selection: $settings.notificationThreshold
                 ) {
                     ForEach(SettingsStore.notificationThresholdOptions, id: \.self) { value in
-                        Text(countsDown ? "\(Int(100 - value))% left" : "\(Int(value))%").tag(value)
+                        Text(countsDown
+                            ? L("\(Int(100 - value))% left")
+                            : L("\(Int(value))%")
+                        ).tag(value)
                     }
                 }
                 .pickerStyle(.segmented)
                 .disabled(!settings.notificationsEnabled)
 
-                Picker("Balance alert below", selection: $settings.balanceNotificationThreshold) {
+                Picker(L("Balance alert below"), selection: $settings.balanceNotificationThreshold) {
                     ForEach(SettingsStore.balanceThresholdOptions, id: \.self) { value in
                         Text("$\(Int(value))").tag(value)
                     }
@@ -244,8 +247,9 @@ private struct AlertsSettingsTab: View {
                 .disabled(!settings.notificationsEnabled)
             } footer: {
                 Text(countsDown
-                    ? "One notification per limit window, re-armed when the window resets. \"20% left\" is the same alert as \"80% used\" — it follows your Display setting."
-                    : "One notification per limit window, re-armed when the window resets. Balance alerts apply to pay-as-you-go providers.")
+                    ? L("One notification per limit window, re-armed when the window resets. \"20% left\" is the same alert as \"80% used\" — it follows your Display setting.")
+                    : L("One notification per limit window, re-armed when the window resets. Balance alerts apply to pay-as-you-go providers.")
+                )
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }

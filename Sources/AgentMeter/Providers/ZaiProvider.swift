@@ -81,8 +81,8 @@ struct ZaiProvider: UsageProvider {
 
     nonisolated static func label(for type: String) -> String? {
         switch type {
-        case "TIME_LIMIT": return "Time quota"
-        case "TOKENS_LIMIT": return "Token quota"
+        case "TIME_LIMIT": return L("Time quota")
+        case "TOKENS_LIMIT": return L("Token quota")
         default: return nil
         }
     }
@@ -95,9 +95,9 @@ enum ZaiError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .badResponse: return "Unexpected response from Z.ai"
-        case .invalidKey: return "Z.ai key rejected — check the key in Settings"
-        case .httpStatus(let code): return "Z.ai returned HTTP \(code)"
+        case .badResponse: return L("Unexpected response from Z.ai")
+        case .invalidKey: return L("Z.ai key rejected — check the key in Settings")
+        case .httpStatus(let code): return L("Z.ai returned HTTP \(code))")
         }
     }
 }

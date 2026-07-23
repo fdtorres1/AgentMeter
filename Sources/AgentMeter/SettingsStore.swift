@@ -14,8 +14,8 @@ enum CountDirection: String {
     nonisolated func percentLabel(_ usedPercent: Double, menuBar: Bool = false) -> String {
         let value = Int(displayPercent(usedPercent).rounded())
         switch self {
-        case .used: return "\(value)%"
-        case .remaining: return menuBar ? "\(value)%" : "\(value)% left"
+        case .used: return L("\(value)%")
+        case .remaining: return menuBar ? L("\(value)%") : L("\(value)% left")
         }
     }
 }
@@ -60,9 +60,9 @@ final class SettingsStore: ObservableObject {
     private var menuBarCache: [String: Bool] = [:]
 
     static let refreshOptions: [(label: String, seconds: TimeInterval)] = [
-        ("30 seconds", 30),
-        ("1 minute", 60),
-        ("5 minutes", 300),
+        (L("30 seconds"), 30),
+        (L("1 minute"), 60),
+        (L("5 minutes"), 300),
     ]
 
     static let notificationThresholdOptions: [Double] = [70, 80, 90]

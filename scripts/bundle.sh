@@ -16,6 +16,10 @@ BUNDLE_ID="com.felixtorres.agentmeter"
 VERSION="${AGENTMETER_VERSION:-1.0}"
 SIGN_IDENTITY="${SIGN_IDENTITY:--}"
 
+# Compile Spanish strings from the catalog; en.lproj is checked in separately.
+xcrun xcstringstool compile Sources/AgentMeter/Resources/Localizable.xcstrings \
+    --output-directory Sources/AgentMeter/Resources
+
 swift build -c release
 
 APP="${APP_NAME}.app"
@@ -23,6 +27,9 @@ rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources" "$APP/Contents/Frameworks"
 
 cp ".build/release/${APP_NAME}" "$APP/Contents/MacOS/${APP_NAME}"
+if [[ -d ".build/release/AgentMeter_AgentMeter.bundle" ]]; then
+    cp -R ".build/release/AgentMeter_AgentMeter.bundle" "$APP/Contents/Resources/"
+fi
 if [[ -f Resources/AppIcon.icns ]]; then
     cp Resources/AppIcon.icns "$APP/Contents/Resources/AppIcon.icns"
 fi
@@ -53,6 +60,13 @@ cat > "$APP/Contents/Info.plist" <<PLIST
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>${VERSION}</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>es</string>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>${VERSION}</string>
 	<key>LSMinimumSystemVersion</key>

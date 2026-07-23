@@ -56,6 +56,14 @@ Releases from v1.4.0 onward include a Sparkle appcast:
   users would need one manual reinstall. Store the backup somewhere safe
   (e.g. 1Password), never in the repo.
 
+## Homebrew cask
+
+After publishing a release, bump the cask in
+[fdtorres1/homebrew-tap](https://github.com/fdtorres1/homebrew-tap):
+update `version` and `sha256` (`curl -sL <zip url> | shasum -a 256`) in
+`Casks/agentmeter.rb` and push. Existing installs auto-update via Sparkle
+regardless (`auto_updates true`), so the cask matters mainly for new installs.
+
 ## Cutting a release
 
 ```bash

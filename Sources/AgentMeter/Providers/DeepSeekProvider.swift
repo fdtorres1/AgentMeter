@@ -93,9 +93,9 @@ enum DeepSeekError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .badResponse: return "Unexpected response from DeepSeek"
-        case .invalidKey: return "DeepSeek key rejected — check the key in Settings"
-        case .httpStatus(let code): return "DeepSeek returned HTTP \(code)"
+        case .badResponse: return L("Unexpected response from DeepSeek")
+        case .invalidKey: return L("DeepSeek key rejected — check the key in Settings")
+        case .httpStatus(let code): return L("DeepSeek returned HTTP \(code))")
         }
     }
 }

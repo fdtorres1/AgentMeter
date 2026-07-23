@@ -62,7 +62,7 @@ struct OpenRouterProvider: UsageProvider {
     static func usage(from response: CreditsResponse, now: Date) -> ProviderUsage {
         let remaining = max(0, response.data.totalCredits - response.data.totalUsage)
         return ProviderUsage(
-            planName: "Credits",
+            planName: L("Credits"),
             windows: [],
             asOf: now,
             balance: BalanceInfo(
@@ -82,10 +82,10 @@ enum OpenRouterError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .badResponse: return "Unexpected response from OpenRouter"
-        case .invalidKey: return "OpenRouter key rejected — reconnect in Settings"
-        case .httpStatus(let code): return "OpenRouter returned HTTP \(code)"
-        case .authFlowFailed(let reason): return "OpenRouter connect failed: \(reason)"
+        case .badResponse: return L("Unexpected response from OpenRouter")
+        case .invalidKey: return L("OpenRouter key rejected — reconnect in Settings")
+        case .httpStatus(let code): return L("OpenRouter returned HTTP \(code))")
+        case .authFlowFailed(let message): return message
         }
     }
 }
@@ -125,7 +125,9 @@ final class OpenRouterAuthFlow {
         guard let verifier = pendingVerifier,
               let code = URLComponents(url: url, resolvingAgainstBaseURL: false)?
                   .queryItems?.first(where: { $0.name == "code" })?.value else {
-            onComplete(.failure(OpenRouterError.authFlowFailed("missing code")))
+            onComplete(.failure(OpenRouterError.authFlowFailed(
+                L("OpenRouter connect failed: missing code")
+            )))
             return true
         }
         pendingVerifier = nil
@@ -155,7 +157,7 @@ final class OpenRouterAuthFlow {
 
         let (data, response) = try await HTTP.session.data(for: request)
         guard let http = response as? HTTPURLResponse, http.statusCode == 200 else {
-            throw OpenRouterError.authFlowFailed("key exchange rejected")
+            throw OpenRouterError.authFlowFailed(L("OpenRouter connect failed: key exchange rejected"))
         }
         struct KeyResponse: Decodable { let key: String }
         return try JSONDecoder().decode(KeyResponse.self, from: data).key

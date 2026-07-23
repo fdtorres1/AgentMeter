@@ -132,8 +132,8 @@ final class NotificationManager {
 
     private func postNotification(provider: any UsageProvider, window: UsageWindow) {
         let content = UNMutableNotificationContent()
-        content.title = "\(provider.displayName) usage alert"
-        var body = "\(window.label) at \(Int(window.usedPercent.rounded()))%"
+        content.title = L("\(provider.displayName) usage alert")
+        var body = L("\(window.label) at \(String(Int(window.usedPercent.rounded())))%")
         if let remaining = window.remainingDescription {
             body += " — \(remaining)"
         }
@@ -150,8 +150,8 @@ final class NotificationManager {
 
     private func postBalanceNotification(provider: any UsageProvider, balance: BalanceInfo) {
         let content = UNMutableNotificationContent()
-        content.title = "\(provider.displayName) balance alert"
-        content.body = "\(balance.currencySymbol)\(BalanceInfo.format(balance.remaining)) remaining"
+        content.title = L("\(provider.displayName) balance alert")
+        content.body = L("\(balance.currencySymbol)\(BalanceInfo.format(balance.remaining)) remaining")
         content.sound = .default
 
         let request = UNNotificationRequest(

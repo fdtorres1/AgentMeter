@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>% left</key>
+	<string>% restante</string>
+	<key>% used</key>
+	<string>% usado</string>
+	<key>%@ at %@%%</key>
+	<string>%@ al %@%%</string>
+	<key>%@ balance alert</key>
+	<string>Alerta de saldo de %@</string>
+	<key>%@ usage alert</key>
+	<string>Alerta de uso de %@</string>
+	<key>%@%@ left</key>
+	<string>%@%@ restante</string>
+	<key>%@%@ remaining</key>
+	<string>%@%@ restante</string>
+	<key>%@%@ used all-time</key>
+	<string>%@%@ usados en total</string>
+	<key>%lld%%</key>
+	<string>%lld%%</string>
+	<key>%lld%% left</key>
+	<string>%lld%% restante</string>
+	<key>%lldd limit</key>
+	<string>Límite de %lld d</string>
+	<key>%lldh limit</key>
+	<string>Límite de %lld h</string>
+	<key>%lldm limit</key>
+	<string>Límite de %lld m</string>
+	<key>1 minute</key>
+	<string>1 minuto</string>
+	<key>30 seconds</key>
+	<string>30 segundos</string>
+	<key>5 minutes</key>
+	<string>5 minutos</string>
+	<key>5h limit</key>
+	<string>Límite de 5 h</string>
+	<key>API key</key>
+	<string>Clave de API</string>
+	<key>API usage</key>
+	<string>Uso de API</string>
+	<key>Alert when remaining falls below</key>
+	<string>Avisar cuando lo restante baje de</string>
+	<key>Alert when usage crosses threshold</key>
+	<string>Avisar cuando el uso cruce el umbral</string>
+	<key>Alert when usage reaches</key>
+	<string>Avisar cuando el uso alcance</string>
+	<key>Alerts</key>
+	<string>Alertas</string>
+	<key>Anthropic rate-limited the usage request</key>
+	<string>Anthropic limitó la solicitud de uso</string>
+	<key>Anthropic returned HTTP %lld</key>
+	<string>Anthropic devolvió HTTP %lld</string>
+	<key>Auto</key>
+	<string>Automático</string>
+	<key>Auto usage</key>
+	<string>Uso automático</string>
+	<key>Balance</key>
+	<string>Saldo</string>
+	<key>Balance alert below</key>
+	<string>Alerta de saldo por debajo de</string>
+	<key>Check for Updates…</key>
+	<string>Buscar actualizaciones…</string>
+	<key>Claude token refresh failed (HTTP %lld)</key>
+	<string>Error al actualizar el token de Claude (HTTP %lld)</string>
+	<key>Compact menu bar (worst only)</key>
+	<string>Barra de menús compacta (solo el peor)</string>
+	<key>Connected</key>
+	<string>Conectado</string>
+	<key>Connect…</key>
+	<string>Conectar…</string>
+	<key>Could not read session file</key>
+	<string>No se pudo leer el archivo de sesión</string>
+	<key>Count direction</key>
+	<string>Dirección del conteo</string>
+	<key>Credits</key>
+	<string>Créditos</string>
+	<key>Cursor session expired — sign in to Cursor again</key>
+	<string>La sesión de Cursor expiró — inicia sesión en Cursor de nuevo</string>
+	<key>Cursor session token has an unexpected format</key>
+	<string>El token de sesión de Cursor tiene un formato inesperado</string>
+	<key>Cursor session token not found (is Cursor signed in?)</key>
+	<string>No se encontró el token de sesión de Cursor (¿estás conectado en Cursor?)</string>
+	<key>Data as of %@</key>
+	<string>Datos al %@</string>
+	<key>DeepSeek key rejected — check the key in Settings</key>
+	<string>Clave de DeepSeek rechazada — revisa la clave en Ajustes</string>
+	<key>DeepSeek returned HTTP %lld</key>
+	<string>DeepSeek devolvió HTTP %lld</string>
+	<key>Detected</key>
+	<string>Detectado</string>
+	<key>Disconnect</key>
+	<string>Desconectar</string>
+	<key>Display</key>
+	<string>Visualización</string>
+	<key>Exact</key>
+	<string>Exacto</string>
+	<key>Flash (24h)</key>
+	<string>Flash (24 h)</string>
+	<key>Flash-Lite (24h)</key>
+	<string>Flash-Lite (24 h)</string>
+	<key>General</key>
+	<string>General</string>
+	<key>Get key</key>
+	<string>Obtener clave</string>
+	<key>Google returned HTTP %lld</key>
+	<string>Google devolvió HTTP %lld</string>
+	<key>Included usage</key>
+	<string>Uso incluido</string>
+	<key>Kimi key rejected — check the key in Settings</key>
+	<string>Clave de Kimi rechazada — revisa la clave en Ajustes</string>
+	<key>Kimi returned HTTP %lld</key>
+	<string>Kimi devolvió HTTP %lld</string>
+	<key>Launch at Login</key>
+	<string>Abrir al iniciar sesión</string>
+	<key>Loading…</key>
+	<string>Cargando…</string>
+	<key>Mode</key>
+	<string>Modo</string>
+	<key>No %@ API key set — add one in Settings</key>
+	<string>No hay clave de API de %@ — agrega una en Ajustes</string>
+	<key>No Codex session logs found</key>
+	<string>No se encontraron registros de sesión de Codex</string>
+	<key>No providers enabled. Open Settings to turn some on.</key>
+	<string>No hay proveedores habilitados. Abre Ajustes para activar algunos.</string>
+	<key>No rate-limit data in recent sessions</key>
+	<string>No hay datos de límites en sesiones recientes</string>
+	<key>No usage data</key>
+	<string>Sin datos de uso</string>
+	<key>Not detected</key>
+	<string>No detectado</string>
+	<key>Not signed in to Claude Code</key>
+	<string>No has iniciado sesión en Claude Code</string>
+	<key>Not signed in to Gemini (run 'gemini' to authenticate)</key>
+	<string>No has iniciado sesión en Gemini (ejecuta 'gemini' para autenticarte)</string>
+	<key>Off</key>
+	<string>Desactivado</string>
+	<key>On</key>
+	<string>Activado</string>
+	<key>One notification per limit window, re-armed when the window resets. "20% left" is the same alert as "80% used" — it follows your Display setting.</key>
+	<string>Una notificación por ventana de límite, reactivada cuando la ventana se restablece. "20% restante" es la misma alerta que "80% usado" — sigue tu configuración de Visualización.</string>
+	<key>One notification per limit window, re-armed when the window resets. Balance alerts apply to pay-as-you-go providers.</key>
+	<string>Una notificación por ventana de límite, reactivada cuando la ventana se restablece. Las alertas de saldo aplican a proveedores de pago por uso.</string>
+	<key>OpenRouter connect failed: key exchange rejected</key>
+	<string>Error al conectar OpenRouter: intercambio de clave rechazado</string>
+	<key>OpenRouter connect failed: missing code</key>
+	<string>Error al conectar OpenRouter: falta el código</string>
+	<key>OpenRouter key rejected — reconnect in Settings</key>
+	<string>Clave de OpenRouter rechazada — vuelve a conectar en Ajustes</string>
+	<key>OpenRouter returned HTTP %lld</key>
+	<string>OpenRouter devolvió HTTP %lld</string>
+	<key>Personal cap</key>
+	<string>Límite personal</string>
+	<key>Pro (24h)</key>
+	<string>Pro (24 h)</string>
+	<key>Providers</key>
+	<string>Proveedores</string>
+	<key>Quit</key>
+	<string>Salir</string>
+	<key>Refresh</key>
+	<string>Actualizar</string>
+	<key>Refresh interval</key>
+	<string>Intervalo de actualización</string>
+	<key>Relative</key>
+	<string>Relativo</string>
+	<key>Remove</key>
+	<string>Eliminar</string>
+	<key>Reset times</key>
+	<string>Tiempos de restablecimiento</string>
+	<key>Save</key>
+	<string>Guardar</string>
+	<key>Saved</key>
+	<string>Guardada</string>
+	<key>Settings…</key>
+	<string>Ajustes…</string>
+	<key>Show in menu bar</key>
+	<string>Mostrar en la barra de menús</string>
+	<key>Status</key>
+	<string>Estado</string>
+	<key>Support ♥</key>
+	<string>Apoyar ♥</string>
+	<key>Team pool</key>
+	<string>Pool del equipo</string>
+	<key>Time quota</key>
+	<string>Cuota de tiempo</string>
+	<key>Token quota</key>
+	<string>Cuota de tokens</string>
+	<key>Unexpected response from Anthropic</key>
+	<string>Respuesta inesperada de Anthropic</string>
+	<key>Unexpected response from DeepSeek</key>
+	<string>Respuesta inesperada de DeepSeek</string>
+	<key>Unexpected response from Google</key>
+	<string>Respuesta inesperada de Google</string>
+	<key>Unexpected response from Kimi</key>
+	<string>Respuesta inesperada de Kimi</string>
+	<key>Unexpected response from OpenRouter</key>
+	<string>Respuesta inesperada de OpenRouter</string>
+	<key>Unexpected response from Venice</key>
+	<string>Respuesta inesperada de Venice</string>
+	<key>Unexpected response from Z.ai</key>
+	<string>Respuesta inesperada de Z.ai</string>
+	<key>Unexpected response from cursor.com</key>
+	<string>Respuesta inesperada de cursor.com</string>
+	<key>Updated %@</key>
+	<string>Actualizado %@</string>
+	<key>Venice key rejected — check the key in Settings</key>
+	<string>Clave de Venice rechazada — revisa la clave en Ajustes</string>
+	<key>Venice returned HTTP %lld</key>
+	<string>Venice devolvió HTTP %lld</string>
+	<key>Weekly (Opus)</key>
+	<string>Semanal (Opus)</string>
+	<key>Weekly limit</key>
+	<string>Límite semanal</string>
+	<key>Window</key>
+	<string>Ventana</string>
+	<key>Z.ai key rejected — check the key in Settings</key>
+	<string>Clave de Z.ai rechazada — revisa la clave en Ajustes</string>
+	<key>Z.ai returned HTTP %lld</key>
+	<string>Z.ai devolvió HTTP %lld</string>
+	<key>cursor.com returned HTTP %lld</key>
+	<string>cursor.com devolvió HTTP %lld</string>
+	<key>key exchange rejected</key>
+	<string>intercambio de clave rechazado</string>
+	<key>missing code</key>
+	<string>falta el código</string>
+	<key>resets %@</key>
+	<string>se restablece %@</string>
+	<key>resets in %@d %@h</key>
+	<string>se restablece en %@d %@h</string>
+	<key>resets in %@h %@m</key>
+	<string>se restablece en %@h %@m</string>
+	<key>resets in %@m</key>
+	<string>se restablece en %@m</string>
+	<key>resets soon</key>
+	<string>se restablece pronto</string>
+</dict>
+</plist>

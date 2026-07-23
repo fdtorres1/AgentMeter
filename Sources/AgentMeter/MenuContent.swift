@@ -18,7 +18,7 @@ struct MenuContent: View {
         VStack(alignment: .leading, spacing: 12) {
             let visible = store.visibleProviders
             if visible.isEmpty {
-                Text("No providers enabled. Open Settings to turn some on.")
+                Text(L("No providers enabled. Open Settings to turn some on."))
                     .font(.caption)
                     .foregroundStyle(.secondary)
             } else {
@@ -40,7 +40,7 @@ struct MenuContent: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 if let refreshed = store.lastRefreshed {
-                    Text("Updated \(refreshed.formatted(date: .omitted, time: .shortened))")
+                    Text(L("Updated \(refreshed.formatted(date: .omitted, time: .shortened))"))
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
@@ -48,7 +48,7 @@ struct MenuContent: View {
                 Button {
                     store.refresh()
                 } label: {
-                    Label("Refresh", systemImage: "arrow.clockwise")
+                    Label(L("Refresh"), systemImage: "arrow.clockwise")
                         .labelStyle(.titleAndIcon)
                 }
                 .buttonStyle(.plain)
@@ -56,7 +56,7 @@ struct MenuContent: View {
             }
             HStack {
                 SettingsLink {
-                    Text("Settings…")
+                    Text(L("Settings…"))
                 }
                 .buttonStyle(.plain)
                 .font(.caption)
@@ -65,17 +65,19 @@ struct MenuContent: View {
                     Self.closeMenuBarWindow()
                 })
                 Spacer()
-                Button("Check for Updates…") {
+                Button(L("Check for Updates…")) {
                     Self.closeMenuBarWindow()
                     Updater.shared.checkForUpdates()
                 }
                 .buttonStyle(.plain)
                 .font(.caption)
                 Spacer()
-                Link("Support ♥", destination: tipJarURL)
+                Link(destination: tipJarURL) {
+                    Text(L("Support ♥"))
+                }
                     .font(.caption)
                 Spacer()
-                Button("Quit") { NSApp.terminate(nil) }
+                Button(L("Quit")) { NSApp.terminate(nil) }
                     .buttonStyle(.plain)
                     .font(.caption)
             }
@@ -122,34 +124,34 @@ private struct ProviderSection: View {
 
             switch state {
             case .loading:
-                Text("Loading…").font(.caption).foregroundStyle(.secondary)
+                Text(L("Loading…")).font(.caption).foregroundStyle(.secondary)
             case .error(let message):
                 Label(message, systemImage: "exclamationmark.triangle")
                     .font(.caption)
                     .foregroundStyle(.orange)
             case .ready(let usage):
                 if usage.windows.isEmpty && usage.balance == nil {
-                    Text("No usage data").font(.caption).foregroundStyle(.secondary)
+                    Text(L("No usage data")).font(.caption).foregroundStyle(.secondary)
                 }
                 ForEach(usage.windows, id: \.label) { window in
                     WindowMeter(window: window, settings: settings)
                 }
                 if let balance = usage.balance {
                     HStack {
-                        Text("Balance").font(.caption)
+                        Text(L("Balance")).font(.caption)
                         Spacer()
                         Text(balance.display)
                             .font(.caption.monospacedDigit())
                             .foregroundStyle(balance.remaining > 5 ? Color.green : Color.orange)
                     }
                     if let used = balance.used {
-                        Text("\(balance.currencySymbol)\(BalanceInfo.format(used)) used all-time")
+                        Text(L("\(balance.currencySymbol)\(BalanceInfo.format(used)) used all-time"))
                             .font(.caption2)
                             .foregroundStyle(.secondary)
                     }
                 }
                 if let asOf = usage.asOf {
-                    Text("Data as of \(asOf.formatted(date: .omitted, time: .shortened))")
+                    Text(L("Data as of \(asOf.formatted(date: .omitted, time: .shortened))"))
                         .font(.caption2)
                         .foregroundStyle(.tertiary)
                 }

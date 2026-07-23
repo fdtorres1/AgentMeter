@@ -63,10 +63,14 @@ AgentMeter is open source (MIT) so you can verify exactly what it does:
 
 ## Install
 
-Download the latest `AgentMeter.zip` from
+```bash
+brew install --cask fdtorres1/tap/agentmeter
+```
+
+Or download the latest `AgentMeter.zip` from
 [Releases](https://github.com/fdtorres1/AgentMeter/releases/latest), unzip,
 and drag `AgentMeter.app` to `/Applications`. Signed and notarized builds open
-without Gatekeeper warnings.
+without Gatekeeper warnings, and the app keeps itself up to date (Sparkle).
 
 ### Build from source
 

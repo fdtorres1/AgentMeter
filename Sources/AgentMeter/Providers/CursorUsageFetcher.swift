@@ -142,21 +142,21 @@ struct CursorUsageFetcher: Sendable {
         }
         if let totalPercent {
             windows.append(UsageWindow(
-                label: "Included usage",
+                label: L("Included usage"),
                 usedPercent: clamp(totalPercent),
                 resetsAt: resetsAt
             ))
         }
         if let autoPercent = plan?.autoPercentUsed {
             windows.append(UsageWindow(
-                label: "Auto usage",
+                label: L("Auto usage"),
                 usedPercent: clamp(autoPercent),
                 resetsAt: resetsAt
             ))
         }
         if let apiPercent = plan?.apiPercentUsed {
             windows.append(UsageWindow(
-                label: "API usage",
+                label: L("API usage"),
                 usedPercent: clamp(apiPercent),
                 resetsAt: resetsAt
             ))
@@ -170,9 +170,9 @@ struct CursorUsageFetcher: Sendable {
                 return used / limit * 100
             }
             if let overall = poolPercent(summary.individualUsage?.overall) {
-                windows.append(UsageWindow(label: "Personal cap", usedPercent: clamp(overall), resetsAt: resetsAt))
+                windows.append(UsageWindow(label: L("Personal cap"), usedPercent: clamp(overall), resetsAt: resetsAt))
             } else if let pooled = poolPercent(summary.teamUsage?.pooled) {
-                windows.append(UsageWindow(label: "Team pool", usedPercent: clamp(pooled), resetsAt: resetsAt))
+                windows.append(UsageWindow(label: L("Team pool"), usedPercent: clamp(pooled), resetsAt: resetsAt))
             }
         }
 
@@ -193,11 +193,11 @@ enum CursorFetchError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .tokenNotFound: return "Cursor session token not found (is Cursor signed in?)"
-        case .invalidToken: return "Cursor session token has an unexpected format"
-        case .notAuthenticated: return "Cursor session expired — sign in to Cursor again"
-        case .badResponse: return "Unexpected response from cursor.com"
-        case .httpStatus(let code): return "cursor.com returned HTTP \(code)"
+        case .tokenNotFound: return L("Cursor session token not found (is Cursor signed in?)")
+        case .invalidToken: return L("Cursor session token has an unexpected format")
+        case .notAuthenticated: return L("Cursor session expired — sign in to Cursor again")
+        case .badResponse: return L("Unexpected response from cursor.com")
+        case .httpStatus(let code): return L("cursor.com returned HTTP \(code))")
         }
     }
 }

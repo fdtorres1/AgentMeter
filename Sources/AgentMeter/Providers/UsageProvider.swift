@@ -43,7 +43,7 @@ enum ProviderKeyError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .missingKey(let name):
-            return "No \(name) API key set — add one in Settings"
+            return L("No \(name) API key set — add one in Settings")
         }
     }
 }
@@ -59,9 +59,9 @@ enum ProviderMode: String, CaseIterable, Identifiable {
 
     var label: String {
         switch self {
-        case .auto: return "Auto"
-        case .on: return "On"
-        case .off: return "Off"
+        case .auto: return L("Auto")
+        case .on: return L("On")
+        case .off: return L("Off")
         }
     }
 

@@ -174,11 +174,11 @@ struct GeminiProvider: UsageProvider {
                   let fraction = bucket.remainingFraction else { continue }
             let family: (String, Int)
             if modelId.contains("flash-lite") {
-                family = ("Flash-Lite (24h)", 2)
+                family = (L("Flash-Lite (24h)"), 2)
             } else if modelId.contains("flash") {
-                family = ("Flash (24h)", 1)
+                family = (L("Flash (24h)"), 1)
             } else if modelId.contains("pro") {
-                family = ("Pro (24h)", 0)
+                family = (L("Pro (24h)"), 0)
             } else {
                 continue
             }
@@ -214,9 +214,9 @@ enum GeminiError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .notSignedIn: return "Not signed in to Gemini (run 'gemini' to authenticate)"
-        case .badResponse: return "Unexpected response from Google"
-        case .httpStatus(let code): return "Google returned HTTP \(code)"
+        case .notSignedIn: return L("Not signed in to Gemini (run 'gemini' to authenticate)")
+        case .badResponse: return L("Unexpected response from Google")
+        case .httpStatus(let code): return L("Google returned HTTP \(code))")
         }
     }
 }
