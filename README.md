@@ -37,6 +37,25 @@ Each provider can be set to **Auto** (show only if detected on this machine),
 **On**, or **Off** in Settings. Refresh runs every 30s/1m/5m (configurable), and
 Codex also refreshes instantly after CLI activity via a file watcher.
 
+## Highlights
+
+- **Reads well before it runs out** — count usage up ("80% used") or down
+  ("20% left"), relative or exact reset times, and optional notifications when
+  a limit window or balance crosses your threshold.
+- **Never cries wolf** — if a provider briefly fails to respond, the last
+  known numbers stay visible (dimmed, with a "stale since…" note) instead of
+  an alarming error in your menu bar.
+- **Knows what key you pasted** — AgentMeter detects the key type (for
+  example Venice Admin vs. Inference, OpenRouter management vs. standard) and
+  explains in plain language what it can do, always recommending the
+  least-privileged key that works.
+- **Fits your menu bar** — full, compact (most constrained provider only), or
+  icon-only styles, with color states at the same thresholds as the meters.
+- **Accessible** — full VoiceOver support: the menu bar item speaks a
+  per-provider summary, meters announce values and severity, and warning
+  states show symbols, not just color.
+- **Stays current** — Sparkle auto-updates from signed, notarized releases.
+
 ## Privacy and trust
 
 AgentMeter is open source (MIT) so you can verify exactly what it does:
@@ -82,18 +101,19 @@ scripts/bundle.sh --install   # also copies it to /Applications
 open AgentMeter.app
 ```
 
-Use the "Launch at Login" checkbox in the dropdown to start it automatically.
+Use the "Launch at Login" toggle in Settings → General to start it automatically.
 
 ## Project layout
 
 - `Sources/AgentMeter/Providers/` — one file per provider plus the `UsageProvider`
   protocol; each reads local credentials and maps the response to `UsageWindow`s.
 - `Sources/AgentMeter/UsageStore.swift` — refresh timer, Codex file watcher, menu bar title.
-- `Sources/AgentMeter/SettingsStore.swift` — per-provider visibility + refresh cadence.
-- `Sources/AgentMeter/MenuContent.swift` — dropdown and settings UI.
-- `Sources/AgentMeter/UpdateChecker.swift` — GitHub Releases update check.
+- `Sources/AgentMeter/SettingsStore.swift` — per-provider visibility, refresh cadence, display and alert preferences.
+- `Sources/AgentMeter/MenuContent.swift` — dropdown UI; `SettingsWindow.swift` — native tabbed Settings.
+- `Sources/AgentMeter/CredentialAssessment.swift` — key-type detection and plain-language explainers.
+- `Sources/AgentMeter/Updater.swift` — Sparkle auto-updates.
 - `scripts/bundle.sh` / `scripts/release.sh` — bundling and signed/notarized release.
-- `.github/workflows/` — CI tests and tagged release automation.
+- `.github/workflows/` — CI (build + tests); releases are built and notarized locally.
 
 ## En español
 
