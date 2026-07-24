@@ -11,6 +11,7 @@ struct AboutView: View {
                 Image(nsImage: icon)
                     .resizable()
                     .frame(width: 72, height: 72)
+                    .accessibilityHidden(true)
             }
             Text("AgentMeter")
                 .font(.title2.bold())
@@ -27,7 +28,7 @@ struct AboutView: View {
             VStack(spacing: 4) {
                 Link(L("Website & source code"), destination: URL(string: "https://github.com/fdtorres1/AgentMeter")!)
                 Link(L("Report an issue"), destination: URL(string: "https://github.com/fdtorres1/AgentMeter/issues")!)
-                Link("Support ♥", destination: URL(string: "https://www.buymeacoffee.com/fdtorres")!)
+                Link(L("Support ♥"), destination: URL(string: "https://www.buymeacoffee.com/fdtorres")!)
             }
             .font(.callout)
 

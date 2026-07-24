@@ -154,6 +154,36 @@ final class UsageStore: ObservableObject {
         menuBarEntries.map(\.text).joined(separator: " · ")
     }
 
+    /// Spoken summary for the raster menu bar title (VoiceOver).
+    var menuBarAccessibilityDescription: String {
+        MenuBarAccessibilitySummary.build(
+            providers: menuBarSummaryProviders.map {
+                MenuBarAccessibilitySummary.ProviderInput(
+                    displayName: $0.displayName,
+                    state: state(for: $0.id)
+                )
+            },
+            countDirection: settings.countDirection,
+            balanceThreshold: settings.balanceNotificationThreshold
+        )
+    }
+
+    /// Providers included in the spoken menu bar summary (icon mode always lists all).
+    private var menuBarSummaryProviders: [any UsageProvider] {
+        let providers = titleProviders
+        guard !providers.isEmpty else { return [] }
+
+        switch settings.menuBarStyle {
+        case .full, .icon:
+            return providers
+        case .compact:
+            if let provider = mostConstrainedMenuBarProvider(from: providers) {
+                return [provider]
+            }
+            return providers
+        }
+    }
+
     private func providerMenuBarEntry(for provider: any UsageProvider) -> (text: String, severity: MenuBarSeverity) {
         let providerState = state(for: provider.id)
         return (
@@ -179,9 +209,9 @@ final class UsageStore: ObservableObject {
         }
     }
 
-    private func mostConstrainedMenuBarEntry(
+    private func mostConstrainedMenuBarProvider(
         from providers: [any UsageProvider]
-    ) -> (text: String, severity: MenuBarSeverity)? {
+    ) -> (any UsageProvider)? {
         var bestPercent: (provider: any UsageProvider, used: Double)?
         var firstBalance: (provider: any UsageProvider, usage: ProviderUsage)?
 
@@ -197,12 +227,19 @@ final class UsageStore: ObservableObject {
         }
 
         if let best = bestPercent {
-            return providerMenuBarEntry(for: best.provider)
+            return best.provider
         }
         if let balance = firstBalance {
-            return providerMenuBarEntry(for: balance.provider)
+            return balance.provider
         }
         return nil
+    }
+
+    private func mostConstrainedMenuBarEntry(
+        from providers: [any UsageProvider]
+    ) -> (text: String, severity: MenuBarSeverity)? {
+        guard let provider = mostConstrainedMenuBarProvider(from: providers) else { return nil }
+        return providerMenuBarEntry(for: provider)
     }
 
     nonisolated private static func worstSeverity(_ severities: [MenuBarSeverity]) -> MenuBarSeverity {

@@ -17,11 +17,7 @@ enum MenuBarTitleRenderer {
             return .critical
         case .ready(let usage):
             if let worst = usage.worstWindow {
-                switch worst.usedPercent {
-                case ..<60: return .normal
-                case ..<85: return .warning
-                default: return .critical
-                }
+                return menuBarSeverity(from: UsageMeterSeverity.forUsedPercent(worst.usedPercent))
             }
             if let balance = usage.balance, balance.kind == .remaining {
                 return balance.remaining < balanceThreshold ? .warning : .normal
@@ -39,7 +35,18 @@ enum MenuBarTitleRenderer {
         }
     }
 
-    static func image(entries: [(text: String, severity: MenuBarSeverity)]) -> NSImage {
+    nonisolated private static func menuBarSeverity(from meter: UsageMeterSeverity) -> MenuBarSeverity {
+        switch meter {
+        case .normal: .normal
+        case .warning: .warning
+        case .critical: .critical
+        }
+    }
+
+    static func image(
+        entries: [(text: String, severity: MenuBarSeverity)],
+        accessibilityDescription: String
+    ) -> NSImage {
         let font = NSFont.monospacedDigitSystemFont(ofSize: 12, weight: .regular)
         let attributed = NSMutableAttributedString()
         for (index, entry) in entries.enumerated() {
@@ -60,10 +67,11 @@ enum MenuBarTitleRenderer {
             return true
         }
         image.isTemplate = false
+        image.accessibilityDescription = accessibilityDescription
         return image
     }
 
-    static func iconImage(severity: MenuBarSeverity) -> NSImage {
+    static func iconImage(severity: MenuBarSeverity, accessibilityDescription: String) -> NSImage {
         let config = NSImage.SymbolConfiguration(pointSize: 12, weight: .regular)
         guard let symbol = NSImage(systemSymbolName: "gauge.with.needle", accessibilityDescription: nil)?
             .withSymbolConfiguration(config) else {
@@ -77,6 +85,7 @@ enum MenuBarTitleRenderer {
             return true
         }
         image.isTemplate = false
+        image.accessibilityDescription = accessibilityDescription
         return image
     }
 }

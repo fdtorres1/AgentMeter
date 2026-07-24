@@ -53,6 +53,8 @@ struct MenuContent: View {
                 }
                 .buttonStyle(.plain)
                 .font(.caption)
+                .help(L("Refresh"))
+                .accessibilityLabel(L("Refresh"))
             }
             HStack {
                 SettingsLink {
@@ -60,6 +62,8 @@ struct MenuContent: View {
                 }
                 .buttonStyle(.plain)
                 .font(.caption)
+                .help(L("Settings…"))
+                .accessibilityLabel(L("Settings…"))
                 .simultaneousGesture(TapGesture().onEnded {
                     NSApp.activate(ignoringOtherApps: true)
                     Self.closeMenuBarWindow()
@@ -71,15 +75,21 @@ struct MenuContent: View {
                 }
                 .buttonStyle(.plain)
                 .font(.caption)
+                .help(L("Check for Updates…"))
+                .accessibilityLabel(L("Check for Updates…"))
                 Spacer()
                 Link(destination: tipJarURL) {
                     Text(L("Support ♥"))
                 }
-                    .font(.caption)
+                .font(.caption)
+                .help(L("Support ♥"))
+                .accessibilityLabel(L("Support ♥"))
                 Spacer()
                 Button(L("Quit")) { NSApp.terminate(nil) }
                     .buttonStyle(.plain)
                     .font(.caption)
+                    .help(L("Quit"))
+                    .accessibilityLabel(L("Quit"))
             }
         }
     }
@@ -100,15 +110,23 @@ private struct ProviderSection: View {
     @ObservedObject var settings: SettingsStore
 
     var body: some View {
+        sectionContent
+            .accessibilityElement(children: .contain)
+            .accessibilityLabel(provider.displayName)
+            .modifier(ProviderSectionAccessibilityValue(value: sectionAccessibilityValue))
+    }
+
+    @ViewBuilder
+    private var sectionContent: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 ProviderBadge(provider: provider, size: 18)
                 if let url = provider.dashboardURL {
-                    Button(provider.displayName) {
-                        NSWorkspace.shared.open(url)
+                    Link(destination: url) {
+                        Text(provider.displayName)
+                            .font(.headline)
+                            .foregroundStyle(.primary)
                     }
-                    .buttonStyle(.plain)
-                    .font(.headline)
                 } else {
                     Text(provider.displayName).font(.headline)
                 }
@@ -130,10 +148,18 @@ private struct ProviderSection: View {
                     .font(.caption)
                     .foregroundStyle(.orange)
             case .ready(let usage):
-                UsageMetersView(usage: usage, settings: settings)
+                UsageMetersView(
+                    providerName: provider.displayName,
+                    usage: usage,
+                    settings: settings
+                )
             case .stale(let usage, let error, let since):
-                UsageMetersView(usage: usage, settings: settings)
-                    .opacity(0.55)
+                UsageMetersView(
+                    providerName: provider.displayName,
+                    usage: usage,
+                    settings: settings
+                )
+                .opacity(0.55)
                 VStack(alignment: .leading, spacing: 2) {
                     Text(L("Stale since \(since.formatted(date: .omitted, time: .shortened))"))
                         .font(.caption)
@@ -145,9 +171,33 @@ private struct ProviderSection: View {
             }
         }
     }
+
+    private var sectionAccessibilityValue: String? {
+        switch state {
+        case .stale:
+            return L("data is stale")
+        case .error:
+            return L("error")
+        case .loading, .ready:
+            return nil
+        }
+    }
+}
+
+private struct ProviderSectionAccessibilityValue: ViewModifier {
+    let value: String?
+
+    func body(content: Content) -> some View {
+        if let value {
+            content.accessibilityValue(value)
+        } else {
+            content
+        }
+    }
 }
 
 private struct UsageMetersView: View {
+    let providerName: String
     let usage: ProviderUsage
     @ObservedObject var settings: SettingsStore
 
@@ -157,25 +207,18 @@ private struct UsageMetersView: View {
                 Text(L("No usage data")).font(.caption).foregroundStyle(.secondary)
             }
             ForEach(usage.windows, id: \.label) { window in
-                WindowMeter(window: window, settings: settings)
+                WindowMeter(
+                    providerName: providerName,
+                    window: window,
+                    settings: settings
+                )
             }
             if let balance = usage.balance {
-                HStack {
-                    Text(balance.kind == .remaining ? L("Balance") : L("Usage")).font(.caption)
-                    Spacer()
-                    Text(balance.display)
-                        .font(.caption.monospacedDigit())
-                        .foregroundStyle(
-                            balance.kind == .spent
-                                ? Color.secondary
-                                : (balance.remaining > 5 ? Color.green : Color.orange)
-                        )
-                }
-                if balance.kind == .remaining, let used = balance.used {
-                    Text(L("\(balance.currencySymbol)\(BalanceInfo.format(used)) used all-time"))
-                        .font(.caption2)
-                        .foregroundStyle(.secondary)
-                }
+                BalanceRow(
+                    providerName: providerName,
+                    balance: balance,
+                    settings: settings
+                )
             }
             if let asOf = usage.asOf {
                 Text(L("Data as of \(asOf.formatted(date: .omitted, time: .shortened))"))
@@ -186,7 +229,67 @@ private struct UsageMetersView: View {
     }
 }
 
+private struct BalanceRow: View {
+    let providerName: String
+    let balance: BalanceInfo
+    @ObservedObject var settings: SettingsStore
+
+    private var isLowBalance: Bool {
+        balance.kind == .remaining && balance.remaining < settings.balanceNotificationThreshold
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 2) {
+            HStack {
+                Text(balance.kind == .remaining ? L("Balance") : L("Usage")).font(.caption)
+                Spacer()
+                HStack(spacing: 4) {
+                    Text(balance.display)
+                        .font(.caption.monospacedDigit())
+                        .foregroundStyle(balanceColor)
+                    if isLowBalance {
+                        Image(systemName: "exclamationmark.triangle.fill")
+                            .font(.caption2)
+                            .foregroundStyle(.orange)
+                            .accessibilityHidden(true)
+                    }
+                }
+            }
+            if balance.kind == .remaining, let used = balance.used {
+                Text(L("\(balance.currencySymbol)\(BalanceInfo.format(used)) used all-time"))
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(balanceAccessibilityLabel)
+        .accessibilityValue(balanceAccessibilityValue)
+    }
+
+    private var balanceColor: Color {
+        switch balance.kind {
+        case .spent:
+            return .secondary
+        case .remaining:
+            return isLowBalance ? .orange : .green
+        }
+    }
+
+    private var balanceAccessibilityLabel: String {
+        String(format: L("%@ balance"), providerName)
+    }
+
+    private var balanceAccessibilityValue: String {
+        var value = balance.accessibilityPhrase
+        if isLowBalance {
+            value = MenuBarAccessibilitySummary.appendQualifier(value, L("low balance"))
+        }
+        return value
+    }
+}
+
 private struct WindowMeter: View {
+    let providerName: String
     let window: UsageWindow
     @ObservedObject var settings: SettingsStore
 
@@ -195,29 +298,60 @@ private struct WindowMeter: View {
             HStack {
                 Text(window.label).font(.caption)
                 Spacer()
-                Text(settings.countDirection.percentLabel(window.usedPercent))
-                    .font(.caption.monospacedDigit())
-                    .foregroundStyle(color)
+                HStack(spacing: 4) {
+                    Text(settings.countDirection.percentLabel(window.usedPercent))
+                        .font(.caption.monospacedDigit())
+                        .foregroundStyle(color)
+                    if let symbol = severity.symbolName {
+                        Image(systemName: symbol)
+                            .font(.caption2)
+                            .foregroundStyle(color)
+                            .accessibilityHidden(true)
+                    }
+                }
             }
             ProgressView(value: progressValue, total: 100)
                 .tint(color)
+                .accessibilityHidden(true)
             if let reset = window.resetDescription(style: settings.resetTimeStyle) {
                 Text(reset)
                     .font(.caption2)
                     .foregroundStyle(.secondary)
             }
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(meterAccessibilityLabel)
+        .accessibilityValue(meterAccessibilityValue)
     }
 
     private var progressValue: Double {
         settings.countDirection.displayPercent(window.usedPercent)
     }
 
+    private var severity: UsageMeterSeverity {
+        UsageMeterSeverity.forUsedPercent(window.usedPercent)
+    }
+
     private var color: Color {
-        switch window.usedPercent {
-        case ..<60: return .green
-        case ..<85: return .yellow
-        default: return .red
+        switch severity {
+        case .normal: return .green
+        case .warning: return .yellow
+        case .critical: return .red
         }
+    }
+
+    private var meterAccessibilityLabel: String {
+        String(format: L("%@, %@"), providerName, window.label)
+    }
+
+    private var meterAccessibilityValue: String {
+        var value = settings.countDirection.accessibilityPercentPhrase(window.usedPercent)
+        if let reset = window.resetDescription(style: settings.resetTimeStyle) {
+            value = "\(value), \(reset)"
+        }
+        if let qualifier = severity.qualifier {
+            value = MenuBarAccessibilitySummary.appendQualifier(value, qualifier)
+        }
+        return value
     }
 }

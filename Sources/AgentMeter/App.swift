@@ -18,9 +18,15 @@ struct AgentMeterApp: App {
         } label: {
             Group {
                 if settings.menuBarStyle == .icon {
-                    Image(nsImage: MenuBarTitleRenderer.iconImage(severity: store.worstMenuBarSeverity))
+                    Image(nsImage: MenuBarTitleRenderer.iconImage(
+                        severity: store.worstMenuBarSeverity,
+                        accessibilityDescription: store.menuBarAccessibilityDescription
+                    ))
                 } else {
-                    Image(nsImage: MenuBarTitleRenderer.image(entries: store.menuBarEntries))
+                    Image(nsImage: MenuBarTitleRenderer.image(
+                        entries: store.menuBarEntries,
+                        accessibilityDescription: store.menuBarAccessibilityDescription
+                    ))
                 }
             }
         }

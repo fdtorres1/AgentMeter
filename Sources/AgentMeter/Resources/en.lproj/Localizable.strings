@@ -2,44 +2,138 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>%@ balance</key>
+	<string>%@ balance</string>
 	<key>%@%@ used</key>
 	<string>%@%@ used</string>
+	<key>%@, %@</key>
+	<string>%@, %@</string>
+	<key>%@: %@</key>
+	<string>%@: %@</string>
+	<key>%lld%% remaining</key>
+	<string>%lld%% remaining</string>
+	<key>%lld%% used</key>
+	<string>%lld%% used</string>
+	<key>A management key can control your whole OpenRouter account, including creating and deleting other API keys. AgentMeter only reads usage and balance — it cannot spend credits or change anything. A regular API key is safer; use Connect to get a dedicated key for AgentMeter that you can revoke anytime.</key>
+	<string>A management key can control your whole OpenRouter account, including creating and deleting other API keys. AgentMeter only reads usage and balance — it cannot spend credits or change anything. A regular API key is safer; use Connect to get a dedicated key for AgentMeter that you can revoke anytime.</string>
+	<key>API key removed</key>
+	<string>API key removed</string>
+	<key>API key saved</key>
+	<string>API key saved</string>
 	<key>About AgentMeter</key>
 	<string>About AgentMeter</string>
+	<key>About this key</key>
+	<string>About this key</string>
+	<key>Admin key</key>
+	<string>Admin key</string>
+	<key>AgentMeter</key>
+	<string>AgentMeter</string>
+	<key>AgentMeter could not reach the provider to check this key. That is usually a network issue or a temporary API change. Your saved key was not removed.</key>
+	<string>AgentMeter could not reach the provider to check this key. That is usually a network issue or a temporary API change. Your saved key was not removed.</string>
+	<key>An Admin key can see billing details and manage other keys. AgentMeter only reads your balance; it cannot spend credits or change settings. An Inference key is safer and also works with AgentMeter.</key>
+	<string>An Admin key can see billing details and manage other keys. AgentMeter only reads your balance; it cannot spend credits or change settings. An Inference key is safer and also works with AgentMeter.</string>
+	<key>An Admin key shows richer billing detail but is more powerful — only switch if you need that extra detail.</key>
+	<string>An Admin key shows richer billing detail but is more powerful — only switch if you need that extra detail.</string>
+	<key>An Inference key is the safer default — it lets apps run models but limits access to billing and key management. AgentMeter only reads your balance through a read-only endpoint; it cannot spend credits.</key>
+	<string>An Inference key is the safer default — it lets apps run models but limits access to billing and key management. AgentMeter only reads your balance through a read-only endpoint; it cannot spend credits.</string>
 	<key>Auto-updates powered by Sparkle (MIT License).</key>
 	<string>Auto-updates powered by Sparkle (MIT License).</string>
+	<key>Balance works through the limited rate-limits endpoint.</key>
+	<string>Balance works through the limited rate-limits endpoint.</string>
+	<key>Checking key…</key>
+	<string>Checking key…</string>
+	<key>Connection failed</key>
+	<string>Connection failed</string>
+	<key>Couldn't check key</key>
+	<string>Couldn't check key</string>
+	<key>Diagnostics copied</key>
+	<string>Diagnostics copied</string>
+	<key>Enable notifications to change this.</key>
+	<string>Enable notifications to change this.</string>
 	<key>Failed to parse Venice response: %@</key>
 	<string>Failed to parse Venice response: %@</string>
+	<key>Full access including billing and key management.</key>
+	<string>Full access including billing and key management.</string>
+	<key>Full account access — more powerful than AgentMeter needs.</key>
+	<string>Full account access — more powerful than AgentMeter needs.</string>
 	<key>GLM Coding Plan API key</key>
 	<string>GLM Coding Plan API key</string>
+	<key>GLM Coding Plan key</key>
+	<string>GLM Coding Plan key</string>
 	<key>Inference and Admin Venice API keys are supported. x402 wallet balances are not supported.</key>
 	<string>Inference and Admin Venice API keys are supported. x402 wallet balances are not supported.</string>
 	<key>Inference key</key>
 	<string>Inference key</string>
 	<key>Key limit</key>
 	<string>Key limit</string>
+	<key>Key not working</key>
+	<string>Key not working</string>
+	<key>Key type: %@. %@</key>
+	<string>Key type: %@. %@</string>
+	<key>Limited key</key>
+	<string>Limited key</string>
+	<key>Manage keys</key>
+	<string>Manage keys</string>
+	<key>Management key</key>
+	<string>Management key</string>
 	<key>Menu bar monitor for AI coding usage limits.</key>
 	<string>Menu bar monitor for AI coding usage limits.</string>
 	<key>OpenRouter connect failed: key could not be saved</key>
 	<string>OpenRouter connect failed: key could not be saved</string>
+	<key>OpenRouter connected</key>
+	<string>OpenRouter connected</string>
 	<key>Or paste an API key</key>
 	<string>Or paste an API key</string>
 	<key>Provider endpoint research credits CodexBar by Peter Steinberger.</key>
 	<string>Provider endpoint research credits CodexBar by Peter Steinberger.</string>
+	<key>Reads prepaid balance only.</key>
+	<string>Reads prepaid balance only.</string>
 	<key>Report an issue</key>
 	<string>Report an issue</string>
+	<key>Shows your 5-hour and token quotas.</key>
+	<string>Shows your 5-hour and token quotas.</string>
+	<key>Spending capped — AgentMeter can read usage within this limit.</key>
+	<string>Spending capped — AgentMeter can read usage within this limit.</string>
+	<key>Standard API key</key>
+	<string>Standard API key</string>
+	<key>Standard key</key>
+	<string>Standard key</string>
+	<key>The key was rejected by Venice.</key>
+	<string>The key was rejected by Venice.</string>
+	<key>This API key lets apps use your OpenRouter credits up to a spending limit you set. AgentMeter only reads how much has been used; it cannot spend money or change your account. If you used Connect, OpenRouter created a dedicated key just for AgentMeter that you can revoke anytime.</key>
+	<string>This API key lets apps use your OpenRouter credits up to a spending limit you set. AgentMeter only reads how much has been used; it cannot spend money or change your account. If you used Connect, OpenRouter created a dedicated key just for AgentMeter that you can revoke anytime.</string>
+	<key>This API key lets apps use your OpenRouter credits. AgentMeter only reads usage; it cannot spend money or change your account. If you used Connect, OpenRouter created a dedicated key just for AgentMeter that you can revoke anytime.</key>
+	<string>This API key lets apps use your OpenRouter credits. AgentMeter only reads usage; it cannot spend money or change your account. If you used Connect, OpenRouter created a dedicated key just for AgentMeter that you can revoke anytime.</string>
+	<key>This key is tied to a GLM Coding Plan subscription. AgentMeter reads your time and token quotas (they reset every few hours). It cannot spend money, call models, or change your account.</key>
+	<string>This key is tied to a GLM Coding Plan subscription. AgentMeter reads your time and token quotas (they reset every few hours). It cannot spend money, call models, or change your account.</string>
+	<key>This key lets apps call DeepSeek models using your prepaid balance. AgentMeter only reads how much balance is left; it cannot spend money or change your account.</key>
+	<string>This key lets apps call DeepSeek models using your prepaid balance. AgentMeter only reads how much balance is left; it cannot spend money or change your account.</string>
+	<key>This key lets apps call Kimi models using your prepaid balance. AgentMeter only reads how much balance is left; it cannot spend money or change your account.</key>
+	<string>This key lets apps call Kimi models using your prepaid balance. AgentMeter only reads how much balance is left; it cannot spend money or change your account.</string>
 	<key>Usage</key>
 	<string>Usage</string>
+	<key>Valid key</key>
+	<string>Valid key</string>
+	<key>Valid key, but Z.ai only exposes usage for GLM Coding Plans</key>
+	<string>Valid key, but Z.ai only exposes usage for GLM Coding Plans</string>
 	<key>Venice API error: %@</key>
 	<string>Venice API error: %@</string>
 	<key>Venice API key</key>
 	<string>Venice API key</string>
+	<key>Venice did not accept this key. Try pasting it again, or create a new Inference or Admin key on Venice's website.</key>
+	<string>Venice did not accept this key. Try pasting it again, or create a new Inference or Admin key on Venice's website.</string>
+	<key>Verification failed — your key may still work.</key>
+	<string>Verification failed — your key may still work.</string>
 	<key>Version %@</key>
 	<string>Version %@</string>
 	<key>Waiting for browser authorization…</key>
 	<string>Waiting for browser authorization…</string>
 	<key>Website &amp; source code</key>
 	<string>Website &amp; source code</string>
+	<key>Works for usage monitoring.</key>
+	<string>Works for usage monitoring.</string>
+	<key>Your key is valid, but Z.ai does not publish usage or balance data for pay-as-you-go API keys. AgentMeter can only show numbers for GLM Coding Plan keys. Your key is fine for calling models — AgentMeter just has nothing to display.</key>
+	<string>Your key is valid, but Z.ai does not publish usage or balance data for pay-as-you-go API keys. AgentMeter can only show numbers for GLM Coding Plan keys. Your key is fine for calling models — AgentMeter just has nothing to display.</string>
 	<key>Z.ai API returned code %lld</key>
 	<string>Z.ai API returned code %lld</string>
 	<key>Z.ai API returned code %lld: %@</key>
@@ -48,5 +142,17 @@
 	<string>Z.ai key is valid, but this account has no GLM Coding Plan</string>
 	<key>Z.ai monitoring supports GLM Coding Plans only. Standard API billing and balance are not available through an API.</key>
 	<string>Z.ai monitoring supports GLM Coding Plans only. Standard API billing and balance are not available through an API.</string>
+	<key>data is stale</key>
+	<string>data is stale</string>
+	<key>error</key>
+	<string>error</string>
+	<key>high usage</key>
+	<string>high usage</string>
+	<key>loading</key>
+	<string>loading</string>
+	<key>low balance</key>
+	<string>low balance</string>
+	<key>nearly used up</key>
+	<string>nearly used up</string>
 </dict>
 </plist>

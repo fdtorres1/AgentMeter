@@ -3,6 +3,29 @@
 All notable changes to AgentMeter. Format follows [Keep a Changelog](https://keepachangelog.com);
 versions follow semantic-ish `MAJOR.MINOR.PATCH`.
 
+## [1.8.0] — 2026-07-23
+
+### Added
+- VoiceOver support for the menu bar item: the rendered title now carries a
+  spoken summary ("AgentMeter. Codex: 25% used. Cursor: 82% used, high
+  usage…") in all display styles, including icon-only mode.
+- Usage meters, balance rows, and provider sections are proper accessibility
+  elements with spoken labels, values, reset times, and severity qualifiers
+  ("high usage", "nearly used up", "low balance", "data is stale") that
+  respect the used/remaining display setting.
+- Severity is no longer color-only: meters and low balances show a small
+  warning/critical symbol alongside the tinted bar and text.
+- VoiceOver announcements for key actions: diagnostics copied, API key
+  saved/removed, OpenRouter connected or failed.
+- Copy Diagnostics now confirms visually with a checkmark.
+
+### Changed
+- Provider dashboard names and footer controls expose proper link/button
+  semantics, tooltips, and accessibility labels.
+- Disabled alert pickers explain that notifications must be enabled first.
+- Low-balance tinting in the dropdown now follows the alert threshold setting
+  instead of a hardcoded $5.
+
 ## [1.7.0] — 2026-07-23
 
 ### Added

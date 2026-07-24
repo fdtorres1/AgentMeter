@@ -56,8 +56,14 @@ private struct GeneralSettingsTab: View {
                 .pickerStyle(.menu)
             }
             Section {
-                Button(diagnosticsCopied ? L("Copied") : L("Copy Diagnostics")) {
+                Button {
                     copyDiagnostics()
+                } label: {
+                    if diagnosticsCopied {
+                        Label(L("Copied"), systemImage: "checkmark")
+                    } else {
+                        Text(L("Copy Diagnostics"))
+                    }
                 }
             } footer: {
                 Text(L("Copies redacted troubleshooting info to the clipboard — never includes keys or tokens."))
@@ -79,6 +85,7 @@ private struct GeneralSettingsTab: View {
         NSPasteboard.general.clearContents()
         NSPasteboard.general.setString(report, forType: .string)
         diagnosticsCopied = true
+        AccessibilityNotification.Announcement(L("Diagnostics copied")).post()
         Task {
             try? await Task.sleep(for: .seconds(2))
             diagnosticsCopied = false
@@ -232,6 +239,16 @@ private struct ProviderCredentialSection: View {
                 }
                 hasKey = connected
             }
+            .onChange(of: openRouterAuth.status) { _, newStatus in
+                switch newStatus {
+                case .connected:
+                    AccessibilityNotification.Announcement(L("OpenRouter connected")).post()
+                case .failed:
+                    AccessibilityNotification.Announcement(L("Connection failed")).post()
+                case .idle, .connecting:
+                    break
+                }
+            }
         }
     }
 
@@ -243,12 +260,14 @@ private struct ProviderCredentialSection: View {
         hasKey = true
         assessmentGeneration += 1
         store.refresh()
+        AccessibilityNotification.Announcement(L("API key saved")).post()
     }
 
     private func removeKey() {
         KeychainStore.delete(provider.keychainAccount)
         hasKey = false
         store.refresh()
+        AccessibilityNotification.Announcement(L("API key removed")).post()
     }
 }
 
@@ -380,6 +399,10 @@ private struct AlertsSettingsTab: View {
                 }
                 .pickerStyle(.segmented)
                 .disabled(!settings.notificationsEnabled)
+                .modifier(DisabledControlAccessibilityHint(
+                    isDisabled: !settings.notificationsEnabled,
+                    hint: L("Enable notifications to change this.")
+                ))
 
                 Picker(L("Balance alert below"), selection: $settings.balanceNotificationThreshold) {
                     ForEach(SettingsStore.balanceThresholdOptions, id: \.self) { value in
@@ -388,6 +411,10 @@ private struct AlertsSettingsTab: View {
                 }
                 .pickerStyle(.segmented)
                 .disabled(!settings.notificationsEnabled)
+                .modifier(DisabledControlAccessibilityHint(
+                    isDisabled: !settings.notificationsEnabled,
+                    hint: L("Enable notifications to change this.")
+                ))
             } footer: {
                 Text(countsDown
                     ? L("One notification per limit window, re-armed when the window resets. \"20% left\" is the same alert as \"80% used\" — it follows your Display setting.")
@@ -398,5 +425,18 @@ private struct AlertsSettingsTab: View {
             }
         }
         .formStyle(.grouped)
+    }
+}
+
+private struct DisabledControlAccessibilityHint: ViewModifier {
+    let isDisabled: Bool
+    let hint: String
+
+    func body(content: Content) -> some View {
+        if isDisabled {
+            content.accessibilityHint(hint)
+        } else {
+            content
+        }
     }
 }

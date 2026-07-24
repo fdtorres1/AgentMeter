@@ -1,6 +1,22 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "AgentMeter": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AgentMeter"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AgentMeter"
+          }
+        }
+      }
+    },
     "% left": {
       "localizations": {
         "es": {
@@ -17,6 +33,54 @@
           "stringUnit": {
             "state": "translated",
             "value": "% usado"
+          }
+        }
+      }
+    },
+    "%@ balance": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ balance"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "saldo de %@"
+          }
+        }
+      }
+    },
+    "%@, %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, %@"
+          }
+        }
+      }
+    },
+    "%@: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@: %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@: %@"
           }
         }
       }
@@ -107,6 +171,38 @@
         }
       }
     },
+    "%lld%% remaining": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld%% remaining"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld%% restante"
+          }
+        }
+      }
+    },
+    "%lld%% used": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld%% used"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld%% usado"
+          }
+        }
+      }
+    },
     "%lld%% left": {
       "localizations": {
         "es": {
@@ -193,6 +289,38 @@
           "stringUnit": {
             "state": "translated",
             "value": "Clave de API"
+          }
+        }
+      }
+    },
+    "API key removed": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "API key removed"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clave API eliminada"
+          }
+        }
+      }
+    },
+    "API key saved": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "API key saved"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clave API guardada"
           }
         }
       }
@@ -389,6 +517,22 @@
         }
       }
     },
+    "Connection failed": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connection failed"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conexión fallida"
+          }
+        }
+      }
+    },
     "Connect…": {
       "localizations": {
         "es": {
@@ -529,6 +673,22 @@
         }
       }
     },
+    "Diagnostics copied": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diagnostics copied"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diagnóstico copiado"
+          }
+        }
+      }
+    },
     "Disconnect": {
       "localizations": {
         "es": {
@@ -555,6 +715,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Exacto"
+          }
+        }
+      }
+    },
+    "Enable notifications to change this.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enable notifications to change this."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Activa las notificaciones para cambiar esto."
           }
         }
       }
@@ -911,6 +1087,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Una notificación por ventana de límite, reactivada cuando la ventana se restablece. Las alertas de saldo aplican a proveedores de pago por uso."
+          }
+        }
+      }
+    },
+    "OpenRouter connected": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenRouter connected"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenRouter conectado"
           }
         }
       }
@@ -2149,6 +2341,102 @@
           "stringUnit": {
             "state": "translated",
             "value": "Funciona para monitorear el uso."
+          }
+        }
+      }
+    },
+    "data is stale": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "data is stale"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "los datos están desactualizados"
+          }
+        }
+      }
+    },
+    "error": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "error"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "error"
+          }
+        }
+      }
+    },
+    "high usage": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "high usage"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "uso elevado"
+          }
+        }
+      }
+    },
+    "loading": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "loading"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "cargando"
+          }
+        }
+      }
+    },
+    "low balance": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "low balance"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "saldo bajo"
+          }
+        }
+      }
+    },
+    "nearly used up": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "nearly used up"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "casi agotado"
           }
         }
       }

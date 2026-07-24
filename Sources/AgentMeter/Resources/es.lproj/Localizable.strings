@@ -8,6 +8,8 @@
 	<string>% usado</string>
 	<key>%@ at %@%%</key>
 	<string>%@ al %@%%</string>
+	<key>%@ balance</key>
+	<string>saldo de %@</string>
 	<key>%@ balance alert</key>
 	<string>Alerta de saldo de %@</string>
 	<key>%@ usage alert</key>
@@ -20,10 +22,18 @@
 	<string>%@%@ usado</string>
 	<key>%@%@ used all-time</key>
 	<string>%@%@ usados en total</string>
+	<key>%@, %@</key>
+	<string>%@, %@</string>
+	<key>%@: %@</key>
+	<string>%@: %@</string>
 	<key>%lld%%</key>
 	<string>%lld%%</string>
 	<key>%lld%% left</key>
 	<string>%lld%% restante</string>
+	<key>%lld%% remaining</key>
+	<string>%lld%% restante</string>
+	<key>%lld%% used</key>
+	<string>%lld%% usado</string>
 	<key>%lldd limit</key>
 	<string>Límite de %lld d</string>
 	<key>%lldh limit</key>
@@ -38,12 +48,26 @@
 	<string>5 minutos</string>
 	<key>5h limit</key>
 	<string>Límite de 5 h</string>
+	<key>A management key can control your whole OpenRouter account, including creating and deleting other API keys. AgentMeter only reads usage and balance — it cannot spend credits or change anything. A regular API key is safer; use Connect to get a dedicated key for AgentMeter that you can revoke anytime.</key>
+	<string>Una clave de administración puede controlar toda tu cuenta de OpenRouter, incluida la creación y eliminación de otras claves API. AgentMeter solo lee el uso y el saldo; no puede gastar créditos ni cambiar nada. Una clave API normal es más segura; usa Conectar para obtener una clave dedicada para AgentMeter que puedas revocar en cualquier momento.</string>
 	<key>API key</key>
 	<string>Clave de API</string>
+	<key>API key removed</key>
+	<string>Clave API eliminada</string>
+	<key>API key saved</key>
+	<string>Clave API guardada</string>
 	<key>API usage</key>
 	<string>Uso de API</string>
 	<key>About AgentMeter</key>
 	<string>Acerca de AgentMeter</string>
+	<key>About this key</key>
+	<string>Acerca de esta clave</string>
+	<key>Admin key</key>
+	<string>Clave de administrador</string>
+	<key>AgentMeter</key>
+	<string>AgentMeter</string>
+	<key>AgentMeter could not reach the provider to check this key. That is usually a network issue or a temporary API change. Your saved key was not removed.</key>
+	<string>AgentMeter no pudo contactar al proveedor para verificar esta clave. Suele ser un problema de red o un cambio temporal en la API. Tu clave guardada no se eliminó.</string>
 	<key>Alert when remaining falls below</key>
 	<string>Avisar cuando lo restante baje de</string>
 	<key>Alert when usage crosses threshold</key>
@@ -52,6 +76,12 @@
 	<string>Avisar cuando el uso alcance</string>
 	<key>Alerts</key>
 	<string>Alertas</string>
+	<key>An Admin key can see billing details and manage other keys. AgentMeter only reads your balance; it cannot spend credits or change settings. An Inference key is safer and also works with AgentMeter.</key>
+	<string>Una clave de administrador puede ver detalles de facturación y administrar otras claves. AgentMeter solo lee tu saldo; no puede gastar créditos ni cambiar la configuración. Una clave de inferencia es más segura y también funciona con AgentMeter.</string>
+	<key>An Admin key shows richer billing detail but is more powerful — only switch if you need that extra detail.</key>
+	<string>Una clave de administrador muestra más detalle de facturación, pero es más poderosa — cámbiala solo si necesitas ese detalle extra.</string>
+	<key>An Inference key is the safer default — it lets apps run models but limits access to billing and key management. AgentMeter only reads your balance through a read-only endpoint; it cannot spend credits.</key>
+	<string>Una clave de inferencia es la opción más segura por defecto: permite que las apps ejecuten modelos, pero limita el acceso a facturación y administración de claves. AgentMeter solo lee tu saldo mediante un punto de acceso de solo lectura; no puede gastar créditos.</string>
 	<key>Anthropic rate-limited the usage request</key>
 	<string>Anthropic limitó la solicitud de uso</string>
 	<key>Anthropic returned HTTP %lld</key>
@@ -66,8 +96,12 @@
 	<string>Saldo</string>
 	<key>Balance alert below</key>
 	<string>Alerta de saldo por debajo de</string>
+	<key>Balance works through the limited rate-limits endpoint.</key>
+	<string>El saldo funciona a través del punto de acceso limitado de límites de uso.</string>
 	<key>Check for Updates…</key>
 	<string>Buscar actualizaciones…</string>
+	<key>Checking key…</key>
+	<string>Verificando clave…</string>
 	<key>Claude token refresh failed (HTTP %lld)</key>
 	<string>Error al actualizar el token de Claude (HTTP %lld)</string>
 	<key>Compact (worst only)</key>
@@ -76,6 +110,8 @@
 	<string>Barra de menús compacta (solo el peor)</string>
 	<key>Connected</key>
 	<string>Conectado</string>
+	<key>Connection failed</key>
+	<string>Conexión fallida</string>
 	<key>Connect…</key>
 	<string>Conectar…</string>
 	<key>Copied</key>
@@ -86,6 +122,8 @@
 	<string>Copiar diagnóstico</string>
 	<key>Could not read session file</key>
 	<string>No se pudo leer el archivo de sesión</string>
+	<key>Couldn't check key</key>
+	<string>No se pudo verificar la clave</string>
 	<key>Count direction</key>
 	<string>Dirección del conteo</string>
 	<key>Credits</key>
@@ -104,10 +142,14 @@
 	<string>DeepSeek devolvió HTTP %lld</string>
 	<key>Detected</key>
 	<string>Detectado</string>
+	<key>Diagnostics copied</key>
+	<string>Diagnóstico copiado</string>
 	<key>Disconnect</key>
 	<string>Desconectar</string>
 	<key>Display</key>
 	<string>Visualización</string>
+	<key>Enable notifications to change this.</key>
+	<string>Activa las notificaciones para cambiar esto.</string>
 	<key>Exact</key>
 	<string>Exacto</string>
 	<key>Failed to parse Venice response: %@</key>
@@ -118,8 +160,14 @@
 	<string>Flash-Lite (24 h)</string>
 	<key>Full</key>
 	<string>Completo</string>
+	<key>Full access including billing and key management.</key>
+	<string>Acceso completo, incluida la facturación y la administración de claves.</string>
+	<key>Full account access — more powerful than AgentMeter needs.</key>
+	<string>Acceso completo a la cuenta — más poderoso de lo que AgentMeter necesita.</string>
 	<key>GLM Coding Plan API key</key>
 	<string>Clave de API del plan GLM Coding</string>
+	<key>GLM Coding Plan key</key>
+	<string>Clave de plan GLM Coding</string>
 	<key>General</key>
 	<string>General</string>
 	<key>Get key</key>
@@ -136,14 +184,24 @@
 	<string>Clave de inferencia</string>
 	<key>Key limit</key>
 	<string>Límite de la clave</string>
+	<key>Key not working</key>
+	<string>Clave no funciona</string>
+	<key>Key type: %@. %@</key>
+	<string>Tipo de clave: %@. %@</string>
 	<key>Kimi key rejected — check the key in Settings</key>
 	<string>Clave de Kimi rechazada — revisa la clave en Ajustes</string>
 	<key>Kimi returned HTTP %lld</key>
 	<string>Kimi devolvió HTTP %lld</string>
 	<key>Launch at Login</key>
 	<string>Abrir al iniciar sesión</string>
+	<key>Limited key</key>
+	<string>Clave limitada</string>
 	<key>Loading…</key>
 	<string>Cargando…</string>
+	<key>Manage keys</key>
+	<string>Administrar claves</string>
+	<key>Management key</key>
+	<string>Clave de administración</string>
 	<key>Menu bar monitor for AI coding usage limits.</key>
 	<string>Monitor de límites de uso de IA para programación en la barra de menús.</string>
 	<key>Menu bar style</key>
@@ -180,6 +238,8 @@
 	<string>Error al conectar OpenRouter: intercambio de clave rechazado</string>
 	<key>OpenRouter connect failed: missing code</key>
 	<string>Error al conectar OpenRouter: falta el código</string>
+	<key>OpenRouter connected</key>
+	<string>OpenRouter conectado</string>
 	<key>OpenRouter key rejected — reconnect in Settings</key>
 	<string>Clave de OpenRouter rechazada — vuelve a conectar en Ajustes</string>
 	<key>OpenRouter returned HTTP %lld</key>
@@ -196,6 +256,8 @@
 	<string>Proveedores</string>
 	<key>Quit</key>
 	<string>Salir</string>
+	<key>Reads prepaid balance only.</key>
+	<string>Solo lee el saldo prepagado.</string>
 	<key>Refresh</key>
 	<string>Actualizar</string>
 	<key>Refresh interval</key>
@@ -216,14 +278,34 @@
 	<string>Ajustes…</string>
 	<key>Show in menu bar</key>
 	<string>Mostrar en la barra de menús</string>
+	<key>Shows your 5-hour and token quotas.</key>
+	<string>Muestra tus cuotas de 5 horas y de tokens.</string>
+	<key>Spending capped — AgentMeter can read usage within this limit.</key>
+	<string>Gasto limitado — AgentMeter puede leer el uso dentro de este límite.</string>
 	<key>Stale since %@</key>
 	<string>Obsoleto desde %@</string>
+	<key>Standard API key</key>
+	<string>Clave API estándar</string>
+	<key>Standard key</key>
+	<string>Clave estándar</string>
 	<key>Status</key>
 	<string>Estado</string>
 	<key>Support ♥</key>
 	<string>Apoyar ♥</string>
 	<key>Team pool</key>
 	<string>Pool del equipo</string>
+	<key>The key was rejected by Venice.</key>
+	<string>Venice rechazó la clave.</string>
+	<key>This API key lets apps use your OpenRouter credits up to a spending limit you set. AgentMeter only reads how much has been used; it cannot spend money or change your account. If you used Connect, OpenRouter created a dedicated key just for AgentMeter that you can revoke anytime.</key>
+	<string>Esta clave API permite que las apps usen tus créditos de OpenRouter hasta un límite de gasto que tú defines. AgentMeter solo lee cuánto se ha usado; no puede gastar dinero ni cambiar tu cuenta. Si usaste Conectar, OpenRouter creó una clave dedicada solo para AgentMeter que puedes revocar en cualquier momento.</string>
+	<key>This API key lets apps use your OpenRouter credits. AgentMeter only reads usage; it cannot spend money or change your account. If you used Connect, OpenRouter created a dedicated key just for AgentMeter that you can revoke anytime.</key>
+	<string>Esta clave API permite que las apps usen tus créditos de OpenRouter. AgentMeter solo lee el uso; no puede gastar dinero ni cambiar tu cuenta. Si usaste Conectar, OpenRouter creó una clave dedicada solo para AgentMeter que puedes revocar en cualquier momento.</string>
+	<key>This key is tied to a GLM Coding Plan subscription. AgentMeter reads your time and token quotas (they reset every few hours). It cannot spend money, call models, or change your account.</key>
+	<string>Esta clave está vinculada a una suscripción GLM Coding Plan. AgentMeter lee tus cuotas de tiempo y de tokens (se restablecen cada pocas horas). No puede gastar dinero, llamar modelos ni cambiar tu cuenta.</string>
+	<key>This key lets apps call DeepSeek models using your prepaid balance. AgentMeter only reads how much balance is left; it cannot spend money or change your account.</key>
+	<string>Esta clave permite que las apps llamen modelos de DeepSeek usando tu saldo prepagado. AgentMeter solo lee cuánto saldo queda; no puede gastar dinero ni cambiar tu cuenta.</string>
+	<key>This key lets apps call Kimi models using your prepaid balance. AgentMeter only reads how much balance is left; it cannot spend money or change your account.</key>
+	<string>Esta clave permite que las apps llamen modelos de Kimi usando tu saldo prepagado. AgentMeter solo lee cuánto saldo queda; no puede gastar dinero ni cambiar tu cuenta.</string>
 	<key>Time quota</key>
 	<string>Cuota de tiempo</string>
 	<key>Token quota</key>
@@ -248,14 +330,22 @@
 	<string>Actualizado %@</string>
 	<key>Usage</key>
 	<string>Uso</string>
+	<key>Valid key</key>
+	<string>Clave válida</string>
+	<key>Valid key, but Z.ai only exposes usage for GLM Coding Plans</key>
+	<string>Clave válida, pero Z.ai solo expone el uso para planes GLM Coding</string>
 	<key>Venice API error: %@</key>
 	<string>Error de la API de Venice: %@</string>
 	<key>Venice API key</key>
 	<string>Clave de API de Venice</string>
+	<key>Venice did not accept this key. Try pasting it again, or create a new Inference or Admin key on Venice's website.</key>
+	<string>Venice no aceptó esta clave. Intenta pegarla de nuevo o crea una nueva clave de inferencia o de administrador en el sitio web de Venice.</string>
 	<key>Venice key rejected — check the key in Settings</key>
 	<string>Clave de Venice rechazada — revisa la clave en Ajustes</string>
 	<key>Venice returned HTTP %lld</key>
 	<string>Venice devolvió HTTP %lld</string>
+	<key>Verification failed — your key may still work.</key>
+	<string>La verificación falló — tu clave puede seguir funcionando.</string>
 	<key>Version %@</key>
 	<string>Versión %@</string>
 	<key>Waiting for browser authorization…</key>
@@ -268,6 +358,10 @@
 	<string>Límite semanal</string>
 	<key>Window</key>
 	<string>Ventana</string>
+	<key>Works for usage monitoring.</key>
+	<string>Funciona para monitorear el uso.</string>
+	<key>Your key is valid, but Z.ai does not publish usage or balance data for pay-as-you-go API keys. AgentMeter can only show numbers for GLM Coding Plan keys. Your key is fine for calling models — AgentMeter just has nothing to display.</key>
+	<string>Tu clave es válida, pero Z.ai no publica datos de uso ni de saldo para claves API de pago por uso. AgentMeter solo puede mostrar números para claves de planes GLM Coding. Tu clave sirve para llamar modelos — AgentMeter simplemente no tiene nada que mostrar.</string>
 	<key>Z.ai API returned code %lld</key>
 	<string>La API de Z.ai devolvió el código %lld</string>
 	<key>Z.ai API returned code %lld: %@</key>
@@ -282,10 +376,22 @@
 	<string>Z.ai devolvió HTTP %lld</string>
 	<key>cursor.com returned HTTP %lld</key>
 	<string>cursor.com devolvió HTTP %lld</string>
+	<key>data is stale</key>
+	<string>los datos están desactualizados</string>
+	<key>error</key>
+	<string>error</string>
+	<key>high usage</key>
+	<string>uso elevado</string>
 	<key>key exchange rejected</key>
 	<string>intercambio de clave rechazado</string>
+	<key>loading</key>
+	<string>cargando</string>
+	<key>low balance</key>
+	<string>saldo bajo</string>
 	<key>missing code</key>
 	<string>falta el código</string>
+	<key>nearly used up</key>
+	<string>casi agotado</string>
 	<key>resets %@</key>
 	<string>se restablece %@</string>
 	<key>resets in %@d %@h</key>
