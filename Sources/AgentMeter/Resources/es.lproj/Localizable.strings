@@ -148,6 +148,8 @@
 	<string>Desconectar</string>
 	<key>Display</key>
 	<string>Visualización</string>
+	<key>Enable agent &amp; CLI access</key>
+	<string>Activar acceso para agentes y CLI</string>
 	<key>Enable notifications to change this.</key>
 	<string>Activa las notificaciones para cambiar esto.</string>
 	<key>Exact</key>
@@ -330,6 +332,8 @@
 	<string>Actualizado %@</string>
 	<key>Usage</key>
 	<string>Uso</string>
+	<key>Usage Details</key>
+	<string>Detalles de uso</string>
 	<key>Valid key</key>
 	<string>Clave válida</string>
 	<key>Valid key, but Z.ai only exposes usage for GLM Coding Plans</key>
@@ -360,6 +364,8 @@
 	<string>Ventana</string>
 	<key>Works for usage monitoring.</key>
 	<string>Funciona para monitorear el uso.</string>
+	<key>Writes a machine-readable usage snapshot (never credentials) to Application Support for the agentmeter command-line tool and other local agents.</key>
+	<string>Escribe una instantánea de uso legible por máquina (nunca credenciales) en Application Support para la herramienta de línea de comandos agentmeter y otros agentes locales.</string>
 	<key>Your key is valid, but Z.ai does not publish usage or balance data for pay-as-you-go API keys. AgentMeter can only show numbers for GLM Coding Plan keys. Your key is fine for calling models — AgentMeter just has nothing to display.</key>
 	<string>Tu clave es válida, pero Z.ai no publica datos de uso ni de saldo para claves API de pago por uso. AgentMeter solo puede mostrar números para claves de planes GLM Coding. Tu clave sirve para llamar modelos — AgentMeter simplemente no tiene nada que mostrar.</string>
 	<key>Z.ai API returned code %lld</key>

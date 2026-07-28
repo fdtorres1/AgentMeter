@@ -27,6 +27,10 @@ rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources" "$APP/Contents/Frameworks"
 
 cp ".build/release/${APP_NAME}" "$APP/Contents/MacOS/${APP_NAME}"
+# CLI ships in Helpers/ (not MacOS/) because "agentmeter" and "AgentMeter"
+# collide on case-insensitive filesystems.
+mkdir -p "$APP/Contents/Helpers"
+cp ".build/release/agentmeter-cli" "$APP/Contents/Helpers/agentmeter"
 if [[ -d ".build/release/AgentMeter_AgentMeter.bundle" ]]; then
     cp -R ".build/release/AgentMeter_AgentMeter.bundle" "$APP/Contents/Resources/"
 fi
@@ -100,6 +104,7 @@ PLIST
 # --deep is discouraged, so sign inside-out.
 if [[ "$SIGN_IDENTITY" == "-" ]]; then
     codesign --force --sign - "$APP/Contents/Frameworks/Sparkle.framework"
+    codesign --force --sign - "$APP/Contents/Helpers/agentmeter"
     codesign --force --sign - "$APP"
 else
     for xpc in "$APP/Contents/Frameworks/Sparkle.framework/Versions/B/XPCServices/"*.xpc; do
@@ -109,6 +114,8 @@ else
         "$APP/Contents/Frameworks/Sparkle.framework/Versions/B/Autoupdate" \
         "$APP/Contents/Frameworks/Sparkle.framework/Versions/B/Updater.app" \
         "$APP/Contents/Frameworks/Sparkle.framework"
+    codesign --force --options runtime --timestamp --sign "$SIGN_IDENTITY" \
+        "$APP/Contents/Helpers/agentmeter"
     codesign --force --options runtime --timestamp --sign "$SIGN_IDENTITY" "$APP"
 fi
 

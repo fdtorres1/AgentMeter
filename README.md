@@ -55,6 +55,9 @@ Codex also refreshes instantly after CLI activity via a file watcher.
   per-provider summary, meters announce values and severity, and warning
   states show symbols, not just color.
 - **Stays current** — Sparkle auto-updates from signed, notarized releases.
+- **Your agents can read it too** — an opt-in, read-only JSON snapshot plus an
+  `agentmeter` CLI let scripts and coding agents check remaining quota before
+  starting a big task. See [docs/AGENT_INTERFACE.md](docs/AGENT_INTERFACE.md).
 
 ## Privacy and trust
 
@@ -102,6 +105,26 @@ open AgentMeter.app
 ```
 
 Use the "Launch at Login" toggle in Settings → General to start it automatically.
+
+## Agent & CLI access
+
+Turn on **Settings → General → Enable agent & CLI access** and AgentMeter
+writes a machine-readable snapshot (usage numbers only — never credentials) to
+`~/Library/Application Support/AgentMeter/status.json` after each refresh. The
+bundled CLI reads it:
+
+```bash
+agentmeter status          # human-readable table
+agentmeter status --json   # stable, versioned JSON for scripts/agents
+agentmeter refresh --wait 15
+agentmeter doctor          # redacted troubleshooting report
+```
+
+Homebrew puts `agentmeter` on your PATH; manual installs can symlink
+`/Applications/AgentMeter.app/Contents/Helpers/agentmeter`. The app remains the
+only process that touches credentials or provider APIs — the CLI is a thin,
+read-only client. Full schema and security model in
+[docs/AGENT_INTERFACE.md](docs/AGENT_INTERFACE.md).
 
 ## Project layout
 

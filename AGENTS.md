@@ -17,8 +17,14 @@ https://github.com/fdtorres1/AgentMeter
 - `MenuContent`: dropdown UI + inline settings panel. Menu bar title is built
   in `UsageStore.menuBarTitle`, e.g. `Cx 5% · Cu 20%` (worst window per
   provider).
-- `UpdateChecker`: compares `CFBundleShortVersionString` against the latest
-  GitHub release tag.
+- Agent/CLI interface (v1.9.0): opt-in `status.json` snapshot in Application
+  Support written by `StatusSnapshotWriter` after each refresh; shared schema
+  lives in the `AgentMeterStatusKit` library target; `agentmeter-cli` is a
+  read-only executable product installed as `Contents/Helpers/agentmeter`.
+  GOTCHA: the product MUST stay named `agentmeter-cli` and ship in `Helpers/`
+  — "agentmeter" and "AgentMeter" clobber each other on case-insensitive APFS
+  (both in `.build/release/` and in `Contents/MacOS/`). Schema doc:
+  docs/AGENT_INTERFACE.md (additive changes only within schemaVersion 1).
 
 ## Provider data sources (validated formats)
 
@@ -109,7 +115,8 @@ Steps (bump `X.Y.Z`, keep `CHANGELOG.md` updated first):
    — BOTH assets; the app's SUFeedURL is `releases/latest/download/appcast.xml`.
 5. Bump the Homebrew cask in the separate repo `fdtorres1/homebrew-tap`
    (`/tmp/homebrew-tap` clone): update `version` + `sha256`
-   (`shasum -a 256 AgentMeter.zip`), commit, push.
+   (`shasum -a 256 AgentMeter.zip`), commit, push. The cask has a `binary`
+   stanza for `Contents/Helpers/agentmeter` (added in 1.9.0) — keep it.
 6. Install locally to verify (`cp -R AgentMeter.app /Applications/`), tick the
    roadmap (issue #1), close the milestone.
 

@@ -48,6 +48,8 @@
 	<string>Couldn't check key</string>
 	<key>Diagnostics copied</key>
 	<string>Diagnostics copied</string>
+	<key>Enable agent &amp; CLI access</key>
+	<string>Enable agent &amp; CLI access</string>
 	<key>Enable notifications to change this.</key>
 	<string>Enable notifications to change this.</string>
 	<key>Failed to parse Venice response: %@</key>
@@ -112,6 +114,8 @@
 	<string>This key lets apps call Kimi models using your prepaid balance. AgentMeter only reads how much balance is left; it cannot spend money or change your account.</string>
 	<key>Usage</key>
 	<string>Usage</string>
+	<key>Usage Details</key>
+	<string>Usage Details</string>
 	<key>Valid key</key>
 	<string>Valid key</string>
 	<key>Valid key, but Z.ai only exposes usage for GLM Coding Plans</key>
@@ -132,6 +136,8 @@
 	<string>Website &amp; source code</string>
 	<key>Works for usage monitoring.</key>
 	<string>Works for usage monitoring.</string>
+	<key>Writes a machine-readable usage snapshot (never credentials) to Application Support for the agentmeter command-line tool and other local agents.</key>
+	<string>Writes a machine-readable usage snapshot (never credentials) to Application Support for the agentmeter command-line tool and other local agents.</string>
 	<key>Your key is valid, but Z.ai does not publish usage or balance data for pay-as-you-go API keys. AgentMeter can only show numbers for GLM Coding Plan keys. Your key is fine for calling models — AgentMeter just has nothing to display.</key>
 	<string>Your key is valid, but Z.ai does not publish usage or balance data for pay-as-you-go API keys. AgentMeter can only show numbers for GLM Coding Plan keys. Your key is fine for calling models — AgentMeter just has nothing to display.</string>
 	<key>Z.ai API returned code %lld</key>

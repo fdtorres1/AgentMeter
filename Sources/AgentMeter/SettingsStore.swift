@@ -59,6 +59,15 @@ final class SettingsStore: ObservableObject {
         didSet { defaults.set(menuBarStyle.rawValue, forKey: Keys.menuBarStyle) }
     }
 
+    @Published var agentAccessEnabled: Bool {
+        didSet {
+            defaults.set(agentAccessEnabled, forKey: Keys.agentAccessEnabled)
+            if !agentAccessEnabled {
+                StatusSnapshotWriter.deleteSnapshotFile()
+            }
+        }
+    }
+
     private let defaults: UserDefaults
     private var modeCache: [String: ProviderMode] = [:]
     private var menuBarCache: [String: Bool] = [:]
@@ -80,6 +89,7 @@ final class SettingsStore: ObservableObject {
         static let resetTimeStyle = "resetTimeStyle"
         static let balanceNotificationThreshold = "balanceNotificationThreshold"
         static let menuBarStyle = "menuBarStyle"
+        static let agentAccessEnabled = "agentAccessEnabled"
         static let compactMenuBar = "compactMenuBar"
         static func mode(_ id: String) -> String { "provider.\(id).mode" }
         static func inMenuBar(_ id: String) -> String { "provider.\(id).inMenuBar" }
@@ -111,6 +121,7 @@ final class SettingsStore: ObservableObject {
         } else {
             self.menuBarStyle = .full
         }
+        self.agentAccessEnabled = defaults.bool(forKey: Keys.agentAccessEnabled)
     }
 
     func mode(for providerID: String) -> ProviderMode {

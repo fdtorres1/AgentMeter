@@ -42,6 +42,18 @@ private struct GeneralSettingsTab: View {
                     .onChange(of: launchAtLogin) { _, enabled in setLaunchAtLogin(enabled) }
             }
             Section {
+                Toggle(L("Enable agent & CLI access"), isOn: $settings.agentAccessEnabled)
+                    .onChange(of: settings.agentAccessEnabled) { _, enabled in
+                        if enabled {
+                            StatusSnapshotWriter.writeIfEnabled(store: store, settings: settings)
+                        }
+                    }
+            } footer: {
+                Text(L("Writes a machine-readable usage snapshot (never credentials) to Application Support for the agentmeter command-line tool and other local agents."))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            Section {
                 Picker(L("Refresh interval"), selection: Binding(
                     get: { settings.refreshInterval },
                     set: { newValue in

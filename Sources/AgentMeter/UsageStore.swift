@@ -21,6 +21,7 @@ final class UsageStore: ObservableObject {
 
     private var credentialsObserver: NSObjectProtocol?
     private var wakeObserver: NSObjectProtocol?
+    private var refreshRequestObserver: NSObjectProtocol?
 
     init(settings: SettingsStore, providers: [any UsageProvider] = UsageStore.defaultProviders) {
         self.settings = settings
@@ -39,6 +40,13 @@ final class UsageStore: ObservableObject {
         }
         wakeObserver = NSWorkspace.shared.notificationCenter.addObserver(
             forName: NSWorkspace.didWakeNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor in self?.refresh() }
+        }
+        refreshRequestObserver = NotificationCenter.default.addObserver(
+            forName: .agentMeterRefreshRequested,
             object: nil,
             queue: .main
         ) { [weak self] _ in
@@ -63,6 +71,9 @@ final class UsageStore: ObservableObject {
         if let wakeObserver {
             NSWorkspace.shared.notificationCenter.removeObserver(wakeObserver)
         }
+        if let refreshRequestObserver {
+            NotificationCenter.default.removeObserver(refreshRequestObserver)
+        }
     }
 
     func rescheduleTimer() {
@@ -86,11 +97,17 @@ final class UsageStore: ObservableObject {
     }
 
     func refresh() {
-        for provider in visibleProviders {
-            Task { await refreshProvider(provider) }
-        }
+        let providers = visibleProviders
         watchNewestCodexSession()
         lastRefreshed = Date()
+        Task {
+            await withTaskGroup(of: Void.self) { group in
+                for provider in providers {
+                    group.addTask { await self.refreshProvider(provider) }
+                }
+            }
+            StatusSnapshotWriter.writeIfEnabled(store: self, settings: settings)
+        }
     }
 
     private func refreshProvider(_ provider: any UsageProvider) async {

@@ -719,6 +719,22 @@
         }
       }
     },
+    "Enable agent & CLI access": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enable agent & CLI access"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Activar acceso para agentes y CLI"
+          }
+        }
+      }
+    },
     "Enable notifications to change this.": {
       "localizations": {
         "en": {
@@ -1507,6 +1523,22 @@
         }
       }
     },
+    "Usage Details": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usage Details"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Detalles de uso"
+          }
+        }
+      }
+    },
     "Venice API error: %@": {
       "localizations": {
         "en": {
@@ -1587,6 +1619,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Esperando autorización en el navegador…"
+          }
+        }
+      }
+    },
+    "Writes a machine-readable usage snapshot (never credentials) to Application Support for the agentmeter command-line tool and other local agents.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Writes a machine-readable usage snapshot (never credentials) to Application Support for the agentmeter command-line tool and other local agents."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escribe una instantánea de uso legible por máquina (nunca credenciales) en Application Support para la herramienta de línea de comandos agentmeter y otros agentes locales."
           }
         }
       }

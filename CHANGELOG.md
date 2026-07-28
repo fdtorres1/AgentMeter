@@ -3,6 +3,22 @@
 All notable changes to AgentMeter. Format follows [Keep a Changelog](https://keepachangelog.com);
 versions follow semantic-ish `MAJOR.MINOR.PATCH`.
 
+## [1.9.0] — 2026-07-28
+
+### Added
+- Agent & CLI access (opt-in, Settings → General): AgentMeter writes an
+  atomic, schema-versioned `status.json` snapshot (usage numbers only, never
+  credentials) to Application Support after each refresh.
+- Bundled `agentmeter` CLI (`Contents/Helpers/agentmeter`, on PATH via
+  Homebrew): `status [--json]`, `refresh [--wait N]`, and a redacted `doctor`
+  report. The CLI is a thin read-only client — the app remains the only
+  process that touches credentials or provider APIs.
+- `agentmeter://refresh` and `agentmeter://details` URL actions.
+- Usage Details window (⌘D from the dropdown): the same provider meters in a
+  regular, resizable window — friendlier for screen sharing and
+  computer-control agents.
+- Schema and security model documented in docs/AGENT_INTERFACE.md.
+
 ## [1.8.0] — 2026-07-23
 
 ### Added
