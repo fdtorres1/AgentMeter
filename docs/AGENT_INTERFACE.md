@@ -122,12 +122,14 @@ Bundled at `AgentMeter.app/Contents/Helpers/agentmeter` (in `Helpers/` because
 filesystems).
 
 - Homebrew installs put it on your `PATH` automatically (cask `binary` stanza).
-- Manual installs: `ln -s /Applications/AgentMeter.app/Contents/Helpers/agentmeter /usr/local/bin/agentmeter`
+- Manual installs: use **Settings → General → Install Command-Line Tool…**, or
+  `ln -s /Applications/AgentMeter.app/Contents/Helpers/agentmeter /usr/local/bin/agentmeter`
 
 ```
 agentmeter status [--json]
 agentmeter refresh [--wait SECONDS]
 agentmeter doctor
+agentmeter skill
 agentmeter --version
 agentmeter --help
 ```
@@ -137,6 +139,7 @@ agentmeter --help
 | `status` | Print human-readable table (default) or raw JSON (`--json`) |
 | `refresh` | Ask the running app to refresh; `--wait N` polls until `generatedAt` changes |
 | `doctor` | Redacted environment and snapshot report |
+| `skill` | Print the agent skill markdown for Codex, Claude Code, or Cursor |
 
 ### Exit codes
 
@@ -149,3 +152,22 @@ agentmeter --help
 | 4 | Refresh wait timed out |
 
 `status` prints a staleness warning when `generatedAt` is older than 10 minutes.
+
+## Agent skill
+
+`agentmeter skill` prints the AgentMeter agent skill markdown to stdout (exit 0).
+Install it into your coding agent's skill directory, for example:
+
+```bash
+mkdir -p ~/.codex/skills/agentmeter
+agentmeter skill > ~/.codex/skills/agentmeter/SKILL.md
+
+mkdir -p ~/.claude/skills/agentmeter
+agentmeter skill > ~/.claude/skills/agentmeter/SKILL.md
+
+mkdir -p ~/.cursor/skills/agentmeter
+agentmeter skill > ~/.cursor/skills/agentmeter/SKILL.md
+```
+
+The canonical source in this repository is `docs/agent-skill/SKILL.md`; the CLI
+embeds the same bytes at build time.

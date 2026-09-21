@@ -30,6 +30,11 @@ final class CLIArgumentParserTests: XCTestCase {
         XCTAssertEqual(CLIArgumentParser.parse(["doctor", "--json"]), .failure(.usage))
     }
 
+    func testSkillRejectsExtraArgs() {
+        XCTAssertEqual(CLIArgumentParser.parse(["skill"]), .success(.skill))
+        XCTAssertEqual(CLIArgumentParser.parse(["skill", "--json"]), .failure(.usage))
+    }
+
     func testUnknownCommandIsUsageError() {
         XCTAssertEqual(CLIArgumentParser.parse(["unknown"]), .failure(.usage))
     }

@@ -533,6 +533,38 @@
         }
       }
     },
+    "Command-line tool installed at %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Command-line tool installed at %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Herramienta de línea de comandos instalada en %@"
+          }
+        }
+      }
+    },
+    "Command-line tool not on your PATH.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Command-line tool not on your PATH."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La herramienta de línea de comandos no está en tu PATH."
+          }
+        }
+      }
+    },
     "Connect…": {
       "localizations": {
         "es": {
@@ -579,6 +611,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "No se pudo leer el archivo de sesión"
+          }
+        }
+      }
+    },
+    "Couldn't install the command-line tool: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't install the command-line tool: %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo instalar la herramienta de línea de comandos: %@"
           }
         }
       }
@@ -849,6 +897,38 @@
           "stringUnit": {
             "state": "translated",
             "value": "Solo icono"
+          }
+        }
+      }
+    },
+    "Install Command-Line Tool…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Install Command-Line Tool…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Instalar herramienta de línea de comandos…"
+          }
+        }
+      }
+    },
+    "Installed. Open a new terminal and run agentmeter --help.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installed. Open a new terminal and run agentmeter --help."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Instalada. Abre una terminal nueva y ejecuta agentmeter --help."
           }
         }
       }
@@ -1281,12 +1361,44 @@
         }
       }
     },
+    "Reinstall Command-Line Tool…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reinstall Command-Line Tool…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reinstalar herramienta de línea de comandos…"
+          }
+        }
+      }
+    },
     "Remove": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Eliminar"
+          }
+        }
+      }
+    },
+    "Run from AgentMeter.app to install the command-line tool.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Run from AgentMeter.app to install the command-line tool."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ejecuta desde AgentMeter.app para instalar la herramienta de línea de comandos."
           }
         }
       }

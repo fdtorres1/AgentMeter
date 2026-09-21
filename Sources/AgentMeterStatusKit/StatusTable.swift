@@ -66,7 +66,7 @@ public enum StatusTable {
         return formatter.string(from: date)
     }
 
-    private static func formatAmount(_ value: Double) -> String {
+    public static func formatAmount(_ value: Double) -> String {
         value == value.rounded() && value < 1000
             ? String(format: "%.0f", value)
             : String(format: "%.2f", value)

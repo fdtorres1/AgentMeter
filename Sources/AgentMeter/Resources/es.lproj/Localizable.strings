@@ -104,6 +104,10 @@
 	<string>Verificando clave…</string>
 	<key>Claude token refresh failed (HTTP %lld)</key>
 	<string>Error al actualizar el token de Claude (HTTP %lld)</string>
+	<key>Command-line tool installed at %@</key>
+	<string>Herramienta de línea de comandos instalada en %@</string>
+	<key>Command-line tool not on your PATH.</key>
+	<string>La herramienta de línea de comandos no está en tu PATH.</string>
 	<key>Compact (worst only)</key>
 	<string>Compacto (solo el peor)</string>
 	<key>Compact menu bar (worst only)</key>
@@ -124,6 +128,8 @@
 	<string>No se pudo leer el archivo de sesión</string>
 	<key>Couldn't check key</key>
 	<string>No se pudo verificar la clave</string>
+	<key>Couldn't install the command-line tool: %@</key>
+	<string>No se pudo instalar la herramienta de línea de comandos: %@</string>
 	<key>Count direction</key>
 	<string>Dirección del conteo</string>
 	<key>Credits</key>
@@ -184,6 +190,10 @@
 	<string>Se admiten claves de API de Venice de tipo Inference y Admin. Los saldos de billeteras x402 no son compatibles.</string>
 	<key>Inference key</key>
 	<string>Clave de inferencia</string>
+	<key>Install Command-Line Tool…</key>
+	<string>Instalar herramienta de línea de comandos…</string>
+	<key>Installed. Open a new terminal and run agentmeter --help.</key>
+	<string>Instalada. Abre una terminal nueva y ejecuta agentmeter --help.</string>
 	<key>Key limit</key>
 	<string>Límite de la clave</string>
 	<key>Key not working</key>
@@ -264,6 +274,8 @@
 	<string>Actualizar</string>
 	<key>Refresh interval</key>
 	<string>Intervalo de actualización</string>
+	<key>Reinstall Command-Line Tool…</key>
+	<string>Reinstalar herramienta de línea de comandos…</string>
 	<key>Relative</key>
 	<string>Relativo</string>
 	<key>Remove</key>
@@ -272,6 +284,8 @@
 	<string>Reportar un problema</string>
 	<key>Reset times</key>
 	<string>Tiempos de restablecimiento</string>
+	<key>Run from AgentMeter.app to install the command-line tool.</key>
+	<string>Ejecuta desde AgentMeter.app para instalar la herramienta de línea de comandos.</string>
 	<key>Save</key>
 	<string>Guardar</string>
 	<key>Saved</key>

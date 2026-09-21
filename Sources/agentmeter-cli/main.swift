@@ -40,6 +40,9 @@ enum AgentMeterCLI {
             return runRefresh(waitSeconds: waitSeconds)
         case .success(.doctor):
             return runDoctor()
+        case .success(.skill):
+            print(AgentSkill.markdown, terminator: "")
+            return 0
         }
     }
 
@@ -136,7 +139,7 @@ enum AgentMeterCLI {
                         summary += "; \(windows)"
                     }
                     if let balance = provider.balance {
-                        summary += "; balance \(balance.currency)\(balance.amount) \(balance.kind)"
+                        summary += "; balance \(balance.currency)\(StatusTable.formatAmount(balance.amount)) \(balance.kind)"
                     }
                     if let error = provider.error {
                         summary += "; error: \(error)"

@@ -42,10 +42,16 @@
 	<string>Balance works through the limited rate-limits endpoint.</string>
 	<key>Checking key…</key>
 	<string>Checking key…</string>
+	<key>Command-line tool installed at %@</key>
+	<string>Command-line tool installed at %@</string>
+	<key>Command-line tool not on your PATH.</key>
+	<string>Command-line tool not on your PATH.</string>
 	<key>Connection failed</key>
 	<string>Connection failed</string>
 	<key>Couldn't check key</key>
 	<string>Couldn't check key</string>
+	<key>Couldn't install the command-line tool: %@</key>
+	<string>Couldn't install the command-line tool: %@</string>
 	<key>Diagnostics copied</key>
 	<string>Diagnostics copied</string>
 	<key>Enable agent &amp; CLI access</key>
@@ -66,6 +72,10 @@
 	<string>Inference and Admin Venice API keys are supported. x402 wallet balances are not supported.</string>
 	<key>Inference key</key>
 	<string>Inference key</string>
+	<key>Install Command-Line Tool…</key>
+	<string>Install Command-Line Tool…</string>
+	<key>Installed. Open a new terminal and run agentmeter --help.</key>
+	<string>Installed. Open a new terminal and run agentmeter --help.</string>
 	<key>Key limit</key>
 	<string>Key limit</string>
 	<key>Key not working</key>
@@ -90,8 +100,12 @@
 	<string>Provider endpoint research credits CodexBar by Peter Steinberger.</string>
 	<key>Reads prepaid balance only.</key>
 	<string>Reads prepaid balance only.</string>
+	<key>Reinstall Command-Line Tool…</key>
+	<string>Reinstall Command-Line Tool…</string>
 	<key>Report an issue</key>
 	<string>Report an issue</string>
+	<key>Run from AgentMeter.app to install the command-line tool.</key>
+	<string>Run from AgentMeter.app to install the command-line tool.</string>
 	<key>Shows your 5-hour and token quotas.</key>
 	<string>Shows your 5-hour and token quotas.</string>
 	<key>Spending capped — AgentMeter can read usage within this limit.</key>

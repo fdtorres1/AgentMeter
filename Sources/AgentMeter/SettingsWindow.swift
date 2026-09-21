@@ -34,6 +34,8 @@ private struct GeneralSettingsTab: View {
     @Environment(\.openWindow) private var openWindow
     @State private var launchAtLogin = SMAppService.mainApp.status == .enabled
     @State private var diagnosticsCopied = false
+    @State private var cliInstallPath: String?
+    @State private var cliInstallResultMessage: String?
 
     var body: some View {
         Form {
@@ -48,6 +50,8 @@ private struct GeneralSettingsTab: View {
                             StatusSnapshotWriter.writeIfEnabled(store: store, settings: settings)
                         }
                     }
+
+                cliToolInstallSection
             } footer: {
                 Text(L("Writes a machine-readable usage snapshot (never credentials) to Application Support for the agentmeter command-line tool and other local agents."))
                     .font(.caption)
@@ -90,6 +94,60 @@ private struct GeneralSettingsTab: View {
             }
         }
         .formStyle(.grouped)
+        .onAppear {
+            refreshCLIInstallStatus()
+        }
+    }
+
+    @ViewBuilder
+    private var cliToolInstallSection: some View {
+        if CLIToolInstaller.isBundledApp {
+            Group {
+                if let path = cliInstallPath {
+                    Text(String(format: L("Command-line tool installed at %@"), path))
+                } else {
+                    Text(L("Command-line tool not on your PATH."))
+                }
+
+                if let cliInstallResultMessage {
+                    Text(cliInstallResultMessage)
+                }
+            }
+            .font(.caption)
+            .foregroundStyle(.secondary)
+
+            Button(CLIToolInstaller.isInstalledAtLocalPath()
+                ? L("Reinstall Command-Line Tool…")
+                : L("Install Command-Line Tool…")) {
+                installCLITool()
+            }
+        } else {
+            Text(L("Run from AgentMeter.app to install the command-line tool."))
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+    }
+
+    private func refreshCLIInstallStatus() {
+        cliInstallPath = CLIToolInstaller.detectedInstallPath()
+    }
+
+    private func installCLITool() {
+        cliInstallResultMessage = nil
+
+        switch CLIToolInstaller.install() {
+        case .success:
+            refreshCLIInstallStatus()
+            let message = L("Installed. Open a new terminal and run agentmeter --help.")
+            cliInstallResultMessage = message
+            AccessibilityNotification.Announcement(message).post()
+        case .failure(_ as CancellationError):
+            break
+        case .failure(let error):
+            let message = String(format: L("Couldn't install the command-line tool: %@"), error.localizedDescription)
+            cliInstallResultMessage = message
+            AccessibilityNotification.Announcement(message).post()
+        }
     }
 
     private func copyDiagnostics() {

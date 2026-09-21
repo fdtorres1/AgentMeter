@@ -3,6 +3,21 @@
 All notable changes to AgentMeter. Format follows [Keep a Changelog](https://keepachangelog.com);
 versions follow semantic-ish `MAJOR.MINOR.PATCH`.
 
+## [1.10.0] — 2026-09-21
+
+### Added
+- Agent skill: `agentmeter skill` prints a ready-to-install `SKILL.md`
+  (canonical copy in docs/agent-skill/) that teaches Codex, Claude Code, and
+  Cursor agents to check remaining quota before large tasks, interpret the
+  snapshot, and never read credentials themselves.
+- Settings → General → "Install Command-Line Tool…" symlinks the bundled CLI
+  into `/usr/local/bin` (with the standard admin prompt when required) and
+  shows whether `agentmeter` is already on your PATH.
+
+### Fixed
+- `agentmeter doctor` now prints balances with two decimals instead of raw
+  floating-point values.
+
 ## [1.9.0] — 2026-07-28
 
 ### Added

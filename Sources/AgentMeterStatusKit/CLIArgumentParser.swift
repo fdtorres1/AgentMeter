@@ -6,6 +6,7 @@ public enum CLICommand: Equatable, Sendable {
     case status(json: Bool)
     case refresh(waitSeconds: Int)
     case doctor
+    case skill
 }
 
 public enum CLIArgumentParser {
@@ -28,6 +29,11 @@ public enum CLIArgumentParser {
                 return .failure(.usage)
             }
             return .success(.doctor)
+        case "skill":
+            if arguments.count > 1 {
+                return .failure(.usage)
+            }
+            return .success(.skill)
         default:
             return .failure(.usage)
         }
@@ -79,6 +85,7 @@ public enum CLIHelp {
       agentmeter status [--json]
       agentmeter refresh [--wait SECONDS]
       agentmeter doctor
+      agentmeter skill
       agentmeter --version
       agentmeter --help
 
@@ -86,6 +93,7 @@ public enum CLIHelp {
       status    Print the usage snapshot (table by default, --json for raw JSON)
       refresh   Ask the running app to refresh (agentmeter://refresh)
       doctor    Print a redacted environment and snapshot report
+      skill     Print the agent skill markdown (e.g. agentmeter skill > ~/.codex/skills/agentmeter/SKILL.md)
 
     Exit codes:
       0  success

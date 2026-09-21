@@ -120,10 +120,18 @@ agentmeter refresh --wait 15
 agentmeter doctor          # redacted troubleshooting report
 ```
 
-Homebrew puts `agentmeter` on your PATH; manual installs can symlink
-`/Applications/AgentMeter.app/Contents/Helpers/agentmeter`. The app remains the
-only process that touches credentials or provider APIs — the CLI is a thin,
-read-only client. Full schema and security model in
+Homebrew puts `agentmeter` on your PATH; otherwise use **Settings → General →
+Install Command-Line Tool…**. The app remains the only process that touches
+credentials or provider APIs — the CLI is a thin, read-only client.
+
+To teach your coding agent to check its own budget before big tasks, install
+the bundled skill (Codex, Claude Code, and Cursor all read this format):
+
+```bash
+mkdir -p ~/.codex/skills/agentmeter && agentmeter skill > ~/.codex/skills/agentmeter/SKILL.md
+```
+
+Full schema, skill, and security model in
 [docs/AGENT_INTERFACE.md](docs/AGENT_INTERFACE.md).
 
 ## Project layout
