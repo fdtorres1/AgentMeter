@@ -76,8 +76,12 @@
 	<string>Acerca de AgentMeter</string>
 	<key>About this key</key>
 	<string>Acerca de esta clave</string>
+	<key>Add</key>
+	<string>Agregar</string>
 	<key>Add account…</key>
 	<string>Agregar cuenta…</string>
+	<key>Adds this account to AgentMeter using the folder name as its label.</key>
+	<string>Agrega esta cuenta a AgentMeter usando el nombre de la carpeta como etiqueta.</string>
 	<key>Admin key</key>
 	<string>Clave de administrador</string>
 	<key>AgentMeter</key>
@@ -210,6 +214,8 @@
 	<string>Flash (24 h)</string>
 	<key>Flash-Lite (24h)</key>
 	<string>Flash-Lite (24 h)</string>
+	<key>Found signed-in Codex home: %@</key>
+	<string>Se encontró una cuenta de Codex con sesión iniciada: %@</string>
 	<key>Full</key>
 	<string>Completo</string>
 	<key>Full access including billing and key management.</key>

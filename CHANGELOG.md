@@ -3,6 +3,14 @@
 All notable changes to AgentMeter. Format follows [Keep a Changelog](https://keepachangelog.com);
 versions follow semantic-ish `MAJOR.MINOR.PATCH`.
 
+## [1.11.2] — 2026-09-21
+
+### Added
+- Settings → Providers → Codex accounts now auto-discovers `~/.codex-*` homes
+  that already have a Codex login and offers a one-click **Add** (label taken
+  from the folder name), so accounts signed in from Terminal show up
+  without retyping paths.
+
 ## [1.11.1] — 2026-09-21
 
 ### Fixed

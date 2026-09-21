@@ -240,6 +240,10 @@ private struct CodexAccountsSection: View {
                 extraAccountRow(account)
             }
 
+            ForEach(discoveredAccounts) { candidate in
+                discoveredAccountRow(candidate)
+            }
+
             if showingAddForm {
                 addAccountForm
             } else {
@@ -259,6 +263,38 @@ private struct CodexAccountsSection: View {
                 .font(.caption2)
                 .foregroundStyle(.tertiary)
         }
+        .onAppear(perform: refreshDiscovered)
+        .onChange(of: settings.codexExtraAccounts) { _, _ in refreshDiscovered() }
+    }
+
+    @State private var discoveredAccounts: [CodexAccountDiscovery.Candidate] = []
+
+    private func refreshDiscovered() {
+        discoveredAccounts = CodexAccountDiscovery.discover(configured: settings.codexExtraAccounts)
+    }
+
+    private func discoveredAccountRow(_ candidate: CodexAccountDiscovery.Candidate) -> some View {
+        HStack(alignment: .firstTextBaseline) {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(String(format: L("Found signed-in Codex home: %@"), candidate.suggestedLabel))
+                    .font(.caption)
+                Text(candidate.homePath)
+                    .font(.caption2.monospaced())
+                    .foregroundStyle(.secondary)
+            }
+            Spacer()
+            Button(L("Add")) {
+                settings.addCodexAccount(CodexAccountConfig(
+                    label: candidate.suggestedLabel,
+                    codexHomePath: candidate.homePath
+                ))
+                refreshDiscovered()
+            }
+            .font(.caption)
+            .help(L("Adds this account to AgentMeter using the folder name as its label."))
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(String(format: L("Found signed-in Codex home: %@"), candidate.homePath))
     }
 
     private var primaryAccountRow: some View {

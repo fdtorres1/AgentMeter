@@ -186,3 +186,19 @@ final class CodexAppServerTests: XCTestCase {
         return try XCTUnwrap(JSONSerialization.jsonObject(with: data) as? [String: Any])
     }
 }
+
+final class CodexAccountDiscoveryTests: XCTestCase {
+    func testDiscoversUnconfiguredHomesWithLogins() {
+        let home = URL(fileURLWithPath: "/Users/test", isDirectory: true)
+        let configured: Set<String> = [home.appendingPathComponent(".codex-default", isDirectory: true).standardizedFileURL.path]
+        let withAuth: Set<String> = [".codex-default", ".codex-me-com"]
+        let found = CodexAccountDiscovery.candidates(
+            from: [".codex", ".codex-old-gmail", ".codex-me-com", ".codex-default", ".codex-", "Documents"],
+            homeDirectory: home,
+            configuredPaths: configured,
+            hasAuth: { withAuth.contains($0.lastPathComponent) }
+        )
+        XCTAssertEqual(found.map(\.homePath), ["~/.codex-me-com"])
+        XCTAssertEqual(found.first?.suggestedLabel, "me-com")
+    }
+}

@@ -57,6 +57,22 @@
         }
       }
     },
+    "%@ renews %@ via %@.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ renews %@ via %@."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ se renueva el %@ a través de %@."
+          }
+        }
+      }
+    },
     "%@ usage alert": {
       "localizations": {
         "es": {
@@ -243,12 +259,76 @@
         }
       }
     },
+    "(confirmed)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(confirmed)"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(confirmado)"
+          }
+        }
+      }
+    },
+    "(expected)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(expected)"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(estimado)"
+          }
+        }
+      }
+    },
+    "1 day before": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 day before"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 día antes"
+          }
+        }
+      }
+    },
     "1 minute": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "1 minuto"
+          }
+        }
+      }
+    },
+    "3 days before": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 days before"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 días antes"
           }
         }
       }
@@ -279,6 +359,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Límite de 5 h"
+          }
+        }
+      }
+    },
+    "7 days before": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "7 days before"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "7 días antes"
           }
         }
       }
@@ -383,6 +479,22 @@
         }
       }
     },
+    "Add": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Agregar"
+          }
+        }
+      }
+    },
     "Add account…": {
       "localizations": {
         "en": {
@@ -395,6 +507,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Agregar cuenta…"
+          }
+        }
+      }
+    },
+    "Adds this account to AgentMeter using the folder name as its label.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adds this account to AgentMeter using the folder name as its label."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Agrega esta cuenta a AgentMeter usando el nombre de la carpeta como etiqueta."
           }
         }
       }
@@ -555,6 +683,22 @@
         }
       }
     },
+    "Apple": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple"
+          }
+        }
+      }
+    },
     "Auto": {
       "localizations": {
         "es": {
@@ -627,6 +771,22 @@
         }
       }
     },
+    "Billed through": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Billed through"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Facturado por"
+          }
+        }
+      }
+    },
     "Cancel": {
       "localizations": {
         "en": {
@@ -639,6 +799,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cancelar"
+          }
+        }
+      }
+    },
+    "ChatGPT": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ChatGPT"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ChatGPT"
           }
         }
       }
@@ -1203,6 +1379,22 @@
         }
       }
     },
+    "Found signed-in Codex home: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Found signed-in Codex home: %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se encontró una cuenta de Codex con sesión iniciada: %@"
+          }
+        }
+      }
+    },
     "Full": {
       "localizations": {
         "es": {
@@ -1297,6 +1489,22 @@
         }
       }
     },
+    "Google Play": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Google Play"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Google Play"
+          }
+        }
+      }
+    },
     "Google returned HTTP %lld": {
       "localizations": {
         "es": {
@@ -1335,6 +1543,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "La ruta de inicio es obligatoria"
+          }
+        }
+      }
+    },
+    "I confirmed this date today": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I confirmed this date today"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Confirmé esta fecha hoy"
           }
         }
       }
@@ -1523,6 +1747,22 @@
         }
       }
     },
+    "Last confirmed %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last confirmed %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Última confirmación: %@"
+          }
+        }
+      }
+    },
     "Launch at Login": {
       "localizations": {
         "es": {
@@ -1603,6 +1843,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Clave de administración"
+          }
+        }
+      }
+    },
+    "Marks today as the date you verified this renewal on your billing platform.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Marks today as the date you verified this renewal on your billing platform."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Marca hoy como la fecha en que verificaste esta renovación en tu plataforma de facturación."
           }
         }
       }
@@ -1689,6 +1945,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Sin datos de uso"
+          }
+        }
+      }
+    },
+    "Not confirmed yet — check the platform that bills you.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not confirmed yet — check the platform that bills you."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aún no confirmado — revisa la plataforma que te factura."
           }
         }
       }
@@ -1795,6 +2067,22 @@
         }
       }
     },
+    "OpenAI doesn't publish subscription renewal dates, so confirm yours on the platform that bills you — ChatGPT, Apple, or Google Play. Renewal dates are separate from usage-limit resets.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenAI doesn't publish subscription renewal dates, so confirm yours on the platform that bills you — ChatGPT, Apple, or Google Play. Renewal dates are separate from usage-limit resets."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenAI no publica las fechas de renovación de suscripción, así que confirma la tuya en la plataforma que te factura — ChatGPT, Apple o Google Play. Las fechas de renovación son distintas de los reinicios de límites de uso."
+          }
+        }
+      }
+    },
     "OpenRouter connect failed: key could not be saved": {
       "localizations": {
         "en": {
@@ -1879,6 +2167,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "O pega una clave de API"
+          }
+        }
+      }
+    },
+    "Other": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Other"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Otro"
           }
         }
       }
@@ -2001,6 +2305,22 @@
         }
       }
     },
+    "Remind me": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remind me"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recordarme"
+          }
+        }
+      }
+    },
     "Remove": {
       "localizations": {
         "es": {
@@ -2023,6 +2343,38 @@
           "stringUnit": {
             "state": "translated",
             "value": "Quitar solo olvida la ruta; no cierra la sesión."
+          }
+        }
+      }
+    },
+    "Renews %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Renews %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se renueva el %@"
+          }
+        }
+      }
+    },
+    "Renews on": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Renews on"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se renueva el"
           }
         }
       }
@@ -2209,6 +2561,54 @@
         }
       }
     },
+    "Subscription": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subscription"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suscripción"
+          }
+        }
+      }
+    },
+    "Subscription renewal": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subscription renewal"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Renovación de suscripción"
+          }
+        }
+      }
+    },
+    "Subscription renews soon": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subscription renews soon"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La suscripción se renueva pronto"
+          }
+        }
+      }
+    },
     "Support ♥": {
       "localizations": {
         "es": {
@@ -2341,6 +2741,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cuota de tokens"
+          }
+        }
+      }
+    },
+    "Track renewal date": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Track renewal date"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Registrar fecha de renovación"
           }
         }
       }
@@ -2915,374 +3331,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "casi agotado"
-          }
-        }
-      }
-    },
-    "(confirmed)": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "(confirmed)"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "(confirmado)"
-          }
-        }
-      }
-    },
-    "(expected)": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "(expected)"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "(estimado)"
-          }
-        }
-      }
-    },
-    "%@ renews %@ via %@.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ renews %@ via %@."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ se renueva el %@ a través de %@."
-          }
-        }
-      }
-    },
-    "1 day before": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "1 day before"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "1 día antes"
-          }
-        }
-      }
-    },
-    "3 days before": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "3 days before"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "3 días antes"
-          }
-        }
-      }
-    },
-    "7 days before": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "7 days before"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "7 días antes"
-          }
-        }
-      }
-    },
-    "Apple": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Apple"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Apple"
-          }
-        }
-      }
-    },
-    "Billed through": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Billed through"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Facturado por"
-          }
-        }
-      }
-    },
-    "ChatGPT": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ChatGPT"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ChatGPT"
-          }
-        }
-      }
-    },
-    "Google Play": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Google Play"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Google Play"
-          }
-        }
-      }
-    },
-    "I confirmed this date today": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "I confirmed this date today"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Confirmé esta fecha hoy"
-          }
-        }
-      }
-    },
-    "Last confirmed %@": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Last confirmed %@"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Última confirmación: %@"
-          }
-        }
-      }
-    },
-    "Marks today as the date you verified this renewal on your billing platform.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Marks today as the date you verified this renewal on your billing platform."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Marca hoy como la fecha en que verificaste esta renovación en tu plataforma de facturación."
-          }
-        }
-      }
-    },
-    "Not confirmed yet — check the platform that bills you.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Not confirmed yet — check the platform that bills you."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Aún no confirmado — revisa la plataforma que te factura."
-          }
-        }
-      }
-    },
-    "OpenAI doesn't publish subscription renewal dates, so confirm yours on the platform that bills you — ChatGPT, Apple, or Google Play. Renewal dates are separate from usage-limit resets.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "OpenAI doesn't publish subscription renewal dates, so confirm yours on the platform that bills you — ChatGPT, Apple, or Google Play. Renewal dates are separate from usage-limit resets."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "OpenAI no publica las fechas de renovación de suscripción, así que confirma la tuya en la plataforma que te factura — ChatGPT, Apple o Google Play. Las fechas de renovación son distintas de los reinicios de límites de uso."
-          }
-        }
-      }
-    },
-    "Other": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Other"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Otro"
-          }
-        }
-      }
-    },
-    "Remind me": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Remind me"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Recordarme"
-          }
-        }
-      }
-    },
-    "Renews %@": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Renews %@"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Se renueva el %@"
-          }
-        }
-      }
-    },
-    "Renews on": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Renews on"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Se renueva el"
-          }
-        }
-      }
-    },
-    "Subscription": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Subscription"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Suscripción"
-          }
-        }
-      }
-    },
-    "Subscription renewal": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Subscription renewal"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Renovación de suscripción"
-          }
-        }
-      }
-    },
-    "Subscription renews soon": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Subscription renews soon"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "La suscripción se renueva pronto"
-          }
-        }
-      }
-    },
-    "Track renewal date": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Track renewal date"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Registrar fecha de renovación"
           }
         }
       }

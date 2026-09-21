@@ -38,8 +38,12 @@
 	<string>About AgentMeter</string>
 	<key>About this key</key>
 	<string>About this key</string>
+	<key>Add</key>
+	<string>Add</string>
 	<key>Add account…</key>
 	<string>Add account…</string>
+	<key>Adds this account to AgentMeter using the folder name as its label.</key>
+	<string>Adds this account to AgentMeter using the folder name as its label.</string>
 	<key>Admin key</key>
 	<string>Admin key</string>
 	<key>AgentMeter</key>
@@ -104,6 +108,8 @@
 	<string>Enable notifications to change this.</string>
 	<key>Failed to parse Venice response: %@</key>
 	<string>Failed to parse Venice response: %@</string>
+	<key>Found signed-in Codex home: %@</key>
+	<string>Found signed-in Codex home: %@</string>
 	<key>Full access including billing and key management.</key>
 	<string>Full access including billing and key management.</string>
 	<key>Full account access — more powerful than AgentMeter needs.</key>
