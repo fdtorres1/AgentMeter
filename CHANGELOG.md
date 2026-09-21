@@ -3,6 +3,26 @@
 All notable changes to AgentMeter. Format follows [Keep a Changelog](https://keepachangelog.com);
 versions follow semantic-ish `MAJOR.MINOR.PATCH`.
 
+## [1.11.0] — 2026-09-21
+
+### Added
+- **Multiple Codex accounts.** Add extra Codex homes in Settings → Providers
+  (sign in with `CODEX_HOME=~/.codex-<label> codex login`); each account gets
+  its own meter, menu bar entry (`CxW`, …), email and plan label, and snapshot
+  entry (`codex:<id>`). AgentMeter never performs logins or reads tokens.
+- **Live Codex data via the app-server protocol.** Codex usage now comes from
+  `codex app-server` (`account/rateLimits/read`, `account/read`) — spawned for
+  about a second, polled every 5 minutes — instead of only the last session
+  log, which could be hours or days stale. Session logs remain the instant
+  in-session update path and the offline fallback.
+- **Subscription renewal tracking** for Codex accounts: record the renewal
+  date and billing platform (ChatGPT / Apple / Google Play), see the expected
+  next renewal as a distinct row (never mixed with usage windows), mark it
+  confirmed, and get an optional reminder 1/3/7 days before.
+- Snapshot schema (still v1, additive): `accountEmail`, `planType`, and
+  `renewal { expectedAt, platform, confirmedAt }` per provider.
+- `AGENTMETER_DEBUG=1` enables structural stderr tracing for development.
+
 ## [1.10.0] — 2026-09-21
 
 ### Added

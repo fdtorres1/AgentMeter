@@ -148,7 +148,7 @@ struct CodexUsageReader {
                 ?? ISO8601DateFormatter.plain.date(from: timestamp)
         }
         let plan = rateLimits["plan_type"] as? String
-        return ProviderUsage(planName: plan?.capitalized, windows: windows, asOf: asOf)
+        return ProviderUsage(planName: CodexPlan.displayName(plan), windows: windows, asOf: asOf)
     }
 
     private static func window(from dict: [String: Any]) -> UsageWindow? {

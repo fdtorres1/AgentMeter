@@ -19,7 +19,7 @@ Cx 5% · Cu 20% · Cl 40% · Ge 12%
 
 | Provider | Source | How usage is read |
 |----------|--------|-------------------|
-| **Codex** (`Cx`) | Local Codex CLI session logs (`~/.codex/sessions/`) | Parses the newest `rate_limits` snapshot; 5h + weekly windows. No network. |
+| **Codex** (`Cx`) | Codex CLI app-server protocol (`codex app-server` → `account/rateLimits/read`), session logs as fallback | Live limits, plan, and signed-in email straight from your own Codex CLI, polled every 5 minutes; session logs keep updates instant during CLI activity. **Multiple accounts**: add extra Codex homes (`CODEX_HOME=~/.codex-work codex login`) and each gets its own meter. Optional subscription renewal-date tracking with reminders. |
 | **Cursor** (`Cu`) | `cursor.com/api/usage-summary` | Uses the session token Cursor stores locally; included/auto/API usage + billing reset. Team/enterprise pools supported. |
 | **Claude** (`Cl`) | `api.anthropic.com/api/oauth/usage` | Uses the Claude Code OAuth token (credentials file or Keychain); 5h + weekly (+Opus) windows. |
 | **Gemini** (`Ge`) | Cloud Code quota API | Uses the Gemini CLI OAuth token (`~/.gemini/oauth_creds.json`); Pro/Flash/Flash-Lite daily quotas. |
@@ -75,7 +75,11 @@ AgentMeter is open source (MIT) so you can verify exactly what it does:
   "AgentMeter" so you can revoke it independently. OpenRouter can instead be
   connected via OAuth, which provisions its own revocable key without you
   handling one at all.
-- Codex data is parsed entirely locally and makes **no network calls**.
+- For Codex, AgentMeter never touches tokens at all: it launches your own
+  `codex` CLI for about a second and asks it over its documented JSON-RPC
+  protocol; Codex handles auth and talks to OpenAI itself. Session-log
+  parsing remains as a fully offline fallback. AgentMeter never performs
+  logins — you sign in extra accounts with `codex login` yourself.
 - No analytics, no telemetry, no accounts.
 
 ## Requirements

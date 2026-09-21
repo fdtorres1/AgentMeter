@@ -43,6 +43,17 @@ Top-level object:
 | `asOf` | `String?` (ISO 8601) | Provider-reported data timestamp |
 | `staleSince` | `String?` (ISO 8601) | Present when `state` is `stale` |
 | `error` | `String?` | Redacted error message for `error` / `stale` |
+| `accountEmail` | `String?` | Signed-in account email (Codex; added in 1.11.0) |
+| `planType` | `String?` | Plan display name (Codex; added in 1.11.0) |
+| `renewal` | `RenewalStatus?` | User-tracked subscription renewal (Codex; added in 1.11.0) |
+
+`RenewalStatus` (added in 1.11.0):
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `expectedAt` | `String` (ISO 8601) | Next expected renewal date |
+| `platform` | `String` | Billing platform (`chatgpt`, `apple`, `google`, `other`) |
+| `confirmedAt` | `String?` (ISO 8601) | When the user last confirmed the date on the billing platform |
 
 `WindowStatus`:
 

@@ -94,9 +94,48 @@ struct ThresholdTracker {
     }
 }
 
+/// Tracks which renewal dates have already triggered a reminder notification.
+struct RenewalTracker {
+    private var lastRenewalNotified: [String: Date] = [:]
+    private let defaults: UserDefaults
+
+    private static let stateKey = "renewalTrackerState"
+
+    init(defaults: UserDefaults = .standard) {
+        self.defaults = defaults
+        if let raw = defaults.dictionary(forKey: Self.stateKey) as? [String: Double] {
+            lastRenewalNotified = raw.mapValues { Date(timeIntervalSince1970: $0) }
+        }
+    }
+
+    mutating func pendingNotification(
+        providerID: String,
+        renewal: SubscriptionRenewal,
+        now: Date = Date(),
+        calendar: Calendar = .current
+    ) -> Date? {
+        let nextRenewalDate = renewal.nextRenewal(after: now, calendar: calendar)
+        guard let reminderDate = renewal.reminderDate(for: nextRenewalDate, calendar: calendar) else {
+            return nil
+        }
+        guard now >= reminderDate else { return nil }
+
+        if let notifiedFor = lastRenewalNotified[providerID],
+           calendar.isDate(notifiedFor, inSameDayAs: nextRenewalDate) {
+            return nil
+        }
+
+        lastRenewalNotified[providerID] = nextRenewalDate
+        let raw = lastRenewalNotified.mapValues { $0.timeIntervalSince1970 }
+        defaults.set(raw, forKey: Self.stateKey)
+        return nextRenewalDate
+    }
+}
+
 @MainActor
 final class NotificationManager {
     private var tracker = ThresholdTracker()
+    private var renewalTracker = RenewalTracker()
     private var authorizationRequested = false
 
     func notifyIfNeeded(
@@ -122,6 +161,18 @@ final class NotificationManager {
                threshold: settings.balanceNotificationThreshold
            ) {
             postBalanceNotification(provider: provider, balance: balance)
+        }
+
+        if let renewal = settings.renewal(for: provider.id),
+           let renewalDate = renewalTracker.pendingNotification(
+               providerID: provider.id,
+               renewal: renewal
+           ) {
+            postRenewalNotification(
+                provider: provider,
+                renewal: renewal,
+                renewalDate: renewalDate
+            )
         }
     }
 
@@ -157,6 +208,30 @@ final class NotificationManager {
 
         let request = UNNotificationRequest(
             identifier: "\(provider.id)-balance-\(Date().timeIntervalSince1970)",
+            content: content,
+            trigger: nil
+        )
+        UNUserNotificationCenter.current().add(request)
+    }
+
+    private func postRenewalNotification(
+        provider: any UsageProvider,
+        renewal: SubscriptionRenewal,
+        renewalDate: Date
+    ) {
+        let content = UNMutableNotificationContent()
+        content.title = L("Subscription renews soon")
+        let formattedDate = renewalDate.formatted(date: .abbreviated, time: .omitted)
+        content.body = String(
+            format: L("%@ renews %@ via %@."),
+            provider.displayName,
+            formattedDate,
+            renewal.platform.displayName
+        )
+        content.sound = .default
+
+        let request = UNNotificationRequest(
+            identifier: "\(provider.id)-renewal-\(renewalDate.timeIntervalSince1970)",
             content: content,
             trigger: nil
         )

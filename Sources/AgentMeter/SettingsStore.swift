@@ -68,6 +68,26 @@ final class SettingsStore: ObservableObject {
         }
     }
 
+    @Published var codexExtraAccounts: [CodexAccountConfig] {
+        didSet {
+            if let data = try? JSONEncoder().encode(codexExtraAccounts) {
+                defaults.set(data, forKey: Keys.codexExtraAccounts)
+            } else {
+                defaults.removeObject(forKey: Keys.codexExtraAccounts)
+            }
+        }
+    }
+
+    @Published var subscriptionRenewals: [String: SubscriptionRenewal] {
+        didSet {
+            if let data = try? JSONEncoder().encode(subscriptionRenewals) {
+                defaults.set(data, forKey: Keys.subscriptionRenewals)
+            } else {
+                defaults.removeObject(forKey: Keys.subscriptionRenewals)
+            }
+        }
+    }
+
     private let defaults: UserDefaults
     private var modeCache: [String: ProviderMode] = [:]
     private var menuBarCache: [String: Bool] = [:]
@@ -90,6 +110,8 @@ final class SettingsStore: ObservableObject {
         static let balanceNotificationThreshold = "balanceNotificationThreshold"
         static let menuBarStyle = "menuBarStyle"
         static let agentAccessEnabled = "agentAccessEnabled"
+        static let codexExtraAccounts = "codexExtraAccounts"
+        static let subscriptionRenewals = "subscriptionRenewals"
         static let compactMenuBar = "compactMenuBar"
         static func mode(_ id: String) -> String { "provider.\(id).mode" }
         static func inMenuBar(_ id: String) -> String { "provider.\(id).inMenuBar" }
@@ -122,6 +144,39 @@ final class SettingsStore: ObservableObject {
             self.menuBarStyle = .full
         }
         self.agentAccessEnabled = defaults.bool(forKey: Keys.agentAccessEnabled)
+        if let data = defaults.data(forKey: Keys.codexExtraAccounts),
+           let accounts = try? JSONDecoder().decode([CodexAccountConfig].self, from: data) {
+            self.codexExtraAccounts = accounts
+        } else {
+            self.codexExtraAccounts = []
+        }
+        if let data = defaults.data(forKey: Keys.subscriptionRenewals),
+           let renewals = try? JSONDecoder().decode([String: SubscriptionRenewal].self, from: data) {
+            self.subscriptionRenewals = renewals
+        } else {
+            self.subscriptionRenewals = [:]
+        }
+    }
+
+    func addCodexAccount(_ account: CodexAccountConfig) {
+        codexExtraAccounts.append(account)
+    }
+
+    func removeCodexAccount(id: UUID) {
+        removeRenewal(for: "codex:\(id.uuidString)")
+        codexExtraAccounts.removeAll { $0.id == id }
+    }
+
+    func renewal(for providerID: String) -> SubscriptionRenewal? {
+        subscriptionRenewals[providerID]
+    }
+
+    func setRenewal(_ renewal: SubscriptionRenewal, for providerID: String) {
+        subscriptionRenewals[providerID] = renewal
+    }
+
+    func removeRenewal(for providerID: String) {
+        subscriptionRenewals.removeValue(forKey: providerID)
     }
 
     func mode(for providerID: String) -> ProviderMode {

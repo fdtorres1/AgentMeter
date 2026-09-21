@@ -38,16 +38,27 @@ struct ProviderSection: View {
     @ViewBuilder
     private var sectionContent: some View {
         VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                ProviderBadge(provider: provider, size: 18)
-                if let url = provider.dashboardURL {
-                    Link(destination: url) {
-                        Text(provider.displayName)
-                            .font(.headline)
-                            .foregroundStyle(.primary)
+            HStack(alignment: .firstTextBaseline) {
+                VStack(alignment: .leading, spacing: 2) {
+                    HStack(spacing: 6) {
+                        ProviderBadge(provider: provider, size: 18)
+                        if let url = provider.dashboardURL {
+                            Link(destination: url) {
+                                Text(provider.displayName)
+                                    .font(.headline)
+                                    .foregroundStyle(.primary)
+                            }
+                        } else {
+                            Text(provider.displayName).font(.headline)
+                        }
                     }
-                } else {
-                    Text(provider.displayName).font(.headline)
+                    if let codex = provider as? CodexProvider,
+                       !codex.isPrimary,
+                       let email = codex.accountEmail {
+                        Text(email)
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                    }
                 }
                 Spacer()
                 if let usage = state.usage, let plan = usage.planName {
@@ -72,6 +83,7 @@ struct ProviderSection: View {
                     usage: usage,
                     settings: settings
                 )
+                subscriptionRenewalRow
             case .stale(let usage, let error, let since):
                 UsageMetersView(
                     providerName: provider.displayName,
@@ -79,6 +91,7 @@ struct ProviderSection: View {
                     settings: settings
                 )
                 .opacity(0.55)
+                subscriptionRenewalRow
                 VStack(alignment: .leading, spacing: 2) {
                     Text(L("Stale since \(since.formatted(date: .omitted, time: .shortened))"))
                         .font(.caption)
@@ -91,6 +104,14 @@ struct ProviderSection: View {
         }
     }
 
+    @ViewBuilder
+    private var subscriptionRenewalRow: some View {
+        if provider.id == "codex" || provider.id.hasPrefix("codex:"),
+           let renewal = settings.renewal(for: provider.id) {
+            SubscriptionRenewalRow(renewal: renewal)
+        }
+    }
+
     private var sectionAccessibilityValue: String? {
         switch state {
         case .stale:
@@ -100,6 +121,34 @@ struct ProviderSection: View {
         case .loading, .ready:
             return nil
         }
+    }
+}
+
+struct SubscriptionRenewalRow: View {
+    let renewal: SubscriptionRenewal
+
+    var body: some View {
+        let next = renewal.nextRenewal(after: Date())
+        let dateText = next.formatted(date: .abbreviated, time: .omitted)
+        let statusText = renewal.needsReconfirmation ? L("(expected)") : L("(confirmed)")
+
+        HStack(alignment: .firstTextBaseline, spacing: 4) {
+            Image(systemName: "calendar")
+                .font(.caption2)
+                .foregroundStyle(.secondary)
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 1) {
+                Text(String(format: L("Renews %@"), dateText))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                Text("\(renewal.platform.displayName) \(statusText)")
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(L("Subscription renewal"))
+        .accessibilityValue("\(dateText), \(renewal.platform.displayName), \(statusText)")
     }
 }
 

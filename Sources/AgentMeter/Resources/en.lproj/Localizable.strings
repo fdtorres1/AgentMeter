@@ -4,16 +4,30 @@
 <dict>
 	<key>%@ balance</key>
 	<string>%@ balance</string>
+	<key>%@ renews %@ via %@.</key>
+	<string>%@ renews %@ via %@.</string>
 	<key>%@%@ used</key>
 	<string>%@%@ used</string>
 	<key>%@, %@</key>
 	<string>%@, %@</string>
+	<key>%@, %@, %@</key>
+	<string>%@, %@, %@</string>
 	<key>%@: %@</key>
 	<string>%@: %@</string>
 	<key>%lld%% remaining</key>
 	<string>%lld%% remaining</string>
 	<key>%lld%% used</key>
 	<string>%lld%% used</string>
+	<key>(confirmed)</key>
+	<string>(confirmed)</string>
+	<key>(expected)</key>
+	<string>(expected)</string>
+	<key>1 day before</key>
+	<string>1 day before</string>
+	<key>3 days before</key>
+	<string>3 days before</string>
+	<key>7 days before</key>
+	<string>7 days before</string>
 	<key>A management key can control your whole OpenRouter account, including creating and deleting other API keys. AgentMeter only reads usage and balance — it cannot spend credits or change anything. A regular API key is safer; use Connect to get a dedicated key for AgentMeter that you can revoke anytime.</key>
 	<string>A management key can control your whole OpenRouter account, including creating and deleting other API keys. AgentMeter only reads usage and balance — it cannot spend credits or change anything. A regular API key is safer; use Connect to get a dedicated key for AgentMeter that you can revoke anytime.</string>
 	<key>API key removed</key>
@@ -24,6 +38,8 @@
 	<string>About AgentMeter</string>
 	<key>About this key</key>
 	<string>About this key</string>
+	<key>Add account…</key>
+	<string>Add account…</string>
 	<key>Admin key</key>
 	<string>Admin key</string>
 	<key>AgentMeter</key>
@@ -36,22 +52,50 @@
 	<string>An Admin key shows richer billing detail but is more powerful — only switch if you need that extra detail.</string>
 	<key>An Inference key is the safer default — it lets apps run models but limits access to billing and key management. AgentMeter only reads your balance through a read-only endpoint; it cannot spend credits.</key>
 	<string>An Inference key is the safer default — it lets apps run models but limits access to billing and key management. AgentMeter only reads your balance through a read-only endpoint; it cannot spend credits.</string>
+	<key>Apple</key>
+	<string>Apple</string>
 	<key>Auto-updates powered by Sparkle (MIT License).</key>
 	<string>Auto-updates powered by Sparkle (MIT License).</string>
 	<key>Balance works through the limited rate-limits endpoint.</key>
 	<string>Balance works through the limited rate-limits endpoint.</string>
+	<key>Billed through</key>
+	<string>Billed through</string>
+	<key>Cancel</key>
+	<string>Cancel</string>
+	<key>ChatGPT</key>
+	<string>ChatGPT</string>
 	<key>Checking key…</key>
 	<string>Checking key…</string>
+	<key>Choose a path other than ~/.codex</key>
+	<string>Choose a path other than ~/.codex</string>
+	<key>Codex CLI not found</key>
+	<string>Codex CLI not found</string>
+	<key>Codex accounts</key>
+	<string>Codex accounts</string>
+	<key>Codex app-server exited unexpectedly</key>
+	<string>Codex app-server exited unexpectedly</string>
+	<key>Codex app-server timed out</key>
+	<string>Codex app-server timed out</string>
+	<key>Codex protocol error</key>
+	<string>Codex protocol error</string>
 	<key>Command-line tool installed at %@</key>
 	<string>Command-line tool installed at %@</string>
 	<key>Command-line tool not on your PATH.</key>
 	<string>Command-line tool not on your PATH.</string>
 	<key>Connection failed</key>
 	<string>Connection failed</string>
+	<key>Copies the Terminal command to sign in this Codex account</key>
+	<string>Copies the Terminal command to sign in this Codex account</string>
+	<key>Copy login command</key>
+	<string>Copy login command</string>
 	<key>Couldn't check key</key>
 	<string>Couldn't check key</string>
 	<key>Couldn't install the command-line tool: %@</key>
 	<string>Couldn't install the command-line tool: %@</string>
+	<key>Default (~/.codex)</key>
+	<string>Default (~/.codex)</string>
+	<key>Default Codex account, %@</key>
+	<string>Default Codex account, %@</string>
 	<key>Diagnostics copied</key>
 	<string>Diagnostics copied</string>
 	<key>Enable agent &amp; CLI access</key>
@@ -68,6 +112,14 @@
 	<string>GLM Coding Plan API key</string>
 	<key>GLM Coding Plan key</key>
 	<string>GLM Coding Plan key</string>
+	<key>Google Play</key>
+	<string>Google Play</string>
+	<key>Home path</key>
+	<string>Home path</string>
+	<key>Home path is required</key>
+	<string>Home path is required</string>
+	<key>I confirmed this date today</key>
+	<string>I confirmed this date today</string>
 	<key>Inference and Admin Venice API keys are supported. x402 wallet balances are not supported.</key>
 	<string>Inference and Admin Venice API keys are supported. x402 wallet balances are not supported.</string>
 	<key>Inference key</key>
@@ -82,30 +134,60 @@
 	<string>Key not working</string>
 	<key>Key type: %@. %@</key>
 	<string>Key type: %@. %@</string>
+	<key>Label</key>
+	<string>Label</string>
+	<key>Label is required</key>
+	<string>Label is required</string>
+	<key>Last confirmed %@</key>
+	<string>Last confirmed %@</string>
 	<key>Limited key</key>
 	<string>Limited key</string>
+	<key>Login command copied</key>
+	<string>Login command copied</string>
 	<key>Manage keys</key>
 	<string>Manage keys</string>
 	<key>Management key</key>
 	<string>Management key</string>
+	<key>Marks today as the date you verified this renewal on your billing platform.</key>
+	<string>Marks today as the date you verified this renewal on your billing platform.</string>
 	<key>Menu bar monitor for AI coding usage limits.</key>
 	<string>Menu bar monitor for AI coding usage limits.</string>
+	<key>Not confirmed yet — check the platform that bills you.</key>
+	<string>Not confirmed yet — check the platform that bills you.</string>
+	<key>Not signed in</key>
+	<string>Not signed in</string>
+	<key>Not signed in — run the login command in Settings</key>
+	<string>Not signed in — run the login command in Settings</string>
+	<key>OpenAI doesn't publish subscription renewal dates, so confirm yours on the platform that bills you — ChatGPT, Apple, or Google Play. Renewal dates are separate from usage-limit resets.</key>
+	<string>OpenAI doesn't publish subscription renewal dates, so confirm yours on the platform that bills you — ChatGPT, Apple, or Google Play. Renewal dates are separate from usage-limit resets.</string>
 	<key>OpenRouter connect failed: key could not be saved</key>
 	<string>OpenRouter connect failed: key could not be saved</string>
 	<key>OpenRouter connected</key>
 	<string>OpenRouter connected</string>
 	<key>Or paste an API key</key>
 	<string>Or paste an API key</string>
+	<key>Other</key>
+	<string>Other</string>
 	<key>Provider endpoint research credits CodexBar by Peter Steinberger.</key>
 	<string>Provider endpoint research credits CodexBar by Peter Steinberger.</string>
 	<key>Reads prepaid balance only.</key>
 	<string>Reads prepaid balance only.</string>
 	<key>Reinstall Command-Line Tool…</key>
 	<string>Reinstall Command-Line Tool…</string>
+	<key>Remind me</key>
+	<string>Remind me</string>
+	<key>Removing only forgets the path; it does not sign out.</key>
+	<string>Removing only forgets the path; it does not sign out.</string>
+	<key>Renews %@</key>
+	<string>Renews %@</string>
+	<key>Renews on</key>
+	<string>Renews on</string>
 	<key>Report an issue</key>
 	<string>Report an issue</string>
 	<key>Run from AgentMeter.app to install the command-line tool.</key>
 	<string>Run from AgentMeter.app to install the command-line tool.</string>
+	<key>Run this in Terminal to sign in that account. AgentMeter never handles your login or tokens — the Codex CLI does.</key>
+	<string>Run this in Terminal to sign in that account. AgentMeter never handles your login or tokens — the Codex CLI does.</string>
 	<key>Shows your 5-hour and token quotas.</key>
 	<string>Shows your 5-hour and token quotas.</string>
 	<key>Spending capped — AgentMeter can read usage within this limit.</key>
@@ -114,6 +196,12 @@
 	<string>Standard API key</string>
 	<key>Standard key</key>
 	<string>Standard key</string>
+	<key>Subscription</key>
+	<string>Subscription</string>
+	<key>Subscription renewal</key>
+	<string>Subscription renewal</string>
+	<key>Subscription renews soon</key>
+	<string>Subscription renews soon</string>
 	<key>The key was rejected by Venice.</key>
 	<string>The key was rejected by Venice.</string>
 	<key>This API key lets apps use your OpenRouter credits up to a spending limit you set. AgentMeter only reads how much has been used; it cannot spend money or change your account. If you used Connect, OpenRouter created a dedicated key just for AgentMeter that you can revoke anytime.</key>
@@ -126,6 +214,8 @@
 	<string>This key lets apps call DeepSeek models using your prepaid balance. AgentMeter only reads how much balance is left; it cannot spend money or change your account.</string>
 	<key>This key lets apps call Kimi models using your prepaid balance. AgentMeter only reads how much balance is left; it cannot spend money or change your account.</key>
 	<string>This key lets apps call Kimi models using your prepaid balance. AgentMeter only reads how much balance is left; it cannot spend money or change your account.</string>
+	<key>Track renewal date</key>
+	<string>Track renewal date</string>
 	<key>Usage</key>
 	<string>Usage</string>
 	<key>Usage Details</key>

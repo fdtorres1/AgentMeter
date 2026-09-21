@@ -28,9 +28,29 @@ https://github.com/fdtorres1/AgentMeter
 
 ## Provider data sources (validated formats)
 
-- **Codex**: no network. Parses newest `~/.codex/sessions/YYYY/MM/DD/rollout-*.jsonl`
-  backwards for the last `rate_limits` snapshot (`primary` = 5h window,
-  `secondary` = weekly; `used_percent`, `resets_at` epoch seconds, `plan_type`).
+- **Codex** (v1.11.0+): primary source is the Codex CLI app-server protocol.
+  `CodexAppServerClient` spawns `codex app-server` (resolved from
+  /opt/homebrew/bin, /usr/local/bin, ~/.local/bin, PATH, then `zsh -lc`),
+  speaks newline-delimited JSON-RPC over stdio: `initialize` (clientInfo) →
+  `initialized` notification → `account/read` (`{account:{email,planType}}`
+  or `account:null`) → `account/rateLimits/read` (`rateLimits.primary/
+  secondary{usedPercent,windowDurationMins,resetsAt(epoch s)}`, `credits`,
+  `planType`; error "authentication required" when signed out). Pipelining
+  all four lines up front is fine; skip lines without our ids. ~1 s round
+  trip; process is terminated afterwards — never persistent. Polled at most
+  every 5 min per account (`CodexAppServerClient.pollInterval`), cached in
+  `CodexAccountCache`. Extra accounts = `CodexAccountConfig` entries in
+  `SettingsStore.codexExtraAccounts`, each with its own `CODEX_HOME`; the
+  user signs in via `CODEX_HOME=<home> codex login` — AgentMeter never logs
+  in or reads auth.json. The protocol has NO account-switch method;
+  `~/.codex/accounts.json` is written by the Codex desktop app only.
+  FALLBACK (primary account only): parse newest
+  `~/.codex/sessions/YYYY/MM/DD/rollout-*.jsonl` backwards for the last
+  `rate_limits` snapshot (`primary`/`secondary`, `used_percent`, `resets_at`,
+  `plan_type`); also preferred when its timestamp is newer than the cache.
+  `agentmeter` tracing: `AGENTMETER_DEBUG=1` (DebugLog) prints structural
+  info to stderr — NOTE: when launched directly from a shell (not via `open`)
+  the initial refresh may not complete; test with `open`.
 - **Cursor**: reads `cursorAuth/accessToken` from
   `~/Library/Application Support/Cursor/User/globalStorage/state.vscdb`
   (SQLite, read-only, queried in place — the DB is multi-GB, do not copy it).

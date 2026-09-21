@@ -30,6 +30,12 @@ public struct ProviderStatus: Codable, Equatable, Sendable {
     public var asOf: Date?
     public var staleSince: Date?
     public var error: String?
+    /// Signed-in account email (Codex multi-account; added in 1.11.0).
+    public var accountEmail: String?
+    /// Raw plan type display name (Codex; added in 1.11.0).
+    public var planType: String?
+    /// User-tracked subscription renewal (Codex; added in 1.11.0).
+    public var renewal: RenewalStatus?
 
     public init(
         id: String,
@@ -39,7 +45,10 @@ public struct ProviderStatus: Codable, Equatable, Sendable {
         balance: BalanceStatus? = nil,
         asOf: Date? = nil,
         staleSince: Date? = nil,
-        error: String? = nil
+        error: String? = nil,
+        accountEmail: String? = nil,
+        planType: String? = nil,
+        renewal: RenewalStatus? = nil
     ) {
         self.id = id
         self.displayName = displayName
@@ -49,6 +58,21 @@ public struct ProviderStatus: Codable, Equatable, Sendable {
         self.asOf = asOf
         self.staleSince = staleSince
         self.error = error
+        self.accountEmail = accountEmail
+        self.planType = planType
+        self.renewal = renewal
+    }
+}
+
+public struct RenewalStatus: Codable, Equatable, Sendable {
+    public var expectedAt: Date
+    public var platform: String
+    public var confirmedAt: Date?
+
+    public init(expectedAt: Date, platform: String, confirmedAt: Date? = nil) {
+        self.expectedAt = expectedAt
+        self.platform = platform
+        self.confirmedAt = confirmedAt
     }
 }
 

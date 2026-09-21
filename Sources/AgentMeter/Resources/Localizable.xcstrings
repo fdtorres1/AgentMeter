@@ -1,22 +1,6 @@
 {
   "sourceLanguage": "en",
   "strings": {
-    "AgentMeter": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "AgentMeter"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "AgentMeter"
-          }
-        }
-      }
-    },
     "% left": {
       "localizations": {
         "es": {
@@ -37,6 +21,16 @@
         }
       }
     },
+    "%@ at %@%%": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ al %@%%"
+          }
+        }
+      }
+    },
     "%@ balance": {
       "localizations": {
         "en": {
@@ -49,48 +43,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "saldo de %@"
-          }
-        }
-      }
-    },
-    "%@, %@": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@, %@"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@, %@"
-          }
-        }
-      }
-    },
-    "%@: %@": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@: %@"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@: %@"
-          }
-        }
-      }
-    },
-    "%@ at %@%%": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ al %@%%"
           }
         }
       }
@@ -161,12 +113,70 @@
         }
       }
     },
+    "%@, %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, %@"
+          }
+        }
+      }
+    },
+    "%@, %@, %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, %@, %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, %@, %@"
+          }
+        }
+      }
+    },
+    "%@: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@: %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@: %@"
+          }
+        }
+      }
+    },
     "%lld%%": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "%lld%%"
+          }
+        }
+      }
+    },
+    "%lld%% left": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld%% restante"
           }
         }
       }
@@ -199,16 +209,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld%% usado"
-          }
-        }
-      }
-    },
-    "%lld%% left": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld%% restante"
           }
         }
       }
@@ -283,6 +283,22 @@
         }
       }
     },
+    "A management key can control your whole OpenRouter account, including creating and deleting other API keys. AgentMeter only reads usage and balance — it cannot spend credits or change anything. A regular API key is safer; use Connect to get a dedicated key for AgentMeter that you can revoke anytime.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A management key can control your whole OpenRouter account, including creating and deleting other API keys. AgentMeter only reads usage and balance — it cannot spend credits or change anything. A regular API key is safer; use Connect to get a dedicated key for AgentMeter that you can revoke anytime."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Una clave de administración puede controlar toda tu cuenta de OpenRouter, incluida la creación y eliminación de otras claves API. AgentMeter solo lee el uso y el saldo; no puede gastar créditos ni cambiar nada. Una clave API normal es más segura; usa Conectar para obtener una clave dedicada para AgentMeter que puedas revocar en cualquier momento."
+          }
+        }
+      }
+    },
     "API key": {
       "localizations": {
         "es": {
@@ -351,6 +367,86 @@
         }
       }
     },
+    "About this key": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "About this key"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acerca de esta clave"
+          }
+        }
+      }
+    },
+    "Add account…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add account…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Agregar cuenta…"
+          }
+        }
+      }
+    },
+    "Admin key": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Admin key"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clave de administrador"
+          }
+        }
+      }
+    },
+    "AgentMeter": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AgentMeter"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AgentMeter"
+          }
+        }
+      }
+    },
+    "AgentMeter could not reach the provider to check this key. That is usually a network issue or a temporary API change. Your saved key was not removed.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AgentMeter could not reach the provider to check this key. That is usually a network issue or a temporary API change. Your saved key was not removed."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AgentMeter no pudo contactar al proveedor para verificar esta clave. Suele ser un problema de red o un cambio temporal en la API. Tu clave guardada no se eliminó."
+          }
+        }
+      }
+    },
     "Alert when remaining falls below": {
       "localizations": {
         "es": {
@@ -387,6 +483,54 @@
           "stringUnit": {
             "state": "translated",
             "value": "Alertas"
+          }
+        }
+      }
+    },
+    "An Admin key can see billing details and manage other keys. AgentMeter only reads your balance; it cannot spend credits or change settings. An Inference key is safer and also works with AgentMeter.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "An Admin key can see billing details and manage other keys. AgentMeter only reads your balance; it cannot spend credits or change settings. An Inference key is safer and also works with AgentMeter."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Una clave de administrador puede ver detalles de facturación y administrar otras claves. AgentMeter solo lee tu saldo; no puede gastar créditos ni cambiar la configuración. Una clave de inferencia es más segura y también funciona con AgentMeter."
+          }
+        }
+      }
+    },
+    "An Admin key shows richer billing detail but is more powerful — only switch if you need that extra detail.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "An Admin key shows richer billing detail but is more powerful — only switch if you need that extra detail."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Una clave de administrador muestra más detalle de facturación, pero es más poderosa — cámbiala solo si necesitas ese detalle extra."
+          }
+        }
+      }
+    },
+    "An Inference key is the safer default — it lets apps run models but limits access to billing and key management. AgentMeter only reads your balance through a read-only endpoint; it cannot spend credits.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "An Inference key is the safer default — it lets apps run models but limits access to billing and key management. AgentMeter only reads your balance through a read-only endpoint; it cannot spend credits."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Una clave de inferencia es la opción más segura por defecto: permite que las apps ejecuten modelos, pero limita el acceso a facturación y administración de claves. AgentMeter solo lee tu saldo mediante un punto de acceso de solo lectura; no puede gastar créditos."
           }
         }
       }
@@ -467,6 +611,38 @@
         }
       }
     },
+    "Balance works through the limited rate-limits endpoint.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Balance works through the limited rate-limits endpoint."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El saldo funciona a través del punto de acceso limitado de límites de uso."
+          }
+        }
+      }
+    },
+    "Cancel": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancelar"
+          }
+        }
+      }
+    },
     "Check for Updates…": {
       "localizations": {
         "es": {
@@ -477,12 +653,156 @@
         }
       }
     },
+    "Checking key…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Checking key…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verificando clave…"
+          }
+        }
+      }
+    },
+    "Choose a path other than ~/.codex": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose a path other than ~/.codex"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Elige una ruta distinta de ~/.codex"
+          }
+        }
+      }
+    },
     "Claude token refresh failed (HTTP %lld)": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Error al actualizar el token de Claude (HTTP %lld)"
+          }
+        }
+      }
+    },
+    "Codex CLI not found": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Codex CLI not found"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se encontró la CLI de Codex"
+          }
+        }
+      }
+    },
+    "Codex accounts": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Codex accounts"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cuentas de Codex"
+          }
+        }
+      }
+    },
+    "Codex app-server exited unexpectedly": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Codex app-server exited unexpectedly"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El app-server de Codex se cerró inesperadamente"
+          }
+        }
+      }
+    },
+    "Codex app-server timed out": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Codex app-server timed out"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se agotó el tiempo de espera del servidor de Codex"
+          }
+        }
+      }
+    },
+    "Codex protocol error": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Codex protocol error"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Error de protocolo de Codex"
+          }
+        }
+      }
+    },
+    "Command-line tool installed at %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Command-line tool installed at %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Herramienta de línea de comandos instalada en %@"
+          }
+        }
+      }
+    },
+    "Command-line tool not on your PATH.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Command-line tool not on your PATH."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La herramienta de línea de comandos no está en tu PATH."
           }
         }
       }
@@ -533,38 +853,6 @@
         }
       }
     },
-    "Command-line tool installed at %@": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Command-line tool installed at %@"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Herramienta de línea de comandos instalada en %@"
-          }
-        }
-      }
-    },
-    "Command-line tool not on your PATH.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Command-line tool not on your PATH."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "La herramienta de línea de comandos no está en tu PATH."
-          }
-        }
-      }
-    },
     "Connect…": {
       "localizations": {
         "es": {
@@ -595,6 +883,22 @@
         }
       }
     },
+    "Copies the Terminal command to sign in this Codex account": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copies the Terminal command to sign in this Codex account"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copia el comando de Terminal para iniciar sesión en esta cuenta de Codex"
+          }
+        }
+      }
+    },
     "Copy Diagnostics": {
       "localizations": {
         "es": {
@@ -605,12 +909,44 @@
         }
       }
     },
+    "Copy login command": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy login command"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copiar comando de inicio de sesión"
+          }
+        }
+      }
+    },
     "Could not read session file": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "No se pudo leer el archivo de sesión"
+          }
+        }
+      }
+    },
+    "Couldn't check key": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't check key"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo verificar la clave"
           }
         }
       }
@@ -711,6 +1047,38 @@
         }
       }
     },
+    "Default (~/.codex)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Default (~/.codex)"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Predeterminada (~/.codex)"
+          }
+        }
+      }
+    },
+    "Default Codex account, %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Default Codex account, %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cuenta de Codex predeterminada, %@"
+          }
+        }
+      }
+    },
     "Detected": {
       "localizations": {
         "es": {
@@ -757,16 +1125,6 @@
         }
       }
     },
-    "Exact": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Exacto"
-          }
-        }
-      }
-    },
     "Enable agent & CLI access": {
       "localizations": {
         "en": {
@@ -795,6 +1153,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Activa las notificaciones para cambiar esto."
+          }
+        }
+      }
+    },
+    "Exact": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exacto"
           }
         }
       }
@@ -845,6 +1213,38 @@
         }
       }
     },
+    "Full access including billing and key management.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Full access including billing and key management."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acceso completo, incluida la facturación y la administración de claves."
+          }
+        }
+      }
+    },
+    "Full account access — more powerful than AgentMeter needs.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Full account access — more powerful than AgentMeter needs."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acceso completo a la cuenta — más poderoso de lo que AgentMeter necesita."
+          }
+        }
+      }
+    },
     "GLM Coding Plan API key": {
       "localizations": {
         "en": {
@@ -857,6 +1257,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Clave de API del plan GLM Coding"
+          }
+        }
+      }
+    },
+    "GLM Coding Plan key": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GLM Coding Plan key"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clave de plan GLM Coding"
           }
         }
       }
@@ -891,44 +1307,44 @@
         }
       }
     },
+    "Home path": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Home path"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ruta de inicio"
+          }
+        }
+      }
+    },
+    "Home path is required": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Home path is required"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La ruta de inicio es obligatoria"
+          }
+        }
+      }
+    },
     "Icon only": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Solo icono"
-          }
-        }
-      }
-    },
-    "Install Command-Line Tool…": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Install Command-Line Tool…"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Instalar herramienta de línea de comandos…"
-          }
-        }
-      }
-    },
-    "Installed. Open a new terminal and run agentmeter --help.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Installed. Open a new terminal and run agentmeter --help."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Instalada. Abre una terminal nueva y ejecuta agentmeter --help."
           }
         }
       }
@@ -975,6 +1391,38 @@
         }
       }
     },
+    "Install Command-Line Tool…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Install Command-Line Tool…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Instalar herramienta de línea de comandos…"
+          }
+        }
+      }
+    },
+    "Installed. Open a new terminal and run agentmeter --help.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installed. Open a new terminal and run agentmeter --help."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Instalada. Abre una terminal nueva y ejecuta agentmeter --help."
+          }
+        }
+      }
+    },
     "Key limit": {
       "localizations": {
         "en": {
@@ -987,6 +1435,38 @@
           "stringUnit": {
             "state": "translated",
             "value": "Límite de la clave"
+          }
+        }
+      }
+    },
+    "Key not working": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Key not working"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clave no funciona"
+          }
+        }
+      }
+    },
+    "Key type: %@. %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Key type: %@. %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tipo de clave: %@. %@"
           }
         }
       }
@@ -1011,6 +1491,38 @@
         }
       }
     },
+    "Label": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Label"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Etiqueta"
+          }
+        }
+      }
+    },
+    "Label is required": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Label is required"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La etiqueta es obligatoria"
+          }
+        }
+      }
+    },
     "Launch at Login": {
       "localizations": {
         "es": {
@@ -1021,12 +1533,76 @@
         }
       }
     },
+    "Limited key": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Limited key"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clave limitada"
+          }
+        }
+      }
+    },
     "Loading…": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Cargando…"
+          }
+        }
+      }
+    },
+    "Login command copied": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Login command copied"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comando de inicio de sesión copiado"
+          }
+        }
+      }
+    },
+    "Manage keys": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manage keys"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Administrar claves"
+          }
+        }
+      }
+    },
+    "Management key": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Management key"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clave de administración"
           }
         }
       }
@@ -1127,6 +1703,22 @@
         }
       }
     },
+    "Not signed in": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not signed in"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sin iniciar sesión"
+          }
+        }
+      }
+    },
     "Not signed in to Claude Code": {
       "localizations": {
         "es": {
@@ -1143,6 +1735,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "No has iniciado sesión en Gemini (ejecuta 'gemini' para autenticarte)"
+          }
+        }
+      }
+    },
+    "Not signed in — run the login command in Settings": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not signed in — run the login command in Settings"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sin iniciar sesión — ejecuta el comando de inicio de sesión en Ajustes"
           }
         }
       }
@@ -1187,22 +1795,6 @@
         }
       }
     },
-    "OpenRouter connected": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "OpenRouter connected"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "OpenRouter conectado"
-          }
-        }
-      }
-    },
     "OpenRouter connect failed: key could not be saved": {
       "localizations": {
         "en": {
@@ -1235,6 +1827,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Error al conectar OpenRouter: falta el código"
+          }
+        }
+      }
+    },
+    "OpenRouter connected": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenRouter connected"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenRouter conectado"
           }
         }
       }
@@ -1331,6 +1939,22 @@
         }
       }
     },
+    "Reads prepaid balance only.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reads prepaid balance only."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solo lee el saldo prepagado."
+          }
+        }
+      }
+    },
     "Refresh": {
       "localizations": {
         "es": {
@@ -1351,16 +1975,6 @@
         }
       }
     },
-    "Relative": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Relativo"
-          }
-        }
-      }
-    },
     "Reinstall Command-Line Tool…": {
       "localizations": {
         "en": {
@@ -1377,6 +1991,16 @@
         }
       }
     },
+    "Relative": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Relativo"
+          }
+        }
+      }
+    },
     "Remove": {
       "localizations": {
         "es": {
@@ -1387,18 +2011,18 @@
         }
       }
     },
-    "Run from AgentMeter.app to install the command-line tool.": {
+    "Removing only forgets the path; it does not sign out.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Run from AgentMeter.app to install the command-line tool."
+            "value": "Removing only forgets the path; it does not sign out."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ejecuta desde AgentMeter.app para instalar la herramienta de línea de comandos."
+            "value": "Quitar solo olvida la ruta; no cierra la sesión."
           }
         }
       }
@@ -1425,6 +2049,38 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tiempos de restablecimiento"
+          }
+        }
+      }
+    },
+    "Run from AgentMeter.app to install the command-line tool.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Run from AgentMeter.app to install the command-line tool."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ejecuta desde AgentMeter.app para instalar la herramienta de línea de comandos."
+          }
+        }
+      }
+    },
+    "Run this in Terminal to sign in that account. AgentMeter never handles your login or tokens — the Codex CLI does.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Run this in Terminal to sign in that account. AgentMeter never handles your login or tokens — the Codex CLI does."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ejecuta esto en Terminal para iniciar sesión en esa cuenta. AgentMeter nunca maneja tu inicio de sesión ni tus tokens — eso lo hace la CLI de Codex."
           }
         }
       }
@@ -1469,12 +2125,76 @@
         }
       }
     },
+    "Shows your 5-hour and token quotas.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shows your 5-hour and token quotas."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Muestra tus cuotas de 5 horas y de tokens."
+          }
+        }
+      }
+    },
+    "Spending capped — AgentMeter can read usage within this limit.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spending capped — AgentMeter can read usage within this limit."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gasto limitado — AgentMeter puede leer el uso dentro de este límite."
+          }
+        }
+      }
+    },
     "Stale since %@": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Obsoleto desde %@"
+          }
+        }
+      }
+    },
+    "Standard API key": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Standard API key"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clave API estándar"
+          }
+        }
+      }
+    },
+    "Standard key": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Standard key"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clave estándar"
           }
         }
       }
@@ -1505,6 +2225,102 @@
           "stringUnit": {
             "state": "translated",
             "value": "Pool del equipo"
+          }
+        }
+      }
+    },
+    "The key was rejected by Venice.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The key was rejected by Venice."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Venice rechazó la clave."
+          }
+        }
+      }
+    },
+    "This API key lets apps use your OpenRouter credits up to a spending limit you set. AgentMeter only reads how much has been used; it cannot spend money or change your account. If you used Connect, OpenRouter created a dedicated key just for AgentMeter that you can revoke anytime.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This API key lets apps use your OpenRouter credits up to a spending limit you set. AgentMeter only reads how much has been used; it cannot spend money or change your account. If you used Connect, OpenRouter created a dedicated key just for AgentMeter that you can revoke anytime."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esta clave API permite que las apps usen tus créditos de OpenRouter hasta un límite de gasto que tú defines. AgentMeter solo lee cuánto se ha usado; no puede gastar dinero ni cambiar tu cuenta. Si usaste Conectar, OpenRouter creó una clave dedicada solo para AgentMeter que puedes revocar en cualquier momento."
+          }
+        }
+      }
+    },
+    "This API key lets apps use your OpenRouter credits. AgentMeter only reads usage; it cannot spend money or change your account. If you used Connect, OpenRouter created a dedicated key just for AgentMeter that you can revoke anytime.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This API key lets apps use your OpenRouter credits. AgentMeter only reads usage; it cannot spend money or change your account. If you used Connect, OpenRouter created a dedicated key just for AgentMeter that you can revoke anytime."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esta clave API permite que las apps usen tus créditos de OpenRouter. AgentMeter solo lee el uso; no puede gastar dinero ni cambiar tu cuenta. Si usaste Conectar, OpenRouter creó una clave dedicada solo para AgentMeter que puedes revocar en cualquier momento."
+          }
+        }
+      }
+    },
+    "This key is tied to a GLM Coding Plan subscription. AgentMeter reads your time and token quotas (they reset every few hours). It cannot spend money, call models, or change your account.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This key is tied to a GLM Coding Plan subscription. AgentMeter reads your time and token quotas (they reset every few hours). It cannot spend money, call models, or change your account."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esta clave está vinculada a una suscripción GLM Coding Plan. AgentMeter lee tus cuotas de tiempo y de tokens (se restablecen cada pocas horas). No puede gastar dinero, llamar modelos ni cambiar tu cuenta."
+          }
+        }
+      }
+    },
+    "This key lets apps call DeepSeek models using your prepaid balance. AgentMeter only reads how much balance is left; it cannot spend money or change your account.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This key lets apps call DeepSeek models using your prepaid balance. AgentMeter only reads how much balance is left; it cannot spend money or change your account."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esta clave permite que las apps llamen modelos de DeepSeek usando tu saldo prepagado. AgentMeter solo lee cuánto saldo queda; no puede gastar dinero ni cambiar tu cuenta."
+          }
+        }
+      }
+    },
+    "This key lets apps call Kimi models using your prepaid balance. AgentMeter only reads how much balance is left; it cannot spend money or change your account.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This key lets apps call Kimi models using your prepaid balance. AgentMeter only reads how much balance is left; it cannot spend money or change your account."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esta clave permite que las apps llamen modelos de Kimi usando tu saldo prepagado. AgentMeter solo lee cuánto saldo queda; no puede gastar dinero ni cambiar tu cuenta."
           }
         }
       }
@@ -1651,6 +2467,38 @@
         }
       }
     },
+    "Valid key": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Valid key"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clave válida"
+          }
+        }
+      }
+    },
+    "Valid key, but Z.ai only exposes usage for GLM Coding Plans": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Valid key, but Z.ai only exposes usage for GLM Coding Plans"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clave válida, pero Z.ai solo expone el uso para planes GLM Coding"
+          }
+        }
+      }
+    },
     "Venice API error: %@": {
       "localizations": {
         "en": {
@@ -1683,6 +2531,22 @@
         }
       }
     },
+    "Venice did not accept this key. Try pasting it again, or create a new Inference or Admin key on Venice's website.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Venice did not accept this key. Try pasting it again, or create a new Inference or Admin key on Venice's website."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Venice no aceptó esta clave. Intenta pegarla de nuevo o crea una nueva clave de inferencia o de administrador en el sitio web de Venice."
+          }
+        }
+      }
+    },
     "Venice key rejected — check the key in Settings": {
       "localizations": {
         "es": {
@@ -1699,6 +2563,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Venice devolvió HTTP %lld"
+          }
+        }
+      }
+    },
+    "Verification failed — your key may still work.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verification failed — your key may still work."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La verificación falló — tu clave puede seguir funcionando."
           }
         }
       }
@@ -1731,22 +2611,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Esperando autorización en el navegador…"
-          }
-        }
-      }
-    },
-    "Writes a machine-readable usage snapshot (never credentials) to Application Support for the agentmeter command-line tool and other local agents.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Writes a machine-readable usage snapshot (never credentials) to Application Support for the agentmeter command-line tool and other local agents."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Escribe una instantánea de uso legible por máquina (nunca credenciales) en Application Support para la herramienta de línea de comandos agentmeter y otros agentes locales."
           }
         }
       }
@@ -1793,6 +2657,54 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ventana"
+          }
+        }
+      }
+    },
+    "Works for usage monitoring.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Works for usage monitoring."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Funciona para monitorear el uso."
+          }
+        }
+      }
+    },
+    "Writes a machine-readable usage snapshot (never credentials) to Application Support for the agentmeter command-line tool and other local agents.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Writes a machine-readable usage snapshot (never credentials) to Application Support for the agentmeter command-line tool and other local agents."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escribe una instantánea de uso legible por máquina (nunca credenciales) en Application Support para la herramienta de línea de comandos agentmeter y otros agentes locales."
+          }
+        }
+      }
+    },
+    "Your key is valid, but Z.ai does not publish usage or balance data for pay-as-you-go API keys. AgentMeter can only show numbers for GLM Coding Plan keys. Your key is fine for calling models — AgentMeter just has nothing to display.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your key is valid, but Z.ai does not publish usage or balance data for pay-as-you-go API keys. AgentMeter can only show numbers for GLM Coding Plan keys. Your key is fine for calling models — AgentMeter just has nothing to display."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu clave es válida, pero Z.ai no publica datos de uso ni de saldo para claves API de pago por uso. AgentMeter solo puede mostrar números para claves de planes GLM Coding. Tu clave sirve para llamar modelos — AgentMeter simplemente no tiene nada que mostrar."
           }
         }
       }
@@ -1891,6 +2803,54 @@
         }
       }
     },
+    "data is stale": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "data is stale"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "los datos están desactualizados"
+          }
+        }
+      }
+    },
+    "error": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "error"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "error"
+          }
+        }
+      }
+    },
+    "high usage": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "high usage"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "uso elevado"
+          }
+        }
+      }
+    },
     "key exchange rejected": {
       "localizations": {
         "es": {
@@ -1901,12 +2861,428 @@
         }
       }
     },
+    "loading": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "loading"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "cargando"
+          }
+        }
+      }
+    },
+    "low balance": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "low balance"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "saldo bajo"
+          }
+        }
+      }
+    },
     "missing code": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "falta el código"
+          }
+        }
+      }
+    },
+    "nearly used up": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "nearly used up"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "casi agotado"
+          }
+        }
+      }
+    },
+    "(confirmed)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(confirmed)"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(confirmado)"
+          }
+        }
+      }
+    },
+    "(expected)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(expected)"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(estimado)"
+          }
+        }
+      }
+    },
+    "%@ renews %@ via %@.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ renews %@ via %@."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ se renueva el %@ a través de %@."
+          }
+        }
+      }
+    },
+    "1 day before": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 day before"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 día antes"
+          }
+        }
+      }
+    },
+    "3 days before": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 days before"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 días antes"
+          }
+        }
+      }
+    },
+    "7 days before": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "7 days before"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "7 días antes"
+          }
+        }
+      }
+    },
+    "Apple": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple"
+          }
+        }
+      }
+    },
+    "Billed through": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Billed through"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Facturado por"
+          }
+        }
+      }
+    },
+    "ChatGPT": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ChatGPT"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ChatGPT"
+          }
+        }
+      }
+    },
+    "Google Play": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Google Play"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Google Play"
+          }
+        }
+      }
+    },
+    "I confirmed this date today": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I confirmed this date today"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Confirmé esta fecha hoy"
+          }
+        }
+      }
+    },
+    "Last confirmed %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last confirmed %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Última confirmación: %@"
+          }
+        }
+      }
+    },
+    "Marks today as the date you verified this renewal on your billing platform.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Marks today as the date you verified this renewal on your billing platform."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Marca hoy como la fecha en que verificaste esta renovación en tu plataforma de facturación."
+          }
+        }
+      }
+    },
+    "Not confirmed yet — check the platform that bills you.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not confirmed yet — check the platform that bills you."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aún no confirmado — revisa la plataforma que te factura."
+          }
+        }
+      }
+    },
+    "OpenAI doesn't publish subscription renewal dates, so confirm yours on the platform that bills you — ChatGPT, Apple, or Google Play. Renewal dates are separate from usage-limit resets.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenAI doesn't publish subscription renewal dates, so confirm yours on the platform that bills you — ChatGPT, Apple, or Google Play. Renewal dates are separate from usage-limit resets."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenAI no publica las fechas de renovación de suscripción, así que confirma la tuya en la plataforma que te factura — ChatGPT, Apple o Google Play. Las fechas de renovación son distintas de los reinicios de límites de uso."
+          }
+        }
+      }
+    },
+    "Other": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Other"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Otro"
+          }
+        }
+      }
+    },
+    "Remind me": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remind me"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recordarme"
+          }
+        }
+      }
+    },
+    "Renews %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Renews %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se renueva el %@"
+          }
+        }
+      }
+    },
+    "Renews on": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Renews on"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se renueva el"
+          }
+        }
+      }
+    },
+    "Subscription": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subscription"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suscripción"
+          }
+        }
+      }
+    },
+    "Subscription renewal": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subscription renewal"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Renovación de suscripción"
+          }
+        }
+      }
+    },
+    "Subscription renews soon": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subscription renews soon"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La suscripción se renueva pronto"
+          }
+        }
+      }
+    },
+    "Track renewal date": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Track renewal date"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Registrar fecha de renovación"
           }
         }
       }
@@ -1957,662 +3333,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "se restablece pronto"
-          }
-        }
-      }
-    },
-    "About this key": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "About this key"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Acerca de esta clave"
-          }
-        }
-      }
-    },
-    "Admin key": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Admin key"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Clave de administrador"
-          }
-        }
-      }
-    },
-    "AgentMeter could not reach the provider to check this key. That is usually a network issue or a temporary API change. Your saved key was not removed.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "AgentMeter could not reach the provider to check this key. That is usually a network issue or a temporary API change. Your saved key was not removed."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "AgentMeter no pudo contactar al proveedor para verificar esta clave. Suele ser un problema de red o un cambio temporal en la API. Tu clave guardada no se eliminó."
-          }
-        }
-      }
-    },
-    "An Admin key can see billing details and manage other keys. AgentMeter only reads your balance; it cannot spend credits or change settings. An Inference key is safer and also works with AgentMeter.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "An Admin key can see billing details and manage other keys. AgentMeter only reads your balance; it cannot spend credits or change settings. An Inference key is safer and also works with AgentMeter."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Una clave de administrador puede ver detalles de facturación y administrar otras claves. AgentMeter solo lee tu saldo; no puede gastar créditos ni cambiar la configuración. Una clave de inferencia es más segura y también funciona con AgentMeter."
-          }
-        }
-      }
-    },
-    "An Admin key shows richer billing detail but is more powerful — only switch if you need that extra detail.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "An Admin key shows richer billing detail but is more powerful — only switch if you need that extra detail."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Una clave de administrador muestra más detalle de facturación, pero es más poderosa — cámbiala solo si necesitas ese detalle extra."
-          }
-        }
-      }
-    },
-    "An Inference key is the safer default — it lets apps run models but limits access to billing and key management. AgentMeter only reads your balance through a read-only endpoint; it cannot spend credits.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "An Inference key is the safer default — it lets apps run models but limits access to billing and key management. AgentMeter only reads your balance through a read-only endpoint; it cannot spend credits."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Una clave de inferencia es la opción más segura por defecto: permite que las apps ejecuten modelos, pero limita el acceso a facturación y administración de claves. AgentMeter solo lee tu saldo mediante un punto de acceso de solo lectura; no puede gastar créditos."
-          }
-        }
-      }
-    },
-    "A management key can control your whole OpenRouter account, including creating and deleting other API keys. AgentMeter only reads usage and balance — it cannot spend credits or change anything. A regular API key is safer; use Connect to get a dedicated key for AgentMeter that you can revoke anytime.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "A management key can control your whole OpenRouter account, including creating and deleting other API keys. AgentMeter only reads usage and balance — it cannot spend credits or change anything. A regular API key is safer; use Connect to get a dedicated key for AgentMeter that you can revoke anytime."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Una clave de administración puede controlar toda tu cuenta de OpenRouter, incluida la creación y eliminación de otras claves API. AgentMeter solo lee el uso y el saldo; no puede gastar créditos ni cambiar nada. Una clave API normal es más segura; usa Conectar para obtener una clave dedicada para AgentMeter que puedas revocar en cualquier momento."
-          }
-        }
-      }
-    },
-    "Balance works through the limited rate-limits endpoint.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Balance works through the limited rate-limits endpoint."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "El saldo funciona a través del punto de acceso limitado de límites de uso."
-          }
-        }
-      }
-    },
-    "Checking key…": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Checking key…"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Verificando clave…"
-          }
-        }
-      }
-    },
-    "Couldn't check key": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Couldn't check key"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No se pudo verificar la clave"
-          }
-        }
-      }
-    },
-    "Full access including billing and key management.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Full access including billing and key management."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Acceso completo, incluida la facturación y la administración de claves."
-          }
-        }
-      }
-    },
-    "Full account access — more powerful than AgentMeter needs.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Full account access — more powerful than AgentMeter needs."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Acceso completo a la cuenta — más poderoso de lo que AgentMeter necesita."
-          }
-        }
-      }
-    },
-    "GLM Coding Plan key": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "GLM Coding Plan key"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Clave de plan GLM Coding"
-          }
-        }
-      }
-    },
-    "Key not working": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Key not working"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Clave no funciona"
-          }
-        }
-      }
-    },
-    "Key type: %@. %@": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Key type: %@. %@"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tipo de clave: %@. %@"
-          }
-        }
-      }
-    },
-    "Limited key": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Limited key"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Clave limitada"
-          }
-        }
-      }
-    },
-    "Manage keys": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Manage keys"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Administrar claves"
-          }
-        }
-      }
-    },
-    "Management key": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Management key"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Clave de administración"
-          }
-        }
-      }
-    },
-    "Reads prepaid balance only.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Reads prepaid balance only."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Solo lee el saldo prepagado."
-          }
-        }
-      }
-    },
-    "Shows your 5-hour and token quotas.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Shows your 5-hour and token quotas."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Muestra tus cuotas de 5 horas y de tokens."
-          }
-        }
-      }
-    },
-    "Spending capped — AgentMeter can read usage within this limit.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Spending capped — AgentMeter can read usage within this limit."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Gasto limitado — AgentMeter puede leer el uso dentro de este límite."
-          }
-        }
-      }
-    },
-    "Standard API key": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Standard API key"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Clave API estándar"
-          }
-        }
-      }
-    },
-    "Standard key": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Standard key"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Clave estándar"
-          }
-        }
-      }
-    },
-    "The key was rejected by Venice.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "The key was rejected by Venice."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Venice rechazó la clave."
-          }
-        }
-      }
-    },
-    "This API key lets apps use your OpenRouter credits up to a spending limit you set. AgentMeter only reads how much has been used; it cannot spend money or change your account. If you used Connect, OpenRouter created a dedicated key just for AgentMeter that you can revoke anytime.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "This API key lets apps use your OpenRouter credits up to a spending limit you set. AgentMeter only reads how much has been used; it cannot spend money or change your account. If you used Connect, OpenRouter created a dedicated key just for AgentMeter that you can revoke anytime."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Esta clave API permite que las apps usen tus créditos de OpenRouter hasta un límite de gasto que tú defines. AgentMeter solo lee cuánto se ha usado; no puede gastar dinero ni cambiar tu cuenta. Si usaste Conectar, OpenRouter creó una clave dedicada solo para AgentMeter que puedes revocar en cualquier momento."
-          }
-        }
-      }
-    },
-    "This API key lets apps use your OpenRouter credits. AgentMeter only reads usage; it cannot spend money or change your account. If you used Connect, OpenRouter created a dedicated key just for AgentMeter that you can revoke anytime.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "This API key lets apps use your OpenRouter credits. AgentMeter only reads usage; it cannot spend money or change your account. If you used Connect, OpenRouter created a dedicated key just for AgentMeter that you can revoke anytime."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Esta clave API permite que las apps usen tus créditos de OpenRouter. AgentMeter solo lee el uso; no puede gastar dinero ni cambiar tu cuenta. Si usaste Conectar, OpenRouter creó una clave dedicada solo para AgentMeter que puedes revocar en cualquier momento."
-          }
-        }
-      }
-    },
-    "This key is tied to a GLM Coding Plan subscription. AgentMeter reads your time and token quotas (they reset every few hours). It cannot spend money, call models, or change your account.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "This key is tied to a GLM Coding Plan subscription. AgentMeter reads your time and token quotas (they reset every few hours). It cannot spend money, call models, or change your account."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Esta clave está vinculada a una suscripción GLM Coding Plan. AgentMeter lee tus cuotas de tiempo y de tokens (se restablecen cada pocas horas). No puede gastar dinero, llamar modelos ni cambiar tu cuenta."
-          }
-        }
-      }
-    },
-    "This key lets apps call DeepSeek models using your prepaid balance. AgentMeter only reads how much balance is left; it cannot spend money or change your account.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "This key lets apps call DeepSeek models using your prepaid balance. AgentMeter only reads how much balance is left; it cannot spend money or change your account."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Esta clave permite que las apps llamen modelos de DeepSeek usando tu saldo prepagado. AgentMeter solo lee cuánto saldo queda; no puede gastar dinero ni cambiar tu cuenta."
-          }
-        }
-      }
-    },
-    "This key lets apps call Kimi models using your prepaid balance. AgentMeter only reads how much balance is left; it cannot spend money or change your account.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "This key lets apps call Kimi models using your prepaid balance. AgentMeter only reads how much balance is left; it cannot spend money or change your account."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Esta clave permite que las apps llamen modelos de Kimi usando tu saldo prepagado. AgentMeter solo lee cuánto saldo queda; no puede gastar dinero ni cambiar tu cuenta."
-          }
-        }
-      }
-    },
-    "Valid key": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Valid key"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Clave válida"
-          }
-        }
-      }
-    },
-    "Valid key, but Z.ai only exposes usage for GLM Coding Plans": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Valid key, but Z.ai only exposes usage for GLM Coding Plans"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Clave válida, pero Z.ai solo expone el uso para planes GLM Coding"
-          }
-        }
-      }
-    },
-    "Venice did not accept this key. Try pasting it again, or create a new Inference or Admin key on Venice's website.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Venice did not accept this key. Try pasting it again, or create a new Inference or Admin key on Venice's website."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Venice no aceptó esta clave. Intenta pegarla de nuevo o crea una nueva clave de inferencia o de administrador en el sitio web de Venice."
-          }
-        }
-      }
-    },
-    "Verification failed — your key may still work.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Verification failed — your key may still work."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "La verificación falló — tu clave puede seguir funcionando."
-          }
-        }
-      }
-    },
-    "Works for usage monitoring.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Works for usage monitoring."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Funciona para monitorear el uso."
-          }
-        }
-      }
-    },
-    "data is stale": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "data is stale"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "los datos están desactualizados"
-          }
-        }
-      }
-    },
-    "error": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "error"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "error"
-          }
-        }
-      }
-    },
-    "high usage": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "high usage"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "uso elevado"
-          }
-        }
-      }
-    },
-    "loading": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "loading"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "cargando"
-          }
-        }
-      }
-    },
-    "low balance": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "low balance"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "saldo bajo"
-          }
-        }
-      }
-    },
-    "nearly used up": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "nearly used up"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "casi agotado"
-          }
-        }
-      }
-    },
-    "Your key is valid, but Z.ai does not publish usage or balance data for pay-as-you-go API keys. AgentMeter can only show numbers for GLM Coding Plan keys. Your key is fine for calling models — AgentMeter just has nothing to display.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Your key is valid, but Z.ai does not publish usage or balance data for pay-as-you-go API keys. AgentMeter can only show numbers for GLM Coding Plan keys. Your key is fine for calling models — AgentMeter just has nothing to display."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tu clave es válida, pero Z.ai no publica datos de uso ni de saldo para claves API de pago por uso. AgentMeter solo puede mostrar números para claves de planes GLM Coding. Tu clave sirve para llamar modelos — AgentMeter simplemente no tiene nada que mostrar."
           }
         }
       }

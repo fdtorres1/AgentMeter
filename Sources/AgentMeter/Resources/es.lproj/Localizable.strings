@@ -12,6 +12,8 @@
 	<string>saldo de %@</string>
 	<key>%@ balance alert</key>
 	<string>Alerta de saldo de %@</string>
+	<key>%@ renews %@ via %@.</key>
+	<string>%@ se renueva el %@ a través de %@.</string>
 	<key>%@ usage alert</key>
 	<string>Alerta de uso de %@</string>
 	<key>%@%@ left</key>
@@ -24,6 +26,8 @@
 	<string>%@%@ usados en total</string>
 	<key>%@, %@</key>
 	<string>%@, %@</string>
+	<key>%@, %@, %@</key>
+	<string>%@, %@, %@</string>
 	<key>%@: %@</key>
 	<string>%@: %@</string>
 	<key>%lld%%</key>
@@ -40,14 +44,24 @@
 	<string>Límite de %lld h</string>
 	<key>%lldm limit</key>
 	<string>Límite de %lld m</string>
+	<key>(confirmed)</key>
+	<string>(confirmado)</string>
+	<key>(expected)</key>
+	<string>(estimado)</string>
+	<key>1 day before</key>
+	<string>1 día antes</string>
 	<key>1 minute</key>
 	<string>1 minuto</string>
+	<key>3 days before</key>
+	<string>3 días antes</string>
 	<key>30 seconds</key>
 	<string>30 segundos</string>
 	<key>5 minutes</key>
 	<string>5 minutos</string>
 	<key>5h limit</key>
 	<string>Límite de 5 h</string>
+	<key>7 days before</key>
+	<string>7 días antes</string>
 	<key>A management key can control your whole OpenRouter account, including creating and deleting other API keys. AgentMeter only reads usage and balance — it cannot spend credits or change anything. A regular API key is safer; use Connect to get a dedicated key for AgentMeter that you can revoke anytime.</key>
 	<string>Una clave de administración puede controlar toda tu cuenta de OpenRouter, incluida la creación y eliminación de otras claves API. AgentMeter solo lee el uso y el saldo; no puede gastar créditos ni cambiar nada. Una clave API normal es más segura; usa Conectar para obtener una clave dedicada para AgentMeter que puedas revocar en cualquier momento.</string>
 	<key>API key</key>
@@ -62,6 +76,8 @@
 	<string>Acerca de AgentMeter</string>
 	<key>About this key</key>
 	<string>Acerca de esta clave</string>
+	<key>Add account…</key>
+	<string>Agregar cuenta…</string>
 	<key>Admin key</key>
 	<string>Clave de administrador</string>
 	<key>AgentMeter</key>
@@ -86,6 +102,8 @@
 	<string>Anthropic limitó la solicitud de uso</string>
 	<key>Anthropic returned HTTP %lld</key>
 	<string>Anthropic devolvió HTTP %lld</string>
+	<key>Apple</key>
+	<string>Apple</string>
 	<key>Auto</key>
 	<string>Automático</string>
 	<key>Auto usage</key>
@@ -98,12 +116,30 @@
 	<string>Alerta de saldo por debajo de</string>
 	<key>Balance works through the limited rate-limits endpoint.</key>
 	<string>El saldo funciona a través del punto de acceso limitado de límites de uso.</string>
+	<key>Billed through</key>
+	<string>Facturado por</string>
+	<key>Cancel</key>
+	<string>Cancelar</string>
+	<key>ChatGPT</key>
+	<string>ChatGPT</string>
 	<key>Check for Updates…</key>
 	<string>Buscar actualizaciones…</string>
 	<key>Checking key…</key>
 	<string>Verificando clave…</string>
+	<key>Choose a path other than ~/.codex</key>
+	<string>Elige una ruta distinta de ~/.codex</string>
 	<key>Claude token refresh failed (HTTP %lld)</key>
 	<string>Error al actualizar el token de Claude (HTTP %lld)</string>
+	<key>Codex CLI not found</key>
+	<string>No se encontró la CLI de Codex</string>
+	<key>Codex accounts</key>
+	<string>Cuentas de Codex</string>
+	<key>Codex app-server exited unexpectedly</key>
+	<string>El app-server de Codex se cerró inesperadamente</string>
+	<key>Codex app-server timed out</key>
+	<string>Se agotó el tiempo de espera del servidor de Codex</string>
+	<key>Codex protocol error</key>
+	<string>Error de protocolo de Codex</string>
 	<key>Command-line tool installed at %@</key>
 	<string>Herramienta de línea de comandos instalada en %@</string>
 	<key>Command-line tool not on your PATH.</key>
@@ -122,8 +158,12 @@
 	<string>Copiado</string>
 	<key>Copies redacted troubleshooting info to the clipboard — never includes keys or tokens.</key>
 	<string>Copia información de diagnóstico redactada al portapapeles — nunca incluye claves ni tokens.</string>
+	<key>Copies the Terminal command to sign in this Codex account</key>
+	<string>Copia el comando de Terminal para iniciar sesión en esta cuenta de Codex</string>
 	<key>Copy Diagnostics</key>
 	<string>Copiar diagnóstico</string>
+	<key>Copy login command</key>
+	<string>Copiar comando de inicio de sesión</string>
 	<key>Could not read session file</key>
 	<string>No se pudo leer el archivo de sesión</string>
 	<key>Couldn't check key</key>
@@ -146,6 +186,10 @@
 	<string>Clave de DeepSeek rechazada — revisa la clave en Ajustes</string>
 	<key>DeepSeek returned HTTP %lld</key>
 	<string>DeepSeek devolvió HTTP %lld</string>
+	<key>Default (~/.codex)</key>
+	<string>Predeterminada (~/.codex)</string>
+	<key>Default Codex account, %@</key>
+	<string>Cuenta de Codex predeterminada, %@</string>
 	<key>Detected</key>
 	<string>Detectado</string>
 	<key>Diagnostics copied</key>
@@ -180,8 +224,16 @@
 	<string>General</string>
 	<key>Get key</key>
 	<string>Obtener clave</string>
+	<key>Google Play</key>
+	<string>Google Play</string>
 	<key>Google returned HTTP %lld</key>
 	<string>Google devolvió HTTP %lld</string>
+	<key>Home path</key>
+	<string>Ruta de inicio</string>
+	<key>Home path is required</key>
+	<string>La ruta de inicio es obligatoria</string>
+	<key>I confirmed this date today</key>
+	<string>Confirmé esta fecha hoy</string>
 	<key>Icon only</key>
 	<string>Solo icono</string>
 	<key>Included usage</key>
@@ -204,16 +256,26 @@
 	<string>Clave de Kimi rechazada — revisa la clave en Ajustes</string>
 	<key>Kimi returned HTTP %lld</key>
 	<string>Kimi devolvió HTTP %lld</string>
+	<key>Label</key>
+	<string>Etiqueta</string>
+	<key>Label is required</key>
+	<string>La etiqueta es obligatoria</string>
+	<key>Last confirmed %@</key>
+	<string>Última confirmación: %@</string>
 	<key>Launch at Login</key>
 	<string>Abrir al iniciar sesión</string>
 	<key>Limited key</key>
 	<string>Clave limitada</string>
 	<key>Loading…</key>
 	<string>Cargando…</string>
+	<key>Login command copied</key>
+	<string>Comando de inicio de sesión copiado</string>
 	<key>Manage keys</key>
 	<string>Administrar claves</string>
 	<key>Management key</key>
 	<string>Clave de administración</string>
+	<key>Marks today as the date you verified this renewal on your billing platform.</key>
+	<string>Marca hoy como la fecha en que verificaste esta renovación en tu plataforma de facturación.</string>
 	<key>Menu bar monitor for AI coding usage limits.</key>
 	<string>Monitor de límites de uso de IA para programación en la barra de menús.</string>
 	<key>Menu bar style</key>
@@ -230,12 +292,18 @@
 	<string>No hay datos de límites en sesiones recientes</string>
 	<key>No usage data</key>
 	<string>Sin datos de uso</string>
+	<key>Not confirmed yet — check the platform that bills you.</key>
+	<string>Aún no confirmado — revisa la plataforma que te factura.</string>
 	<key>Not detected</key>
 	<string>No detectado</string>
+	<key>Not signed in</key>
+	<string>Sin iniciar sesión</string>
 	<key>Not signed in to Claude Code</key>
 	<string>No has iniciado sesión en Claude Code</string>
 	<key>Not signed in to Gemini (run 'gemini' to authenticate)</key>
 	<string>No has iniciado sesión en Gemini (ejecuta 'gemini' para autenticarte)</string>
+	<key>Not signed in — run the login command in Settings</key>
+	<string>Sin iniciar sesión — ejecuta el comando de inicio de sesión en Ajustes</string>
 	<key>Off</key>
 	<string>Desactivado</string>
 	<key>On</key>
@@ -244,6 +312,8 @@
 	<string>Una notificación por ventana de límite, reactivada cuando la ventana se restablece. "20% restante" es la misma alerta que "80% usado" — sigue tu configuración de Visualización.</string>
 	<key>One notification per limit window, re-armed when the window resets. Balance alerts apply to pay-as-you-go providers.</key>
 	<string>Una notificación por ventana de límite, reactivada cuando la ventana se restablece. Las alertas de saldo aplican a proveedores de pago por uso.</string>
+	<key>OpenAI doesn't publish subscription renewal dates, so confirm yours on the platform that bills you — ChatGPT, Apple, or Google Play. Renewal dates are separate from usage-limit resets.</key>
+	<string>OpenAI no publica las fechas de renovación de suscripción, así que confirma la tuya en la plataforma que te factura — ChatGPT, Apple o Google Play. Las fechas de renovación son distintas de los reinicios de límites de uso.</string>
 	<key>OpenRouter connect failed: key could not be saved</key>
 	<string>Falló la conexión con OpenRouter: no se pudo guardar la clave</string>
 	<key>OpenRouter connect failed: key exchange rejected</key>
@@ -258,6 +328,8 @@
 	<string>OpenRouter devolvió HTTP %lld</string>
 	<key>Or paste an API key</key>
 	<string>O pega una clave de API</string>
+	<key>Other</key>
+	<string>Otro</string>
 	<key>Personal cap</key>
 	<string>Límite personal</string>
 	<key>Pro (24h)</key>
@@ -278,14 +350,24 @@
 	<string>Reinstalar herramienta de línea de comandos…</string>
 	<key>Relative</key>
 	<string>Relativo</string>
+	<key>Remind me</key>
+	<string>Recordarme</string>
 	<key>Remove</key>
 	<string>Eliminar</string>
+	<key>Removing only forgets the path; it does not sign out.</key>
+	<string>Quitar solo olvida la ruta; no cierra la sesión.</string>
+	<key>Renews %@</key>
+	<string>Se renueva el %@</string>
+	<key>Renews on</key>
+	<string>Se renueva el</string>
 	<key>Report an issue</key>
 	<string>Reportar un problema</string>
 	<key>Reset times</key>
 	<string>Tiempos de restablecimiento</string>
 	<key>Run from AgentMeter.app to install the command-line tool.</key>
 	<string>Ejecuta desde AgentMeter.app para instalar la herramienta de línea de comandos.</string>
+	<key>Run this in Terminal to sign in that account. AgentMeter never handles your login or tokens — the Codex CLI does.</key>
+	<string>Ejecuta esto en Terminal para iniciar sesión en esa cuenta. AgentMeter nunca maneja tu inicio de sesión ni tus tokens — eso lo hace la CLI de Codex.</string>
 	<key>Save</key>
 	<string>Guardar</string>
 	<key>Saved</key>
@@ -306,6 +388,12 @@
 	<string>Clave estándar</string>
 	<key>Status</key>
 	<string>Estado</string>
+	<key>Subscription</key>
+	<string>Suscripción</string>
+	<key>Subscription renewal</key>
+	<string>Renovación de suscripción</string>
+	<key>Subscription renews soon</key>
+	<string>La suscripción se renueva pronto</string>
 	<key>Support ♥</key>
 	<string>Apoyar ♥</string>
 	<key>Team pool</key>
@@ -326,6 +414,8 @@
 	<string>Cuota de tiempo</string>
 	<key>Token quota</key>
 	<string>Cuota de tokens</string>
+	<key>Track renewal date</key>
+	<string>Registrar fecha de renovación</string>
 	<key>Unexpected response from Anthropic</key>
 	<string>Respuesta inesperada de Anthropic</string>
 	<key>Unexpected response from DeepSeek</key>

@@ -10,7 +10,7 @@ final class UsageStore: ObservableObject {
     @Published private(set) var states: [String: ProviderState] = [:]
     @Published var lastRefreshed: Date?
 
-    let providers: [any UsageProvider]
+    @Published private(set) var providers: [any UsageProvider]
     let settings: SettingsStore
     lazy var notificationManager = NotificationManager()
 
@@ -22,15 +22,25 @@ final class UsageStore: ObservableObject {
     private var credentialsObserver: NSObjectProtocol?
     private var wakeObserver: NSObjectProtocol?
     private var refreshRequestObserver: NSObjectProtocol?
+    private var codexAccountsObserver: AnyCancellable?
 
-    init(settings: SettingsStore, providers: [any UsageProvider] = UsageStore.defaultProviders) {
+    init(
+        settings: SettingsStore,
+        providers: [any UsageProvider]? = nil
+    ) {
         self.settings = settings
-        self.providers = providers
-        for provider in providers {
+        self.providers = providers ?? Self.defaultProviders(extraAccounts: settings.codexExtraAccounts)
+        for provider in self.providers {
             states[provider.id] = .loading
         }
         refresh()
         rescheduleTimer()
+        codexAccountsObserver = settings.$codexExtraAccounts
+            .dropFirst()
+            .removeDuplicates()
+            .sink { [weak self] _ in
+                self?.rebuildProviders()
+            }
         credentialsObserver = NotificationCenter.default.addObserver(
             forName: .providerCredentialsChanged,
             object: nil,
@@ -55,11 +65,36 @@ final class UsageStore: ObservableObject {
     }
 
     nonisolated static var defaultProviders: [any UsageProvider] {
-        [
-            CodexProvider(), CursorProvider(), ClaudeProvider(), GeminiProvider(),
+        defaultProviders(extraAccounts: [])
+    }
+
+    nonisolated static func defaultProviders(extraAccounts: [CodexAccountConfig]) -> [any UsageProvider] {
+        var result: [any UsageProvider] = [CodexProvider()]
+        for config in extraAccounts {
+            result.append(CodexProvider(accountConfig: config))
+        }
+        let others: [any UsageProvider] = [
+            CursorProvider(), ClaudeProvider(), GeminiProvider(),
             OpenRouterProvider(), DeepSeekProvider(), MoonshotProvider(),
             ZaiProvider(), VeniceProvider(),
         ]
+        result.append(contentsOf: others)
+        return result
+    }
+
+    func rebuildProviders() {
+        let newProviders = Self.defaultProviders(extraAccounts: settings.codexExtraAccounts)
+        let oldIDs = Set(providers.map(\.id))
+        let newIDs = Set(newProviders.map(\.id))
+        providers = newProviders
+        for removed in oldIDs.subtracting(newIDs) {
+            states.removeValue(forKey: removed)
+            CodexAccountCache.shared.clear(providerID: removed)
+        }
+        for added in newIDs.subtracting(oldIDs) {
+            states[added] = .loading
+        }
+        refresh()
     }
 
     deinit {
@@ -103,9 +138,13 @@ final class UsageStore: ObservableObject {
         Task {
             await withTaskGroup(of: Void.self) { group in
                 for provider in providers {
-                    group.addTask { await self.refreshProvider(provider) }
+                    group.addTask {
+                        await self.refreshProvider(provider)
+                        DebugLog.write("refresh: \(provider.id) done")
+                    }
                 }
             }
+            DebugLog.write("refresh: all done, writing snapshot")
             StatusSnapshotWriter.writeIfEnabled(store: self, settings: settings)
         }
     }
@@ -276,7 +315,9 @@ final class UsageStore: ObservableObject {
     /// Watches the newest rollout file so appended token_count events update the
     /// Codex meter immediately, without waiting for the next timer tick.
     private func watchNewestCodexSession() {
-        guard settings.mode(for: "codex").isVisible(detected: CodexProvider().isDetected),
+        let primaryCodex = providers.first { $0.id == "codex" }
+        guard let primaryCodex,
+              settings.mode(for: "codex").isVisible(detected: primaryCodex.isDetected),
               let newest = codexReader.recentSessionFiles(limit: 1).first,
               newest != watchedFile else {
             return
@@ -296,7 +337,7 @@ final class UsageStore: ObservableObject {
         )
         source.setEventHandler { [weak self] in
             guard let self else { return }
-            Task { await self.refreshProvider(CodexProvider()) }
+            Task { await self.refreshProvider(primaryCodex) }
         }
         source.setCancelHandler {
             close(descriptor)
