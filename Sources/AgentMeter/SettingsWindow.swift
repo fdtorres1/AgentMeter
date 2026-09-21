@@ -343,7 +343,7 @@ private struct CodexAccountsSection: View {
     }
 
     private var addAccountForm: some View {
-        let loginCommand = "CODEX_HOME=\(draftHomePath) codex login"
+        let loginCommand = CodexAccountConfig.loginCommand(homePath: draftHomePath)
         return VStack(alignment: .leading, spacing: 8) {
             TextField(L("Label"), text: $draftLabel)
                 .onChange(of: draftLabel) { _, newValue in

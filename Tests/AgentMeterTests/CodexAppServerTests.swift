@@ -112,6 +112,17 @@ final class CodexAppServerTests: XCTestCase {
         )
     }
 
+    func testLoginCommandCreatesHomeFirst() {
+        XCTAssertEqual(
+            CodexAccountConfig.loginCommand(homePath: "~/.codex-main"),
+            "mkdir -p ~/.codex-main && CODEX_HOME=~/.codex-main codex login"
+        )
+        XCTAssertEqual(
+            CodexAccountConfig.loginCommand(homePath: "/Volumes/My Disk/codex home"),
+            "mkdir -p '/Volumes/My Disk/codex home' && CODEX_HOME='/Volumes/My Disk/codex home' codex login"
+        )
+    }
+
     func testCodexAccountConfigCodableRoundTrip() throws {
         let original = CodexAccountConfig(
             id: UUID(uuidString: "A1B2C3D4-E5F6-7890-ABCD-EF1234567890")!,

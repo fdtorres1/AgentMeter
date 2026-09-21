@@ -3,6 +3,13 @@
 All notable changes to AgentMeter. Format follows [Keep a Changelog](https://keepachangelog.com);
 versions follow semantic-ish `MAJOR.MINOR.PATCH`.
 
+## [1.11.1] — 2026-09-21
+
+### Fixed
+- The "Copy login command" for extra Codex accounts now creates the home
+  directory first (`mkdir -p … && CODEX_HOME=… codex login`); Codex refuses
+  to start when `CODEX_HOME` does not exist yet. Paths with spaces are quoted.
+
 ## [1.11.0] — 2026-09-21
 
 ### Added

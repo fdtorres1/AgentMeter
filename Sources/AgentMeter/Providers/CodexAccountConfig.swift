@@ -28,6 +28,19 @@ struct CodexAccountConfig: Codable, Equatable, Identifiable, Sendable {
         return "~/.codex-\(suffix)"
     }
 
+    /// Terminal command that signs in a separate Codex account. Codex refuses
+    /// a CODEX_HOME that does not exist yet, so the directory is created first.
+    /// `~` is left unquoted so the shell expands it; other paths are quoted.
+    nonisolated static func loginCommand(homePath: String) -> String {
+        let path: String
+        if homePath.hasPrefix("~/"), !homePath.contains(where: { $0.isWhitespace || $0 == "'" || $0 == "\"" }) {
+            path = homePath
+        } else {
+            path = "'" + homePath.replacingOccurrences(of: "'", with: "'\\''") + "'"
+        }
+        return "mkdir -p \(path) && CODEX_HOME=\(path) codex login"
+    }
+
     nonisolated func expandedHomeURL() -> URL {
         CodexPath.expand(codexHomePath)
     }

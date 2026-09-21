@@ -41,7 +41,7 @@ https://github.com/fdtorres1/AgentMeter
   every 5 min per account (`CodexAppServerClient.pollInterval`), cached in
   `CodexAccountCache`. Extra accounts = `CodexAccountConfig` entries in
   `SettingsStore.codexExtraAccounts`, each with its own `CODEX_HOME`; the
-  user signs in via `CODEX_HOME=<home> codex login` — AgentMeter never logs
+  user signs in via `mkdir -p <home> && CODEX_HOME=<home> codex login` (Codex refuses a nonexistent CODEX_HOME) — AgentMeter never logs
   in or reads auth.json. The protocol has NO account-switch method;
   `~/.codex/accounts.json` is written by the Codex desktop app only.
   FALLBACK (primary account only): parse newest

@@ -19,7 +19,7 @@ Cx 5% · Cu 20% · Cl 40% · Ge 12%
 
 | Provider | Source | How usage is read |
 |----------|--------|-------------------|
-| **Codex** (`Cx`) | Codex CLI app-server protocol (`codex app-server` → `account/rateLimits/read`), session logs as fallback | Live limits, plan, and signed-in email straight from your own Codex CLI, polled every 5 minutes; session logs keep updates instant during CLI activity. **Multiple accounts**: add extra Codex homes (`CODEX_HOME=~/.codex-work codex login`) and each gets its own meter. Optional subscription renewal-date tracking with reminders. |
+| **Codex** (`Cx`) | Codex CLI app-server protocol (`codex app-server` → `account/rateLimits/read`), session logs as fallback | Live limits, plan, and signed-in email straight from your own Codex CLI, polled every 5 minutes; session logs keep updates instant during CLI activity. **Multiple accounts**: add extra Codex homes (`mkdir -p ~/.codex-work && CODEX_HOME=~/.codex-work codex login`) and each gets its own meter. Optional subscription renewal-date tracking with reminders. |
 | **Cursor** (`Cu`) | `cursor.com/api/usage-summary` | Uses the session token Cursor stores locally; included/auto/API usage + billing reset. Team/enterprise pools supported. |
 | **Claude** (`Cl`) | `api.anthropic.com/api/oauth/usage` | Uses the Claude Code OAuth token (credentials file or Keychain); 5h + weekly (+Opus) windows. |
 | **Gemini** (`Ge`) | Cloud Code quota API | Uses the Gemini CLI OAuth token (`~/.gemini/oauth_creds.json`); Pro/Flash/Flash-Lite daily quotas. |
