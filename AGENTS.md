@@ -6,6 +6,10 @@ pay-as-you-go balances for OpenRouter, DeepSeek, Kimi, Z.ai, and Venice.
 Public repo: https://github.com/fdtorres1/AgentMeter. Current release line:
 1.11.x (see CHANGELOG.md). Test suite: 136 tests (`swift test`).
 
+**If `HANDOFF.md` exists in the repo root, read it first.** It is the
+gitignored, machine-local session handoff (current state, pending work,
+announcement drafts, environment specifics) and complements this file.
+
 ## Architecture
 
 - One file per provider in `Sources/AgentMeter/Providers/`, each implementing
