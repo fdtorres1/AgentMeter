@@ -35,17 +35,17 @@ Top-level object:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `id` | `String` | Provider id (e.g. `codex`, `cursor`) |
-| `displayName` | `String` | Human label |
+| `id` | `String` | Provider id: `codex`, `cursor`, `claude`, `gemini`, `openrouter`, `deepseek`, `moonshot`, `zai`, `venice`. Extra Codex accounts are `codex:<uuid>` (stable per account for as long as it is configured). |
+| `displayName` | `String` | Human label (extra Codex accounts: `Codex — <label>`) |
 | `state` | `String` | `ready`, `stale`, `error`, or `loading` |
 | `windows` | `[WindowStatus]` | Rate-limit windows |
 | `balance` | `BalanceStatus?` | Pay-as-you-go balance, if any |
 | `asOf` | `String?` (ISO 8601) | Provider-reported data timestamp |
 | `staleSince` | `String?` (ISO 8601) | Present when `state` is `stale` |
 | `error` | `String?` | Redacted error message for `error` / `stale` |
-| `accountEmail` | `String?` | Signed-in account email (Codex; added in 1.11.0) |
-| `planType` | `String?` | Plan display name (Codex; added in 1.11.0) |
-| `renewal` | `RenewalStatus?` | User-tracked subscription renewal (Codex; added in 1.11.0) |
+| `accountEmail` | `String?` | Signed-in account email — Codex accounts only (added in 1.11.0) |
+| `planType` | `String?` | Plan / tier label as shown in the app's plan capsule (e.g. `Pro`, `Pro Lite`, `Ultra`, `Credits`, `Inference key`); present for any provider that reports one (added in 1.11.0) |
+| `renewal` | `RenewalStatus?` | User-entered subscription renewal — billing information, NOT a usage window; do not use it for quota decisions (Codex accounts; added in 1.11.0) |
 
 `RenewalStatus` (added in 1.11.0):
 
@@ -75,36 +75,50 @@ Top-level object:
 
 ```json
 {
-  "appVersion": "1.0",
-  "generatedAt": "2026-07-28T20:15:00Z",
+  "appVersion": "1.11.2",
+  "generatedAt": "2026-09-21T07:30:00Z",
   "providers": [
     {
-      "asOf": "2026-07-28T20:14:55Z",
+      "accountEmail": "you@example.com",
+      "asOf": "2026-09-21T07:29:58Z",
       "displayName": "Codex",
       "id": "codex",
+      "planType": "Pro",
       "state": "ready",
       "windows": [
-        {
-          "label": "5h",
-          "resetsAt": "2026-07-28T22:00:00Z",
-          "usedPercent": 42
-        },
-        {
-          "label": "Weekly",
-          "resetsAt": "2026-08-04T00:00:00Z",
-          "usedPercent": 17
-        }
+        { "label": "5h limit", "resetsAt": "2026-09-21T10:00:00Z", "usedPercent": 42 },
+        { "label": "Weekly limit", "resetsAt": "2026-09-28T05:12:00Z", "usedPercent": 17 }
       ]
     },
     {
-      "balance": {
-        "amount": 12.5,
-        "currency": "$",
-        "kind": "remaining"
+      "accountEmail": "work@example.com",
+      "asOf": "2026-09-21T07:29:59Z",
+      "displayName": "Codex — work",
+      "id": "codex:2F1A6C1E-8B3D-4E6F-9A0B-1C2D3E4F5A6B",
+      "planType": "Pro Lite",
+      "renewal": {
+        "confirmedAt": "2026-09-01T14:00:00Z",
+        "expectedAt": "2026-10-03T00:00:00Z",
+        "platform": "apple"
       },
+      "state": "ready",
+      "windows": [
+        { "label": "Weekly limit", "resetsAt": "2026-09-25T18:40:00Z", "usedPercent": 62 }
+      ]
+    },
+    {
+      "balance": { "amount": 8.06, "currency": "$", "kind": "remaining" },
       "displayName": "OpenRouter",
       "id": "openrouter",
+      "planType": "Credits",
       "state": "ready",
+      "windows": []
+    },
+    {
+      "displayName": "Z.ai",
+      "error": "Z.ai key is valid, but this account has no GLM Coding Plan",
+      "id": "zai",
+      "state": "error",
       "windows": []
     }
   ],
@@ -112,9 +126,23 @@ Top-level object:
 }
 ```
 
+Notes for consumers:
+
+- Window labels are localized to the app's UI language; match on `id` and
+  window position/`resetsAt`, not on label text, if you need stability.
+- `usedPercent` is always *used*; the app's "count down" display setting does
+  not affect the snapshot.
+- Codex `asOf` is the time of the last live app-server read (or the newest
+  session-log event when the fallback is in use).
+
 ### Schema stability
 
 Within `schemaVersion` 1, changes are **additive only** (new optional fields). Breaking renames or semantic changes require incrementing `schemaVersion`.
+
+| App version | Schema change |
+|-------------|---------------|
+| 1.9.0 | Schema v1 introduced |
+| 1.11.0 | Added optional `accountEmail`, `planType`, `renewal` on `ProviderStatus`; extra Codex accounts appear as `codex:<uuid>` providers |
 
 ## URL schemes
 
@@ -164,6 +192,23 @@ agentmeter --help
 
 `status` prints a staleness warning when `generatedAt` is older than 10 minutes.
 
+### Refresh cadence
+
+The app refreshes every 30 s / 1 min / 5 min (user setting) and on wake, and
+Codex updates instantly during CLI activity via a file watcher. Live Codex
+app-server reads are capped at one per 5 minutes per account regardless of the
+refresh interval; `agentmeter refresh` triggers a normal refresh, which reuses
+the cached app-server reading if it is younger than 5 minutes.
+
+### Debugging
+
+`AGENTMETER_DEBUG=1` in the app's environment enables structural tracing to
+stderr (refresh completion per provider, Codex app-server success/failure).
+It never prints credentials. Note that launching the app binary directly from
+a shell can leave the initial refresh incomplete; prefer
+`open /Applications/AgentMeter.app` for real-world behavior and use the
+snapshot/CLI to observe it.
+
 ## Agent skill
 
 `agentmeter skill` prints the AgentMeter agent skill markdown to stdout (exit 0).
@@ -181,4 +226,14 @@ agentmeter skill > ~/.cursor/skills/agentmeter/SKILL.md
 ```
 
 The canonical source in this repository is `docs/agent-skill/SKILL.md`; the CLI
-embeds the same bytes at build time.
+embeds the same bytes at build time (a test enforces byte identity).
+
+## Codex multi-account specifics
+
+Extra Codex accounts are configured in Settings → Providers → Codex accounts
+and monitored through separate `CODEX_HOME` directories. See
+[CODEX_ACCOUNTS.md](CODEX_ACCOUNTS.md) for setup. From an agent's point of
+view each account is an independent provider entry. To find *your own*
+account's entry, compare `accountEmail` with `codex login status` (run with the
+same `CODEX_HOME` you are executing under), or match the home you were started
+with to the label the user chose.

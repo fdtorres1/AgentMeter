@@ -1,22 +1,45 @@
 # AgentMeter — Agent Context
 
 macOS menu bar app (SwiftUI, Swift Package, macOS 14+) showing AI coding usage
-limits for Codex, Cursor, Claude Code, and Gemini. Public repo:
-https://github.com/fdtorres1/AgentMeter
+limits for Codex (multiple accounts), Cursor, Claude Code, Gemini, and
+pay-as-you-go balances for OpenRouter, DeepSeek, Kimi, Z.ai, and Venice.
+Public repo: https://github.com/fdtorres1/AgentMeter. Current release line:
+1.11.x (see CHANGELOG.md). Test suite: 136 tests (`swift test`).
 
 ## Architecture
 
 - One file per provider in `Sources/AgentMeter/Providers/`, each implementing
   the `UsageProvider` protocol (`id`, `displayName`, `shortCode`, `isDetected`,
-  `fetch() -> ProviderUsage`). Registered in `UsageStore.defaultProviders`.
-- `UsageStore` (@MainActor ObservableObject): per-provider `ProviderState`,
-  refresh timer, and a `DispatchSource` file watcher on the newest Codex
-  session file for instant updates after CLI activity.
-- `SettingsStore`: per-provider visibility (`auto`/`on`/`off` in UserDefaults;
-  `auto` = show only when `isDetected`) and refresh interval (30s/1m/5m).
-- `MenuContent`: dropdown UI + inline settings panel. Menu bar title is built
-  in `UsageStore.menuBarTitle`, e.g. `Cx 5% · Cu 20%` (worst window per
-  provider).
+  `fetch() -> ProviderUsage`, optional `assessCredential()`,
+  `credentialHelpText`, `apiKeyPlaceholder`, `dashboardURL`). Built by
+  `UsageStore.defaultProviders(extraAccounts:)` — the list is DYNAMIC: extra
+  Codex accounts (`CodexProvider(accountConfig:)`, id `codex:<uuid>`) are
+  inserted after the primary `codex`, and `UsageStore.rebuildProviders()` runs
+  when `SettingsStore.codexExtraAccounts` changes.
+- `UsageStore` (@MainActor ObservableObject): per-provider `ProviderState`
+  (`loading`/`ready`/`stale`/`error`), refresh timer, `DispatchSource` file
+  watcher on the newest Codex session file, wake/credential-change observers,
+  menu bar title/entries + spoken `menuBarAccessibilityDescription`, and the
+  post-refresh `StatusSnapshotWriter` call.
+- `SettingsStore` (UserDefaults): per-provider visibility (`auto`/`on`/`off`;
+  `auto` = show only when `isDetected`), refresh interval (30s/1m/5m),
+  notifications + thresholds, count direction, reset-time style, menu bar
+  style (full/compact/icon), `agentAccessEnabled`, `codexExtraAccounts`
+  (`[CodexAccountConfig]`, JSON), `subscriptionRenewals`
+  (`[providerID: SubscriptionRenewal]`, JSON).
+- UI: `MenuContent` (dropdown; provider sections live in
+  `ProviderUsageSections.swift` and are shared with `UsageDetailsView`, the
+  ⌘D / `agentmeter://details` window), `SettingsWindow` (native tabbed
+  Settings: General / Providers / Display / Alerts; includes
+  `CodexAccountsSection` with auto-discovery of `~/.codex-*` homes and
+  `CodexSubscriptionSettings`), `AboutWindow`. Menu bar title is a rendered
+  `NSImage` (`MenuBarTitleRenderer`) with an `accessibilityDescription`.
+- Cross-cutting: `CredentialAssessment` (key-type detection + plain-language
+  explainers), `UsageMeterSeverity` (shared 60/85% thresholds, symbols,
+  spoken qualifiers), `NotificationManager` (`ThresholdTracker`,
+  `RenewalTracker`), `SubscriptionRenewal` (anniversary math; billing dates
+  are NEVER merged with usage windows), `ErrorRedaction`, `Diagnostics`,
+  `DebugLog` (`AGENTMETER_DEBUG=1` stderr tracing; never credentials).
 - Agent/CLI interface (v1.9.0): opt-in `status.json` snapshot in Application
   Support written by `StatusSnapshotWriter` after each refresh; shared schema
   lives in the `AgentMeterStatusKit` library target; `agentmeter-cli` is a
@@ -25,6 +48,9 @@ https://github.com/fdtorres1/AgentMeter
   — "agentmeter" and "AgentMeter" clobber each other on case-insensitive APFS
   (both in `.build/release/` and in `Contents/MacOS/`). Schema doc:
   docs/AGENT_INTERFACE.md (additive changes only within schemaVersion 1).
+  `agentmeter skill` prints `docs/agent-skill/SKILL.md`, embedded as
+  `AgentSkill.markdown` — a test enforces byte identity, so edit the .md and
+  regenerate the Swift constant together (see Conventions).
 
 ## Provider data sources (validated formats)
 
@@ -145,7 +171,13 @@ Gotchas:
   the Sparkle key if the Sparkle tool binary changed (e.g. after an SPM
   re-resolve). Approve with "Always Allow" — it blocks the release until then.
 - `appcast.xml` is gitignored (build artifact); it lives only as a release asset.
-- `.build/`, `*.app/`, `HANDOFF.md` are gitignored.
+- `.build/`, `*.app/`, `HANDOFF.md` are gitignored. `AgentMeter.zip` IS
+  tracked (historical); `release.sh` overwrites it — run
+  `git checkout -- AgentMeter.zip` before committing unrelated work.
+- `/tmp/homebrew-tap` may be gone between sessions; reclone
+  `https://github.com/fdtorres1/homebrew-tap` before bumping the cask.
+- Running the app binary directly from a shell (for `AGENTMETER_DEBUG`) can
+  leave the initial refresh incomplete; verify behavior with `open`.
 
 ## Conventions
 
@@ -154,3 +186,21 @@ Gotchas:
 - Public issue tracking only (no Discussions). Roadmap is pinned+locked issue #1.
 - Author commits with a real identity; the repo's initial history was recreated
   once to strip a secret-scanner false positive, so avoid rewriting history.
+- Localization: every user-facing string goes through `L()` and gets en + es
+  entries in `Sources/AgentMeter/Resources/Localizable.xcstrings`; then run
+  `xcrun xcstringstool compile Sources/AgentMeter/Resources/Localizable.xcstrings
+  --output-directory Sources/AgentMeter/Resources` (bundle.sh does this too).
+  CLI output and docs are English-only.
+- Agent skill: `docs/agent-skill/SKILL.md` is canonical; after editing it,
+  regenerate `Sources/AgentMeterStatusKit/AgentSkill.swift` so the raw-string
+  constant is byte-identical (`AgentSkillTests` fails otherwise).
+- Snapshot schema (`AgentMeterStatusKit`): additive optional fields only
+  within `schemaVersion` 1; update docs/AGENT_INTERFACE.md tables and the
+  fixture test in the same change.
+- Accessibility: every new meter/row is one accessibility element with a
+  label + value; severity is never color-only (`UsageMeterSeverity`); state
+  changes post `AccessibilityNotification.Announcement`.
+- Delegation pattern that has worked: spec bounded implementation tasks to a
+  subagent, then review every diff, run the suite, and live-test against the
+  installed app before releasing. Subagents sometimes create a stray branch
+  at HEAD — `git checkout main` carries the working tree back.

@@ -1,13 +1,16 @@
 # AgentMeter
 
 A tiny macOS menu bar app (no Dock icon) that keeps your AI coding usage limits
-visible at a glance — Codex/ChatGPT, Cursor, Claude Code, and Gemini — with a
-dropdown showing detailed meters and reset countdowns.
+visible at a glance — Codex/ChatGPT (one or several accounts), Cursor, Claude
+Code, and Gemini, plus pay-as-you-go balances for OpenRouter, DeepSeek, Kimi,
+Z.ai, and Venice — with a dropdown showing detailed meters, reset countdowns,
+and balances. Your coding agents can read the same numbers through a small
+read-only CLI.
 
 The menu bar shows the most constrained window per enabled provider, e.g.:
 
 ```
-Cx 5% · Cu 20% · Cl 40% · Ge 12%
+Cx 5% · CxW 62% · Cu 20% · Cl 40% · OR $8.06
 ```
 
 <p align="center">
@@ -19,7 +22,7 @@ Cx 5% · Cu 20% · Cl 40% · Ge 12%
 
 | Provider | Source | How usage is read |
 |----------|--------|-------------------|
-| **Codex** (`Cx`) | Codex CLI app-server protocol (`codex app-server` → `account/rateLimits/read`), session logs as fallback | Live limits, plan, and signed-in email straight from your own Codex CLI, polled every 5 minutes; session logs keep updates instant during CLI activity. **Multiple accounts**: add extra Codex homes (`mkdir -p ~/.codex-work && CODEX_HOME=~/.codex-work codex login`) and each gets its own meter. Optional subscription renewal-date tracking with reminders. |
+| **Codex** (`Cx`, `CxW`, …) | Your own Codex CLI via its app-server protocol; session logs as offline fallback | Live limits, plan, and signed-in email, polled every 5 minutes through a ~1-second `codex app-server` call. **Multiple accounts**: sign in extra Codex homes and each gets its own meter. Optional subscription renewal-date tracking with reminders. See [docs/CODEX_ACCOUNTS.md](docs/CODEX_ACCOUNTS.md). |
 | **Cursor** (`Cu`) | `cursor.com/api/usage-summary` | Uses the session token Cursor stores locally; included/auto/API usage + billing reset. Team/enterprise pools supported. |
 | **Claude** (`Cl`) | `api.anthropic.com/api/oauth/usage` | Uses the Claude Code OAuth token (credentials file or Keychain); 5h + weekly (+Opus) windows. |
 | **Gemini** (`Ge`) | Cloud Code quota API | Uses the Gemini CLI OAuth token (`~/.gemini/oauth_creds.json`); Pro/Flash/Flash-Lite daily quotas. |
@@ -34,8 +37,10 @@ Subscription-style providers show percent-of-limit meters; pay-as-you-go
 percentage to measure.
 
 Each provider can be set to **Auto** (show only if detected on this machine),
-**On**, or **Off** in Settings. Refresh runs every 30s/1m/5m (configurable), and
-Codex also refreshes instantly after CLI activity via a file watcher.
+**On**, or **Off** in Settings, and shown or hidden in the menu bar
+independently. Refresh runs every 30s/1m/5m (configurable); Codex also
+refreshes instantly after CLI activity via a file watcher, and the app
+refreshes on wake.
 
 ## Highlights
 
@@ -54,16 +59,22 @@ Codex also refreshes instantly after CLI activity via a file watcher.
 - **Accessible** — full VoiceOver support: the menu bar item speaks a
   per-provider summary, meters announce values and severity, and warning
   states show symbols, not just color.
+- **Several Codex accounts at once** — personal, work, and legacy
+  subscriptions each get their own meter, label, and menu bar code, with
+  optional billing-renewal reminders kept strictly separate from usage
+  windows. See [docs/CODEX_ACCOUNTS.md](docs/CODEX_ACCOUNTS.md).
 - **Stays current** — Sparkle auto-updates from signed, notarized releases.
-- **Your agents can read it too** — an opt-in, read-only JSON snapshot plus an
-  `agentmeter` CLI let scripts and coding agents check remaining quota before
-  starting a big task. See [docs/AGENT_INTERFACE.md](docs/AGENT_INTERFACE.md).
+- **Your agents can read it too** — an opt-in, read-only JSON snapshot, an
+  `agentmeter` CLI, and a drop-in agent skill let scripts and coding agents
+  check remaining quota before starting a big task. See
+  [docs/AGENT_INTERFACE.md](docs/AGENT_INTERFACE.md).
+- **Bilingual** — English and Spanish, following your macOS language.
 
 ## Privacy and trust
 
 AgentMeter is open source (MIT) so you can verify exactly what it does:
 
-- For Codex, Cursor, Claude, and Gemini, credentials are **read fresh on each
+- For Cursor, Claude, and Gemini, credentials are **read fresh on each
   refresh** from the locations the official CLIs/apps already use. They are
   **never written anywhere** by AgentMeter and never leave your machine except
   as the `Authorization`/`Cookie` header on the request to that provider's own
@@ -80,12 +91,17 @@ AgentMeter is open source (MIT) so you can verify exactly what it does:
   protocol; Codex handles auth and talks to OpenAI itself. Session-log
   parsing remains as a fully offline fallback. AgentMeter never performs
   logins — you sign in extra accounts with `codex login` yourself.
+- Nothing runs in the background besides the menu bar app itself: the Codex
+  helper exits after each ~1-second query, and the `agentmeter` CLI is a
+  read-only client that never sees credentials.
 - No analytics, no telemetry, no accounts.
 
 ## Requirements
 
 - macOS 14 (Sonoma) or later
 - The CLIs/apps you want to monitor, signed in (Codex CLI, Cursor, Claude Code, Gemini CLI)
+- For live Codex data: the Codex CLI on your PATH or in `/opt/homebrew/bin`,
+  `/usr/local/bin`, or `~/.local/bin` (session logs are used otherwise)
 
 ## Install
 
@@ -110,6 +126,22 @@ open AgentMeter.app
 
 Use the "Launch at Login" toggle in Settings → General to start it automatically.
 
+## Multiple Codex accounts
+
+Sign in another account into its own Codex home, then add it in Settings —
+AgentMeter discovers signed-in `~/.codex-*` folders automatically:
+
+```bash
+mkdir -p ~/.codex-work && CODEX_HOME=~/.codex-work codex login
+```
+
+Each account becomes its own provider (`Codex — work`, menu bar `CxW`) with
+independent visibility and alerts. AgentMeter never performs the login or
+reads the resulting tokens; it only asks your Codex CLI for the numbers.
+You can also record each subscription's renewal date and billing platform and
+get a reminder a few days before. Full guide:
+[docs/CODEX_ACCOUNTS.md](docs/CODEX_ACCOUNTS.md).
+
 ## Agent & CLI access
 
 Turn on **Settings → General → Enable agent & CLI access** and AgentMeter
@@ -122,7 +154,12 @@ agentmeter status          # human-readable table
 agentmeter status --json   # stable, versioned JSON for scripts/agents
 agentmeter refresh --wait 15
 agentmeter doctor          # redacted troubleshooting report
+agentmeter skill           # prints the agent skill (see below)
 ```
+
+Every provider — including each Codex account — appears as its own entry with
+usage windows, balance, freshness, plan, account email, and any tracked
+renewal date.
 
 Homebrew puts `agentmeter` on your PATH; otherwise use **Settings → General →
 Install Command-Line Tool…**. The app remains the only process that touches
@@ -142,11 +179,16 @@ Full schema, skill, and security model in
 
 - `Sources/AgentMeter/Providers/` — one file per provider plus the `UsageProvider`
   protocol; each reads local credentials and maps the response to `UsageWindow`s.
-- `Sources/AgentMeter/UsageStore.swift` — refresh timer, Codex file watcher, menu bar title.
-- `Sources/AgentMeter/SettingsStore.swift` — per-provider visibility, refresh cadence, display and alert preferences.
-- `Sources/AgentMeter/MenuContent.swift` — dropdown UI; `SettingsWindow.swift` — native tabbed Settings.
+  `CodexAppServerClient.swift` talks to the Codex CLI; `CodexAccountConfig.swift`
+  holds extra-account config and discovery.
+- `Sources/AgentMeter/UsageStore.swift` — dynamic provider list, refresh timer, Codex file watcher, menu bar title and spoken summary.
+- `Sources/AgentMeter/SettingsStore.swift` — visibility, refresh cadence, display/alert preferences, Codex accounts, renewal dates.
+- `Sources/AgentMeter/MenuContent.swift` + `ProviderUsageSections.swift` — dropdown UI (shared with the Usage Details window); `SettingsWindow.swift` — native tabbed Settings.
 - `Sources/AgentMeter/CredentialAssessment.swift` — key-type detection and plain-language explainers.
+- `Sources/AgentMeter/SubscriptionRenewal.swift` — renewal-date model and reminder math.
+- `Sources/AgentMeter/StatusSnapshotWriter.swift` — opt-in `status.json`; `Sources/AgentMeterStatusKit/` — shared snapshot schema, CLI parsing, embedded agent skill; `Sources/agentmeter-cli/` — the read-only CLI.
 - `Sources/AgentMeter/Updater.swift` — Sparkle auto-updates.
+- `docs/` — [agent interface](docs/AGENT_INTERFACE.md), [Codex accounts guide](docs/CODEX_ACCOUNTS.md), [agent skill](docs/agent-skill/SKILL.md), [releasing](docs/RELEASING.md).
 - `scripts/bundle.sh` / `scripts/release.sh` — bundling and signed/notarized release.
 - `.github/workflows/` — CI (build + tests); releases are built and notarized locally.
 

@@ -1,8 +1,20 @@
 # Releasing AgentMeter
 
-AgentMeter is distributed as a signed, notarized `.app` zipped and attached to a
-GitHub Release. This is a one-time setup; after that, pushing a `vX.Y.Z` tag
-builds and publishes automatically.
+AgentMeter is distributed as a signed, notarized `.app` (with the `agentmeter`
+CLI inside at `Contents/Helpers/agentmeter`), zipped and attached to a GitHub
+Release together with a Sparkle `appcast.xml`, plus a Homebrew cask. Releases
+are cut **locally** with `scripts/release.sh`; see "Cutting a release" below.
+The GitHub Actions release workflow exists but is manual-dispatch only and has
+no secrets configured.
+
+## What a release contains
+
+| Artifact | Produced by | Notes |
+|----------|-------------|-------|
+| `AgentMeter.app` | `scripts/bundle.sh` | Compiles the String Catalog, builds `AgentMeter` and `agentmeter-cli`, embeds Sparkle.framework, writes Info.plist (version, `agentmeter://` URL scheme, Sparkle keys), signs inside-out: XPC services → Sparkle → `Helpers/agentmeter` → app. |
+| `AgentMeter.zip` | `scripts/release.sh` | `ditto`-zipped, notarized, stapled. |
+| `appcast.xml` | `scripts/release.sh` (`generate_appcast`) | EdDSA-signed Sparkle feed. Must be uploaded with the zip. |
+| Homebrew cask | manual bump in `fdtorres1/homebrew-tap` | `app` + `binary` stanza for the CLI. |
 
 ## One-time setup
 
@@ -26,18 +38,20 @@ You need an Apple Developer Program membership ($99/yr).
 2. Create a key with the **Developer** role. Download the `.p8` (once only).
 3. Note the **Key ID** and **Issuer ID**.
 
-### 3. GitHub repository secrets
+### 3. Where the credentials live (current setup)
 
-Add these under Settings → Secrets and variables → Actions:
+Nothing is stored in GitHub. `scripts/release.sh` reads:
 
-| Secret | Value |
-|--------|-------|
-| `MACOS_CERT_P12` | base64 of your `.p12`: `base64 -i cert.p12 \| pbcopy` |
-| `MACOS_CERT_PASSWORD` | the `.p12` export password |
-| `KEYCHAIN_PASSWORD` | any random string (temp CI keychain) |
-| `APPLE_API_KEY` | base64 of your `.p8`: `base64 -i AuthKey_XXX.p8 \| pbcopy` |
-| `APPLE_API_KEY_ID` | the Key ID |
-| `APPLE_API_ISSUER` | the Issuer ID |
+| Credential | Location |
+|------------|----------|
+| Developer ID signing identity | login Keychain; passed as `SIGN_IDENTITY` |
+| App Store Connect API key (`.p8`, base64), Key ID, Issuer ID | 1Password via `op-sa` — vault Sage-Openclaw, item "AgentMeter Notarization (App Store Connect API)" |
+| Sparkle EdDSA private key | login Keychain item "Private key for signing Sparkle updates"; backup in 1Password item "AgentMeter Sparkle EdDSA Private Key" |
+
+If you ever want CI releases instead, `.github/workflows/release.yml` expects
+`MACOS_CERT_P12`, `MACOS_CERT_PASSWORD`, `KEYCHAIN_PASSWORD`, `APPLE_API_KEY`
+(base64 `.p8`), `APPLE_API_KEY_ID`, and `APPLE_API_ISSUER` as repository
+secrets.
 
 ## Sparkle auto-updates
 
@@ -60,9 +74,12 @@ Releases from v1.4.0 onward include a Sparkle appcast:
 
 After publishing a release, bump the cask in
 [fdtorres1/homebrew-tap](https://github.com/fdtorres1/homebrew-tap):
-update `version` and `sha256` (`curl -sL <zip url> | shasum -a 256`) in
-`Casks/agentmeter.rb` and push. Existing installs auto-update via Sparkle
+update `version` and `sha256` (`shasum -a 256 AgentMeter.zip`) in
+`Casks/agentmeter.rb` and push. Keep the
+`binary "#{appdir}/AgentMeter.app/Contents/Helpers/agentmeter"` stanza — it is
+what puts the CLI on users' PATH. Existing installs auto-update via Sparkle
 regardless (`auto_updates true`), so the cask matters mainly for new installs.
+The `/tmp/homebrew-tap` clone may not survive between sessions; reclone it.
 
 ## Cutting a release (local — the actual flow)
 
@@ -72,8 +89,12 @@ lives in the login keychain; notarization credentials are fetched from
 1Password by `release.sh` automatically (via `op-sa`, vault Sage-Openclaw, item
 "AgentMeter Notarization (App Store Connect API)").
 
-1. Update `CHANGELOG.md` with the new version.
-2. Commit and push `main`.
+1. Update `CHANGELOG.md` with the new version. Run `swift test` (all green)
+   and, for user-visible changes, install a dev bundle
+   (`AGENTMETER_VERSION=X.Y.Z-dev scripts/bundle.sh --install`) and verify with
+   `open` + `agentmeter status`.
+2. Commit and push `main` (`git checkout -- AgentMeter.zip` first if a previous
+   release left the tracked zip modified).
 3. Build + sign + notarize + appcast:
    ```bash
    export SIGN_IDENTITY="Developer ID Application: Felix Torres (77Z6XS8JU8)"
@@ -89,8 +110,13 @@ lives in the login keychain; notarization credentials are fetched from
    gh release create vX.Y.Z AgentMeter.zip appcast.xml \
      --title "AgentMeter X.Y.Z" --notes "..."
    ```
-5. Bump the Homebrew cask (see below).
-6. Install locally to verify; tick the roadmap and close the milestone.
+5. Bump the Homebrew cask (see above).
+6. Install locally to verify (`cp -R AgentMeter.app /Applications/`; check
+   `agentmeter --version` reports the new version); update the roadmap
+   (pinned issue #1) and close the milestone if any.
+
+Versioning: MINOR for features (new providers, agent interface, accounts),
+PATCH for fixes and small UX follow-ups shipped the same day.
 
 ## Before first publish (historical — already done)
 

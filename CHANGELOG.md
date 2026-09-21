@@ -3,6 +3,20 @@
 All notable changes to AgentMeter. Format follows [Keep a Changelog](https://keepachangelog.com);
 versions follow semantic-ish `MAJOR.MINOR.PATCH`.
 
+## [1.11.3] — 2026-09-21
+
+### Changed
+- Agent skill (`agentmeter skill`) now explains multiple Codex accounts
+  (`codex` vs `codex:<uuid>`, matching your own account by `accountEmail`),
+  `planType`, and that `renewal` is billing information, not quota.
+
+### Documentation
+- New docs/CODEX_ACCOUNTS.md guide (multi-account setup, how accounts appear,
+  renewal tracking, troubleshooting). README, docs/AGENT_INTERFACE.md (schema
+  history, multi-account ids, refresh cadence, debugging), docs/RELEASING.md
+  (actual local flow, artifact table), the agent skill, and AGENTS.md brought
+  in line with 1.11.x.
+
 ## [1.11.2] — 2026-09-21
 
 ### Added

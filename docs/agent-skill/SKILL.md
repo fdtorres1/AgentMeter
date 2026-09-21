@@ -62,6 +62,19 @@ Each provider:
 - `balance` (pay-as-you-go providers): `amount`, `currency` symbol, and
   `kind` — `remaining` means money left, `spent` means money used
 - `asOf`, `staleSince`, `error` (redacted message) where applicable
+- `accountEmail` and `planType` (Codex): which signed-in account and plan the
+  entry belongs to
+- `renewal` (optional): the user's subscription *billing* renewal date. This is
+  not a usage window — never treat it as quota, and do not mention it unless
+  the user asks about billing.
+
+Multiple Codex accounts: the user may monitor several Codex subscriptions.
+The default account has `id` `codex`; extra accounts have ids like
+`codex:<uuid>` and display names like `Codex — work`, each with its own
+`accountEmail`. If you are running as Codex, find your own entry by matching
+`accountEmail` against `codex login status` (run with the same `CODEX_HOME`
+you were started with); when unsure, report the most constrained Codex
+account and say which email it is.
 
 Freshness: if `generatedAt` is more than 10 minutes old, run
 `agentmeter refresh --wait 15` once, then read the snapshot again. Do not
