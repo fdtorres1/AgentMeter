@@ -4,7 +4,7 @@ macOS menu bar app (SwiftUI, Swift Package, macOS 14+) showing AI coding usage
 limits for Codex (multiple accounts), Cursor, Claude Code, Gemini, and
 pay-as-you-go balances for OpenRouter, DeepSeek, Kimi, Z.ai, and Venice.
 Public repo: https://github.com/fdtorres1/AgentMeter. Current release line:
-1.11.x (see CHANGELOG.md). Test suite: 136 tests (`swift test`).
+1.11.x (see CHANGELOG.md). Test suite: 137 tests (`swift test`).
 
 **If `HANDOFF.md` exists in the repo root, read it first.** It is the
 gitignored, machine-local session handoff (current state, pending work,
@@ -31,7 +31,8 @@ announcement drafts, environment specifics) and complements this file.
   style (full/compact/icon), `agentAccessEnabled`, `codexExtraAccounts`
   (`[CodexAccountConfig]`, JSON), `subscriptionRenewals`
   (`[providerID: SubscriptionRenewal]`, JSON).
-- UI: `MenuContent` (dropdown; provider sections live in
+- UI: `MenuContent` (dropdown with a display-bounded scrolling provider list
+  and a fixed footer; short lists shrink to their content; provider sections live in
   `ProviderUsageSections.swift` and are shared with `UsageDetailsView`, the
   ⌘D / `agentmeter://details` window), `SettingsWindow` (native tabbed
   Settings: General / Providers / Display / Alerts; includes

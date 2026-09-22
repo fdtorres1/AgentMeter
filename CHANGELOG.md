@@ -3,6 +3,13 @@
 All notable changes to AgentMeter. Format follows [Keep a Changelog](https://keepachangelog.com);
 versions follow semantic-ish `MAJOR.MINOR.PATCH`.
 
+## [Unreleased]
+
+### Fixed
+- The menu bar panel now scrolls long provider lists while keeping Refresh,
+  Usage Details, Settings, updates, Support, and Quit visible below the list.
+  Its height follows the popup's display, and short lists remain compact.
+
 ## [1.11.3] — 2026-09-21
 
 ### Changed
