@@ -118,6 +118,19 @@ lives in the login keychain; notarization credentials are fetched from
 Versioning: MINOR for features (new providers, agent interface, accounts),
 PATCH for fixes and small UX follow-ups shipped the same day.
 
+### Local packaging checks
+
+- Use the complete `scripts/bundle.sh` flow. It adds
+  `@executable_path/../Frameworks` to the executable's runtime search paths;
+  replacing the executable afterward loses that step and can prevent Sparkle
+  from loading. Verify the packaged executable with `otool -l` before signing.
+- Build and sign outside iCloud Documents if File Provider adds Finder metadata
+  that causes code signing to reject the bundle. A clean `/private/tmp` source
+  checkout is suitable for release staging.
+- Verify the final bundle's signature and notarization, then launch the installed
+  app and check `agentmeter doctor` plus a fresh `agentmeter refresh --wait 15`
+  snapshot. A valid signature alone does not prove the app can launch.
+
 ## Before first publish (historical — already done)
 
 - Buy Me a Coffee slug is set (`buymeacoffee.com/fdtorres`).
