@@ -9,6 +9,8 @@ versions follow semantic-ish `MAJOR.MINOR.PATCH`.
 - The menu bar panel now scrolls long provider lists while keeping Refresh,
   Usage Details, Settings, updates, Support, and Quit visible below the list.
   Its height follows the popup's display, and short lists remain compact.
+- A translucent bottom fade and small down chevron indicate more providers
+  below; the cue disappears when the list reaches the bottom.
 
 ## [1.11.3] — 2026-09-21
 

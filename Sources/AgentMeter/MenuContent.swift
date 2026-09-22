@@ -7,6 +7,7 @@ struct MenuContent: View {
     @Environment(\.openWindow) private var openWindow
     @State private var menuScreenVisibleHeight: CGFloat?
     @State private var providerContentHeight: CGFloat?
+    @State private var providerContentBottom: CGFloat = 0
 
     private let tipJarURL = URL(string: "https://www.buymeacoffee.com/fdtorres")!
 
@@ -38,13 +39,40 @@ struct MenuContent: View {
                             key: ProviderContentHeightKey.self,
                             value: proxy.size.height
                         )
+                        .preference(
+                            key: ProviderContentBottomKey.self,
+                            value: proxy.frame(in: .named("providerViewport")).maxY
+                        )
                     }
                 }
             }
             .frame(height: providerViewportHeight, alignment: .top)
+            .coordinateSpace(name: "providerViewport")
             .onPreferenceChange(ProviderContentHeightKey.self) { height in
                 guard providerContentHeight != height else { return }
                 providerContentHeight = height
+            }
+            .onPreferenceChange(ProviderContentBottomKey.self) { bottom in
+                providerContentBottom = bottom
+            }
+            .overlay(alignment: .bottom) {
+                if providerContentBottom > providerViewportHeight + 1 {
+                    Rectangle()
+                        .fill(.ultraThinMaterial)
+                        .mask {
+                            LinearGradient(colors: [.clear, .black],
+                                           startPoint: .top, endPoint: .bottom)
+                        }
+                        .frame(height: 36)
+                        .overlay(alignment: .bottom) {
+                            Image(systemName: "chevron.down")
+                                .font(.system(size: 10, weight: .semibold))
+                                .foregroundStyle(.secondary)
+                                .padding(.bottom, 4)
+                        }
+                        .allowsHitTesting(false)
+                        .accessibilityHidden(true)
+                }
             }
             Divider()
             footer
@@ -149,6 +177,14 @@ private struct ProviderContentHeightKey: PreferenceKey {
 
     static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
         value = max(value, nextValue())
+    }
+}
+
+private struct ProviderContentBottomKey: PreferenceKey {
+    static let defaultValue: CGFloat = 0
+
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = nextValue()
     }
 }
 
