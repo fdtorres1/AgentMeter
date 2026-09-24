@@ -3,7 +3,7 @@
 All notable changes to AgentMeter. Format follows [Keep a Changelog](https://keepachangelog.com);
 versions follow semantic-ish `MAJOR.MINOR.PATCH`.
 
-## [Unreleased]
+## [1.11.5] — 2026-09-24
 
 ### Added
 - Exact reset times now include a remaining duration in parentheses, with days
