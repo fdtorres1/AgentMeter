@@ -494,22 +494,38 @@
 	<string>cursor.com devolvió HTTP %lld</string>
 	<key>data is stale</key>
 	<string>los datos están desactualizados</string>
+	<key>day</key>
+	<string>día</string>
+	<key>days</key>
+	<string>días</string>
 	<key>error</key>
 	<string>error</string>
 	<key>high usage</key>
 	<string>uso elevado</string>
+	<key>hour</key>
+	<string>hora</string>
+	<key>hours</key>
+	<string>horas</string>
 	<key>key exchange rejected</key>
 	<string>intercambio de clave rechazado</string>
+	<key>less than a minute</key>
+	<string>menos de un minuto</string>
 	<key>loading</key>
 	<string>cargando</string>
 	<key>low balance</key>
 	<string>saldo bajo</string>
+	<key>minute</key>
+	<string>minuto</string>
+	<key>minutes</key>
+	<string>minutos</string>
 	<key>missing code</key>
 	<string>falta el código</string>
 	<key>nearly used up</key>
 	<string>casi agotado</string>
 	<key>resets %@</key>
 	<string>se restablece %@</string>
+	<key>resets %@ (%@)</key>
+	<string>se restablece %@ (%@)</string>
 	<key>resets in %@d %@h</key>
 	<string>se restablece en %@d %@h</string>
 	<key>resets in %@h %@m</key>

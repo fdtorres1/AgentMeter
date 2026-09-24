@@ -22,11 +22,11 @@ struct UsageWindow: Equatable {
         resetDescription(style: .relative)
     }
 
-    func resetDescription(style: ResetTimeStyle) -> String? {
+    func resetDescription(style: ResetTimeStyle, now: Date = Date()) -> String? {
         guard let resetsAt else { return nil }
         switch style {
         case .relative:
-            let interval = resetsAt.timeIntervalSinceNow
+            let interval = resetsAt.timeIntervalSince(now)
             guard interval > 0 else { return L("resets soon") }
             let days = Int(interval) / 86400
             let hours = (Int(interval) % 86400) / 3600
@@ -37,10 +37,38 @@ struct UsageWindow: Equatable {
         case .absolute:
             let calendar = Calendar.current
             let includeYear = calendar.component(.year, from: resetsAt)
-                != calendar.component(.year, from: Date())
+                != calendar.component(.year, from: now)
             var format = Date.FormatStyle().month(.abbreviated).day().hour().minute()
             if includeYear { format = format.year() }
-            return L("resets \(resetsAt.formatted(format))")
+            let date = resetsAt.formatted(format)
+            let interval = resetsAt.timeIntervalSince(now)
+            guard interval > 0 else { return L("resets soon") }
+            let duration: String
+            if interval < 60 {
+                duration = L("less than a minute")
+            } else if interval >= 86_400 {
+                var days = Int(interval) / 86_400
+                var hours = Int(((interval - Double(days * 86_400)) / 3_600).rounded())
+                if hours == 24 { days += 1; hours = 0 }
+                duration = "\(days) \(L(days == 1 ? "day" : "days")) \(hours) \(L(hours == 1 ? "hour" : "hours"))"
+            } else if interval >= 3_600 {
+                var hours = Int(interval) / 3_600
+                var minutes = Int(((interval - Double(hours * 3_600)) / 60).rounded())
+                if minutes == 60 { hours += 1; minutes = 0 }
+                if hours == 24 {
+                    duration = "1 \(L("day")) 0 \(L("hours"))"
+                } else {
+                    duration = "\(hours) \(L(hours == 1 ? "hour" : "hours")) \(minutes) \(L(minutes == 1 ? "minute" : "minutes"))"
+                }
+            } else {
+                let minutes = Int((interval / 60).rounded())
+                if minutes == 60 {
+                    duration = "1 \(L("hour")) 0 \(L("minutes"))"
+                } else {
+                    duration = "\(max(1, minutes)) \(L(minutes == 1 ? "minute" : "minutes"))"
+                }
+            }
+            return L("resets \(date) (\(duration))")
         }
     }
 }

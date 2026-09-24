@@ -3,6 +3,14 @@
 All notable changes to AgentMeter. Format follows [Keep a Changelog](https://keepachangelog.com);
 versions follow semantic-ish `MAJOR.MINOR.PATCH`.
 
+## [Unreleased]
+
+### Added
+- Exact reset times now include a remaining duration in parentheses, with days
+  and hours, hours and minutes, or minutes. The smaller unit rounds to the
+  nearest value; under a minute is shown explicitly. Countdowns update while
+  the menu or Usage Details is open and are included in VoiceOver descriptions.
+
 ## [1.11.4] — 2026-09-22
 
 ### Fixed

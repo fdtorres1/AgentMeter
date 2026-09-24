@@ -35,6 +35,7 @@ final class MenuContentLayoutTests: XCTestCase {
         let suite = "MenuContentLayoutTests.\(UUID().uuidString)"
         let defaults = UserDefaults(suiteName: suite)!
         let settings = SettingsStore(defaults: defaults)
+        settings.resetTimeStyle = .absolute
         settings.setMode(.off, for: "codex")
         let providers = (0..<providerCount).map { LayoutProvider(id: "layout-\($0)") }
         let store = UsageStore(settings: settings, providers: providers)
@@ -68,7 +69,8 @@ private struct LayoutProvider: UsageProvider {
     var isDetected: Bool { true }
     func fetch() async throws -> ProviderUsage {
         ProviderUsage(planName: "Test", windows: [
-            UsageWindow(label: "Weekly limit", usedPercent: 25, resetsAt: Date())
+            UsageWindow(label: "Weekly limit", usedPercent: 25,
+                        resetsAt: Date().addingTimeInterval(6 * 86400 + 11 * 3600))
         ], asOf: Date())
     }
 }

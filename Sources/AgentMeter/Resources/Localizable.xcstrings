@@ -3335,6 +3335,46 @@
         }
       }
     },
+    "day": {
+      "localizations": {
+        "es": { "stringUnit": { "state": "translated", "value": "día" } }
+      }
+    },
+    "days": {
+      "localizations": {
+        "es": { "stringUnit": { "state": "translated", "value": "días" } }
+      }
+    },
+    "hour": {
+      "localizations": {
+        "es": { "stringUnit": { "state": "translated", "value": "hora" } }
+      }
+    },
+    "hours": {
+      "localizations": {
+        "es": { "stringUnit": { "state": "translated", "value": "horas" } }
+      }
+    },
+    "less than a minute": {
+      "localizations": {
+        "es": { "stringUnit": { "state": "translated", "value": "menos de un minuto" } }
+      }
+    },
+    "minute": {
+      "localizations": {
+        "es": { "stringUnit": { "state": "translated", "value": "minuto" } }
+      }
+    },
+    "minutes": {
+      "localizations": {
+        "es": { "stringUnit": { "state": "translated", "value": "minutos" } }
+      }
+    },
+    "resets %@ (%@)": {
+      "localizations": {
+        "es": { "stringUnit": { "state": "translated", "value": "se restablece %@ (%@)" } }
+      }
+    },
     "resets %@": {
       "localizations": {
         "es": {

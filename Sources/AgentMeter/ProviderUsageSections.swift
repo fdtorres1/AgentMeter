@@ -262,6 +262,12 @@ private struct WindowMeter: View {
     @ObservedObject var settings: SettingsStore
 
     var body: some View {
+        TimelineView(.periodic(from: .now, by: 30)) { context in
+            meter(at: context.date)
+        }
+    }
+
+    private func meter(at now: Date) -> some View {
         VStack(alignment: .leading, spacing: 2) {
             HStack {
                 Text(window.label).font(.caption)
@@ -281,15 +287,16 @@ private struct WindowMeter: View {
             ProgressView(value: progressValue, total: 100)
                 .tint(color)
                 .accessibilityHidden(true)
-            if let reset = window.resetDescription(style: settings.resetTimeStyle) {
+            if let reset = window.resetDescription(style: settings.resetTimeStyle, now: now) {
                 Text(reset)
                     .font(.caption2)
                     .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
             }
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel(meterAccessibilityLabel)
-        .accessibilityValue(meterAccessibilityValue)
+        .accessibilityValue(meterAccessibilityValue(at: now))
     }
 
     private var progressValue: Double {
@@ -312,9 +319,9 @@ private struct WindowMeter: View {
         String(format: L("%@, %@"), providerName, window.label)
     }
 
-    private var meterAccessibilityValue: String {
+    private func meterAccessibilityValue(at now: Date) -> String {
         var value = settings.countDirection.accessibilityPercentPhrase(window.usedPercent)
-        if let reset = window.resetDescription(style: settings.resetTimeStyle) {
+        if let reset = window.resetDescription(style: settings.resetTimeStyle, now: now) {
             value = "\(value), \(reset)"
         }
         if let qualifier = severity.qualifier {

@@ -45,7 +45,7 @@ refreshes on wake.
 ## Highlights
 
 - **Reads well before it runs out** — count usage up ("80% used") or down
-  ("20% left"), relative or exact reset times, and optional notifications when
+  ("20% left"), relative or exact reset times (with a remaining duration), and optional notifications when
   a limit window or balance crosses your threshold.
 - **Never cries wolf** — if a provider briefly fails to respond, the last
   known numbers stay visible (dimmed, with a "stale since…" note) instead of
