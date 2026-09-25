@@ -34,6 +34,8 @@
 	<string>API key removed</string>
 	<key>API key saved</key>
 	<string>API key saved</string>
+	<key>API spending</key>
+	<string>API spending</string>
 	<key>About AgentMeter</key>
 	<string>About AgentMeter</string>
 	<key>About this key</key>
@@ -64,6 +66,10 @@
 	<string>Balance works through the limited rate-limits endpoint.</string>
 	<key>Billed through</key>
 	<string>Billed through</string>
+	<key>Cache creation tokens</key>
+	<string>Cache creation tokens</string>
+	<key>Cache read tokens</key>
+	<string>Cache read tokens</string>
 	<key>Cancel</key>
 	<string>Cancel</string>
 	<key>ChatGPT</key>
@@ -72,6 +78,14 @@
 	<string>Checking key…</string>
 	<key>Choose a path other than ~/.codex</key>
 	<string>Choose a path other than ~/.codex</string>
+	<key>Claude API reporting access denied (HTTP 403); check key scope and account eligibility</key>
+	<string>Claude API reporting access denied (HTTP 403); check key scope and account eligibility</string>
+	<key>Claude API reporting key rejected (HTTP 401)</key>
+	<string>Claude API reporting key rejected (HTTP 401)</string>
+	<key>Claude API reporting rate limited (HTTP 429)</key>
+	<string>Claude API reporting rate limited (HTTP 429)</string>
+	<key>Claude API reporting returned HTTP %@</key>
+	<string>Claude API reporting returned HTTP %@</string>
 	<key>Codex CLI not found</key>
 	<string>Codex CLI not found</string>
 	<key>Codex accounts</key>
@@ -92,6 +106,12 @@
 	<string>Copies the Terminal command to sign in this Codex account</string>
 	<key>Copy login command</key>
 	<string>Copy login command</string>
+	<key>Could not connect to Claude API reporting</key>
+	<string>Could not connect to Claude API reporting</string>
+	<key>Could not remove the API key from Keychain. Please try again.</key>
+	<string>Could not remove the API key from Keychain. Please try again.</string>
+	<key>Could not save the API key in Keychain. Please try again.</key>
+	<string>Could not save the API key in Keychain. Please try again.</string>
 	<key>Couldn't check key</key>
 	<string>Couldn't check key</string>
 	<key>Couldn't install the command-line tool: %@</key>
@@ -130,6 +150,8 @@
 	<string>Inference and Admin Venice API keys are supported. x402 wallet balances are not supported.</string>
 	<key>Inference key</key>
 	<string>Inference key</string>
+	<key>Input tokens</key>
+	<string>Input tokens</string>
 	<key>Install Command-Line Tool…</key>
 	<string>Install Command-Line Tool…</string>
 	<key>Installed. Open a new terminal and run agentmeter --help.</key>
@@ -158,6 +180,8 @@
 	<string>Marks today as the date you verified this renewal on your billing platform.</string>
 	<key>Menu bar monitor for AI coding usage limits.</key>
 	<string>Menu bar monitor for AI coding usage limits.</string>
+	<key>Month to date (UTC)</key>
+	<string>Month to date (UTC)</string>
 	<key>Not confirmed yet — check the platform that bills you.</key>
 	<string>Not confirmed yet — check the platform that bills you.</string>
 	<key>Not signed in</key>
@@ -172,8 +196,16 @@
 	<string>OpenRouter connected</string>
 	<key>Or paste an API key</key>
 	<string>Or paste an API key</string>
+	<key>Organization</key>
+	<string>Organization</string>
+	<key>Organization-wide API spend and tokens require a Claude Console Admin reporting key or an eligible unscoped personal or service key. Workspace-scoped keys and individual accounts cannot access these reports. Prepaid credit balance is unavailable through this API.</key>
+	<string>Organization-wide API spend and tokens require a Claude Console Admin reporting key or an eligible unscoped personal or service key. Workspace-scoped keys and individual accounts cannot access these reports. Prepaid credit balance is unavailable through this API.</string>
 	<key>Other</key>
 	<string>Other</string>
+	<key>Output tokens</key>
+	<string>Output tokens</string>
+	<key>Prepaid credits</key>
+	<string>Prepaid credits</string>
 	<key>Provider endpoint research credits CodexBar by Peter Steinberger.</key>
 	<string>Provider endpoint research credits CodexBar by Peter Steinberger.</string>
 	<key>Reads prepaid balance only.</key>
@@ -190,6 +222,8 @@
 	<string>Renews on</string>
 	<key>Report an issue</key>
 	<string>Report an issue</string>
+	<key>Reporting may be delayed. Priority Tier costs excluded.</key>
+	<string>Reporting may be delayed. Priority Tier costs excluded.</string>
 	<key>Run from AgentMeter.app to install the command-line tool.</key>
 	<string>Run from AgentMeter.app to install the command-line tool.</string>
 	<key>Run this in Terminal to sign in that account. AgentMeter never handles your login or tokens — the Codex CLI does.</key>
@@ -222,6 +256,10 @@
 	<string>This key lets apps call Kimi models using your prepaid balance. AgentMeter only reads how much balance is left; it cannot spend money or change your account.</string>
 	<key>Track renewal date</key>
 	<string>Track renewal date</string>
+	<key>Unavailable via API</key>
+	<string>Unavailable via API</string>
+	<key>Unexpected Claude API report</key>
+	<string>Unexpected Claude API report</string>
 	<key>Usage</key>
 	<string>Usage</string>
 	<key>Usage Details</key>
@@ -240,6 +278,8 @@
 	<string>Verification failed — your key may still work.</string>
 	<key>Version %@</key>
 	<string>Version %@</string>
+	<key>View prepaid credits</key>
+	<string>View prepaid credits</string>
 	<key>Waiting for browser authorization…</key>
 	<string>Waiting for browser authorization…</string>
 	<key>Website &amp; source code</key>

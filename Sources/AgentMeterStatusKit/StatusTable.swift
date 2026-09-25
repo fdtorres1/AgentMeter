@@ -31,7 +31,14 @@ public enum StatusTable {
                 lines.append(line)
             }
 
-            if let balance = provider.balance {
+            if let apiUsage = provider.apiUsage {
+                lines.append("  API spending (month to date, UTC): USD \(formatAmount(apiUsage.costUSD))")
+                lines.append("  tokens: input \(apiUsage.inputTokens), output \(apiUsage.outputTokens), cache read \(apiUsage.cacheReadTokens), cache creation \(apiUsage.cacheCreationTokens)")
+                lines.append("  prepaid credits: unavailable")
+                lines.append("  cost excludes Priority Tier: \(apiUsage.costExcludesPriorityTier ? "yes" : "no")")
+            }
+
+            if provider.apiUsage == nil, let balance = provider.balance {
                 let meaning = balance.kind == "remaining" ? "remaining" : "spent"
                 lines.append("  balance: \(balance.currency)\(formatAmount(balance.amount)) \(meaning)")
             }

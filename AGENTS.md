@@ -1,10 +1,10 @@
 # AgentMeter — Agent Context
 
 macOS menu bar app (SwiftUI, Swift Package, macOS 14+) showing AI coding usage
-limits for Codex (multiple accounts), Cursor, Claude Code, Gemini, and
+limits for Codex (multiple accounts), Cursor, Claude Code, Gemini, Claude API reporting, and
 pay-as-you-go balances for OpenRouter, DeepSeek, Kimi, Z.ai, and Venice.
 Public repo: https://github.com/fdtorres1/AgentMeter. Current release line:
-1.11.x (see CHANGELOG.md). Test suite: 143 tests (`swift test`).
+1.11.x (see CHANGELOG.md). Test suite: 155 tests (`swift test`).
 
 **If `HANDOFF.md` exists in the repo root, read it first.** It is the
 gitignored, machine-local session handoff (current state, pending work,
@@ -101,6 +101,17 @@ announcement drafts, environment specifics) and complements this file.
   windows `five_hour`/`seven_day`/`seven_day_opus` with `utilization` percent
   and `resets_at` ISO8601. NOTE: the token endpoint rate-limits aggressively
   (HTTP 429 even for invalid tokens), so treat refresh failures gently.
+- **Claude API** (`claude-api`, unreleased): separate from subscription Claude.
+  Keychain API key must have organization reporting access. Read-only GET
+  `/v1/organizations/cost_report` and `/v1/organizations/usage_report/messages`
+  return organization-wide UTC monthly spend and token categories. Costs are
+  decimal-string cents; convert to USD. Daily report end is next UTC midnight
+  to include today's partial bucket. Paginate both reports. Cache for five
+  minutes (60-second failure cooldown), keyed by credential digest and month;
+  do not log keys or response bodies. No public prepaid-credit endpoint:
+  explicitly unavailable plus billing link, never an estimated balance.
+  `ProviderUsage.apiUsage` holds the detail; `.spent` balance supports menu
+  summaries and old CLI readers. Key changes clear state and ignore old fetches.
 - **Gemini**: OAuth creds from `~/.gemini/oauth_creds.json` (`expiry_date` in
   ms). Refresh via `oauth2.googleapis.com/token` with the Gemini CLI's public
   installed-app client (constants in `GeminiProvider`, split into string

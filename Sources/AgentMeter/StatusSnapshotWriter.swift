@@ -113,7 +113,20 @@ enum StatusSnapshotWriter {
             asOf: usage.asOf,
             accountEmail: accountEmail,
             planType: planType,
-            renewal: mapRenewal(renewal, now: now)
+            renewal: mapRenewal(renewal, now: now),
+            apiUsage: usage.apiUsage.map(mapAPIUsage)
+        )
+    }
+
+    nonisolated private static func mapAPIUsage(_ usage: APIUsageSummary) -> APIUsageStatus {
+        APIUsageStatus(
+            costUSD: usage.costUSD,
+            inputTokens: usage.inputTokens,
+            outputTokens: usage.outputTokens,
+            cacheReadTokens: usage.cacheReadTokens,
+            cacheCreationTokens: usage.cacheCreationTokens,
+            periodStart: usage.periodStart,
+            periodEnd: usage.periodEnd
         )
     }
 

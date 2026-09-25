@@ -65,6 +65,11 @@ Each provider:
   *used*, never remaining), and `resetsAt` (ISO 8601, optional)
 - `balance` (pay-as-you-go providers): `amount`, `currency` symbol, and
   `kind` — `remaining` means money left, `spent` means money used
+- Claude `apiUsage` (optional): organization-wide USD spending and separate
+  input, output, cache-read, and cache-creation token counts for the current
+  UTC calendar month through `periodEnd`. This is reported spend, not available
+  prepaid credits; `prepaidCreditsStatus` is `unavailable`, and costs exclude
+  Priority Tier. The API report may lag actual usage.
 - `asOf`, `staleSince`, `error` (redacted message) where applicable
 - `accountEmail` and `planType` (Codex): which signed-in account and plan the
   entry belongs to

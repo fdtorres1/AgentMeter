@@ -36,6 +36,8 @@ public struct ProviderStatus: Codable, Equatable, Sendable {
     public var planType: String?
     /// User-tracked subscription renewal (Codex; added in 1.11.0).
     public var renewal: RenewalStatus?
+    /// Organization API usage report (Claude; optional additive schema v1 field).
+    public var apiUsage: APIUsageStatus?
 
     public init(
         id: String,
@@ -48,7 +50,8 @@ public struct ProviderStatus: Codable, Equatable, Sendable {
         error: String? = nil,
         accountEmail: String? = nil,
         planType: String? = nil,
-        renewal: RenewalStatus? = nil
+        renewal: RenewalStatus? = nil,
+        apiUsage: APIUsageStatus? = nil
     ) {
         self.id = id
         self.displayName = displayName
@@ -61,6 +64,45 @@ public struct ProviderStatus: Codable, Equatable, Sendable {
         self.accountEmail = accountEmail
         self.planType = planType
         self.renewal = renewal
+        self.apiUsage = apiUsage
+    }
+}
+
+/// Claude organization API usage report. This is spend reporting, not available-credit data.
+public struct APIUsageStatus: Codable, Equatable, Sendable {
+    public var costUSD: Double
+    public var inputTokens: Int
+    public var outputTokens: Int
+    public var cacheReadTokens: Int
+    public var cacheCreationTokens: Int
+    public var periodStart: Date
+    public var periodEnd: Date
+    public var currency: String
+    public var prepaidCreditsStatus: String
+    public var costExcludesPriorityTier: Bool
+
+    public init(
+        costUSD: Double,
+        inputTokens: Int,
+        outputTokens: Int,
+        cacheReadTokens: Int,
+        cacheCreationTokens: Int,
+        periodStart: Date,
+        periodEnd: Date,
+        currency: String = "USD",
+        prepaidCreditsStatus: String = "unavailable",
+        costExcludesPriorityTier: Bool = true
+    ) {
+        self.costUSD = costUSD
+        self.inputTokens = inputTokens
+        self.outputTokens = outputTokens
+        self.cacheReadTokens = cacheReadTokens
+        self.cacheCreationTokens = cacheCreationTokens
+        self.periodStart = periodStart
+        self.periodEnd = periodEnd
+        self.currency = currency
+        self.prepaidCreditsStatus = prepaidCreditsStatus
+        self.costExcludesPriorityTier = costExcludesPriorityTier
     }
 }
 

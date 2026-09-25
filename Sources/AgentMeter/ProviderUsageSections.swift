@@ -171,7 +171,7 @@ struct UsageMetersView: View {
 
     var body: some View {
         Group {
-            if usage.windows.isEmpty && usage.balance == nil {
+            if usage.windows.isEmpty && usage.balance == nil && usage.apiUsage == nil {
                 Text(L("No usage data")).font(.caption).foregroundStyle(.secondary)
             }
             ForEach(usage.windows, id: \.label) { window in
@@ -181,7 +181,9 @@ struct UsageMetersView: View {
                     settings: settings
                 )
             }
-            if let balance = usage.balance {
+            if let apiUsage = usage.apiUsage {
+                APIUsageRows(summary: apiUsage)
+            } else if let balance = usage.balance {
                 BalanceRow(
                     providerName: providerName,
                     balance: balance,
@@ -194,6 +196,52 @@ struct UsageMetersView: View {
                     .foregroundStyle(.tertiary)
             }
         }
+    }
+}
+
+/// Usage reported by the Claude Console Admin API. These values are kept
+/// separate from prepaid credits because the API does not report credit balance.
+private struct APIUsageRows: View {
+    let summary: APIUsageSummary
+
+    private static let prepaidCreditsURL = URL(string: "https://platform.claude.com/settings/billing")!
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(L("Month to date (UTC)"))
+                .font(.caption2)
+                .foregroundStyle(.secondary)
+            valueRow(label: L("API spending"), value: summary.costUSD.formatted(.currency(code: "USD")))
+            valueRow(label: L("Input tokens"), value: summary.inputTokens.formatted())
+            valueRow(label: L("Output tokens"), value: summary.outputTokens.formatted())
+            valueRow(label: L("Cache read tokens"), value: summary.cacheReadTokens.formatted())
+            valueRow(label: L("Cache creation tokens"), value: summary.cacheCreationTokens.formatted())
+            valueRow(label: L("Prepaid credits"), value: L("Unavailable via API"))
+            Link(L("View prepaid credits"), destination: Self.prepaidCreditsURL)
+                .font(.caption)
+                .fixedSize(horizontal: false, vertical: true)
+            Text(L("Reporting may be delayed. Priority Tier costs excluded."))
+                .font(.caption2)
+                .foregroundStyle(.tertiary)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private func valueRow(label: String, value: String) -> some View {
+        HStack(alignment: .firstTextBaseline, spacing: 8) {
+            Text(label)
+                .font(.caption)
+                .fixedSize(horizontal: false, vertical: true)
+            Spacer(minLength: 4)
+            Text(value)
+                .font(.caption.monospacedDigit())
+                .multilineTextAlignment(.trailing)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(label)
+        .accessibilityValue(value)
     }
 }
 

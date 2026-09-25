@@ -3,6 +3,19 @@
 All notable changes to AgentMeter. Format follows [Keep a Changelog](https://keepachangelog.com);
 versions follow semantic-ish `MAJOR.MINOR.PATCH`.
 
+## [Unreleased]
+
+### Added
+- A separate Claude API provider with Keychain key entry, organization-wide
+  month-to-date spending, and input/output/cache token counts. Requires access
+  to Anthropic's organization reporting API. Prepaid credits are explicitly
+  unavailable via API, with a link to Console billing.
+- Optional API report details in the read-only agent snapshot.
+
+### Fixed
+- Provider-specific API key guidance now appears in Settings. Failed Keychain
+  saves/removals are reported, and changing a key clears the previous report.
+
 ## [1.11.6] — 2026-09-25
 
 ### Fixed

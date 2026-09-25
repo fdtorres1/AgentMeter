@@ -70,6 +70,8 @@
 	<string>Clave API eliminada</string>
 	<key>API key saved</key>
 	<string>Clave API guardada</string>
+	<key>API spending</key>
+	<string>Gasto de API</string>
 	<key>API usage</key>
 	<string>Uso de API</string>
 	<key>About AgentMeter</key>
@@ -122,6 +124,10 @@
 	<string>El saldo funciona a través del punto de acceso limitado de límites de uso.</string>
 	<key>Billed through</key>
 	<string>Facturado por</string>
+	<key>Cache creation tokens</key>
+	<string>Tokens de creación de caché</string>
+	<key>Cache read tokens</key>
+	<string>Tokens leídos de caché</string>
 	<key>Cancel</key>
 	<string>Cancelar</string>
 	<key>ChatGPT</key>
@@ -132,6 +138,14 @@
 	<string>Verificando clave…</string>
 	<key>Choose a path other than ~/.codex</key>
 	<string>Elige una ruta distinta de ~/.codex</string>
+	<key>Claude API reporting access denied (HTTP 403); check key scope and account eligibility</key>
+	<string>Acceso a informes de Claude API denegado (HTTP 403); comprueba el alcance de la clave y los requisitos de la cuenta</string>
+	<key>Claude API reporting key rejected (HTTP 401)</key>
+	<string>Clave de informes de Claude API rechazada (HTTP 401)</string>
+	<key>Claude API reporting rate limited (HTTP 429)</key>
+	<string>Límite de solicitudes de informes de Claude API alcanzado (HTTP 429)</string>
+	<key>Claude API reporting returned HTTP %@</key>
+	<string>Los informes de Claude API devolvieron HTTP %@</string>
 	<key>Claude token refresh failed (HTTP %lld)</key>
 	<string>Error al actualizar el token de Claude (HTTP %lld)</string>
 	<key>Codex CLI not found</key>
@@ -168,8 +182,14 @@
 	<string>Copiar diagnóstico</string>
 	<key>Copy login command</key>
 	<string>Copiar comando de inicio de sesión</string>
+	<key>Could not connect to Claude API reporting</key>
+	<string>No se pudo conectar a los informes de Claude API</string>
 	<key>Could not read session file</key>
 	<string>No se pudo leer el archivo de sesión</string>
+	<key>Could not remove the API key from Keychain. Please try again.</key>
+	<string>No se pudo eliminar la clave de API del Llavero. Inténtalo de nuevo.</string>
+	<key>Could not save the API key in Keychain. Please try again.</key>
+	<string>No se pudo guardar la clave de API en el Llavero. Inténtalo de nuevo.</string>
 	<key>Couldn't check key</key>
 	<string>No se pudo verificar la clave</string>
 	<key>Couldn't install the command-line tool: %@</key>
@@ -248,6 +268,8 @@
 	<string>Se admiten claves de API de Venice de tipo Inference y Admin. Los saldos de billeteras x402 no son compatibles.</string>
 	<key>Inference key</key>
 	<string>Clave de inferencia</string>
+	<key>Input tokens</key>
+	<string>Tokens de entrada</string>
 	<key>Install Command-Line Tool…</key>
 	<string>Instalar herramienta de línea de comandos…</string>
 	<key>Installed. Open a new terminal and run agentmeter --help.</key>
@@ -288,6 +310,8 @@
 	<string>Estilo de barra de menús</string>
 	<key>Mode</key>
 	<string>Modo</string>
+	<key>Month to date (UTC)</key>
+	<string>Mes hasta la fecha (UTC)</string>
 	<key>No %@ API key set — add one in Settings</key>
 	<string>No hay clave de API de %@ — agrega una en Ajustes</string>
 	<key>No Codex session logs found</key>
@@ -334,10 +358,18 @@
 	<string>OpenRouter devolvió HTTP %lld</string>
 	<key>Or paste an API key</key>
 	<string>O pega una clave de API</string>
+	<key>Organization</key>
+	<string>Organización</string>
+	<key>Organization-wide API spend and tokens require a Claude Console Admin reporting key or an eligible unscoped personal or service key. Workspace-scoped keys and individual accounts cannot access these reports. Prepaid credit balance is unavailable through this API.</key>
+	<string>El gasto y los tokens de API de la organización requieren una clave de administrador de Claude Console o una clave personal o de servicio apta sin restricción de espacio de trabajo. Las claves restringidas a un espacio de trabajo y las cuentas individuales no pueden acceder a estos informes. Esta API no ofrece el saldo de créditos prepagados.</string>
 	<key>Other</key>
 	<string>Otro</string>
+	<key>Output tokens</key>
+	<string>Tokens de salida</string>
 	<key>Personal cap</key>
 	<string>Límite personal</string>
+	<key>Prepaid credits</key>
+	<string>Créditos prepagados</string>
 	<key>Pro (24h)</key>
 	<string>Pro (24 h)</string>
 	<key>Provider endpoint research credits CodexBar by Peter Steinberger.</key>
@@ -368,6 +400,8 @@
 	<string>Se renueva el</string>
 	<key>Report an issue</key>
 	<string>Reportar un problema</string>
+	<key>Reporting may be delayed. Priority Tier costs excluded.</key>
+	<string>Los informes pueden demorarse. No incluyen los costos de Priority Tier.</string>
 	<key>Reset times</key>
 	<string>Tiempos de restablecimiento</string>
 	<key>Run from AgentMeter.app to install the command-line tool.</key>
@@ -422,6 +456,10 @@
 	<string>Cuota de tokens</string>
 	<key>Track renewal date</key>
 	<string>Registrar fecha de renovación</string>
+	<key>Unavailable via API</key>
+	<string>No disponible mediante API</string>
+	<key>Unexpected Claude API report</key>
+	<string>Informe inesperado de Claude API</string>
 	<key>Unexpected response from Anthropic</key>
 	<string>Respuesta inesperada de Anthropic</string>
 	<key>Unexpected response from DeepSeek</key>
@@ -462,6 +500,8 @@
 	<string>La verificación falló — tu clave puede seguir funcionando.</string>
 	<key>Version %@</key>
 	<string>Versión %@</string>
+	<key>View prepaid credits</key>
+	<string>Ver créditos prepagados</string>
 	<key>Waiting for browser authorization…</key>
 	<string>Esperando autorización en el navegador…</string>
 	<key>Website &amp; source code</key>

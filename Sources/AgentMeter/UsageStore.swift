@@ -23,6 +23,7 @@ final class UsageStore: ObservableObject {
     private var wakeObserver: NSObjectProtocol?
     private var refreshRequestObserver: NSObjectProtocol?
     private var codexAccountsObserver: AnyCancellable?
+    private var credentialGenerations: [String: Int] = [:]
 
     init(
         settings: SettingsStore,
@@ -74,7 +75,7 @@ final class UsageStore: ObservableObject {
             result.append(CodexProvider(accountConfig: config))
         }
         let others: [any UsageProvider] = [
-            CursorProvider(), ClaudeProvider(), GeminiProvider(),
+            CursorProvider(), ClaudeProvider(), ClaudeAPIProvider(), GeminiProvider(),
             OpenRouterProvider(), DeepSeekProvider(), MoonshotProvider(),
             ZaiProvider(), VeniceProvider(),
         ]
@@ -131,6 +132,14 @@ final class UsageStore: ObservableObject {
         states[providerID] ?? .loading
     }
 
+    /// A replacement key may identify a different organization. Clear the old
+    /// report and prevent an in-flight request from restoring it afterwards.
+    func credentialDidChange(for providerID: String) {
+        credentialGenerations[providerID, default: 0] += 1
+        states[providerID] = .loading
+        refresh()
+    }
+
     func refresh() {
         let providers = visibleProviders
         watchNewestCodexSession()
@@ -150,8 +159,10 @@ final class UsageStore: ObservableObject {
     }
 
     private func refreshProvider(_ provider: any UsageProvider) async {
+        let generation = credentialGenerations[provider.id, default: 0]
         do {
             let usage = try await provider.fetch()
+            guard credentialGenerations[provider.id, default: 0] == generation else { return }
             states[provider.id] = .ready(usage)
             notificationManager.notifyIfNeeded(
                 provider: provider,
@@ -159,6 +170,7 @@ final class UsageStore: ObservableObject {
                 settings: settings
             )
         } catch {
+            guard credentialGenerations[provider.id, default: 0] == generation else { return }
             let previous = states[provider.id] ?? .loading
             states[provider.id] = ProviderState.nextState(
                 after: previous,

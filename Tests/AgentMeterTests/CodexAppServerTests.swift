@@ -175,7 +175,7 @@ final class CodexAppServerTests: XCTestCase {
     func testDefaultProvidersIncludesExtras() {
         let config = CodexAccountConfig(label: "Alt", codexHomePath: "~/.codex-alt")
         let providers = UsageStore.defaultProviders(extraAccounts: [config])
-        XCTAssertEqual(providers.count, 10)
+        XCTAssertEqual(providers.count, 11)
         XCTAssertEqual(providers[0].id, "codex")
         XCTAssertEqual(providers[1].id, "codex:\(config.id.uuidString)")
         XCTAssertEqual(providers[2].id, "cursor")

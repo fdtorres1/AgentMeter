@@ -572,6 +572,7 @@ private struct ProviderCredentialSection: View {
     @State private var draftKey = ""
     @State private var hasKey: Bool
     @State private var assessmentGeneration = 0
+    @State private var credentialError: String?
 
     init(provider: any UsageProvider, store: UsageStore) {
         self.provider = provider
@@ -585,10 +586,17 @@ private struct ProviderCredentialSection: View {
             LabeledContent(L("Status"), value: provider.isDetected ? L("Detected") : L("Not detected"))
         case .apiKey(let keyURL):
             Group {
+                if let credentialError {
+                    Text(credentialError).font(.caption).foregroundStyle(.orange)
+                }
                 if let help = provider.credentialHelpText {
                     Text(help)
                         .font(.caption)
                         .foregroundStyle(.secondary)
+                }
+                if provider.id == "claude-api" {
+                    Link(L("View prepaid credits"), destination: URL(string: "https://platform.claude.com/settings/billing")!)
+                        .font(.caption)
                 }
                 if hasKey {
                     LabeledContent(provider.apiKeyPlaceholder) {
@@ -614,6 +622,9 @@ private struct ProviderCredentialSection: View {
             }
         case .oauth:
             Group {
+                if let credentialError {
+                    Text(credentialError).font(.caption).foregroundStyle(.orange)
+                }
                 if hasKey {
                     LabeledContent(L("Status")) {
                         HStack {
@@ -674,18 +685,26 @@ private struct ProviderCredentialSection: View {
     private func saveKey() {
         let key = draftKey.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !key.isEmpty else { return }
-        KeychainStore.set(key, account: provider.keychainAccount)
+        guard KeychainStore.set(key, account: provider.keychainAccount) else {
+            credentialError = L("Could not save the API key in Keychain. Please try again.")
+            return
+        }
+        credentialError = nil
         draftKey = ""
         hasKey = true
         assessmentGeneration += 1
-        store.refresh()
+        store.credentialDidChange(for: provider.id)
         AccessibilityNotification.Announcement(L("API key saved")).post()
     }
 
     private func removeKey() {
-        KeychainStore.delete(provider.keychainAccount)
+        guard KeychainStore.delete(provider.keychainAccount) else {
+            credentialError = L("Could not remove the API key from Keychain. Please try again.")
+            return
+        }
+        credentialError = nil
         hasKey = false
-        store.refresh()
+        store.credentialDidChange(for: provider.id)
         AccessibilityNotification.Announcement(L("API key removed")).post()
     }
 }

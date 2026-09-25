@@ -2,7 +2,7 @@
 
 A tiny macOS menu bar app (no Dock icon) that keeps your AI coding usage limits
 visible at a glance — Codex/ChatGPT (one or several accounts), Cursor, Claude
-Code, and Gemini, plus pay-as-you-go balances for OpenRouter, DeepSeek, Kimi,
+Code, and Gemini, Claude API spending and token usage, plus pay-as-you-go balances for OpenRouter, DeepSeek, Kimi,
 Z.ai, and Venice — with a dropdown showing detailed meters, reset countdowns,
 and balances. Your coding agents can read the same numbers through a small
 read-only CLI.
@@ -25,6 +25,7 @@ Cx 5% · CxW 62% · Cu 20% · Cl 40% · OR $8.06
 | **Codex** (`Cx`, `CxW`, …) | Your own Codex CLI via its app-server protocol; session logs as offline fallback | Live limits, plan, and signed-in email, polled every 5 minutes through a ~1-second `codex app-server` call. **Multiple accounts**: sign in extra Codex homes and each gets its own meter. Optional subscription renewal-date tracking with reminders. See [docs/CODEX_ACCOUNTS.md](docs/CODEX_ACCOUNTS.md). |
 | **Cursor** (`Cu`) | `cursor.com/api/usage-summary` | Uses the session token Cursor stores locally; included/auto/API usage + billing reset. Team/enterprise pools supported. |
 | **Claude** (`Cl`) | `api.anthropic.com/api/oauth/usage` | Uses the Claude Code OAuth token (credentials file or Keychain); 5h + weekly (+Opus) windows. |
+| **Claude API** (`ClA`) | Anthropic organization Usage & Cost API | Paste an organization reporting key; shows current UTC calendar-month spending and input/output/cache tokens. Prepaid credits are unavailable via the public API; a link opens Console billing. |
 | **Gemini** (`Ge`) | Cloud Code quota API | Uses the Gemini CLI OAuth token (`~/.gemini/oauth_creds.json`); Pro/Flash/Flash-Lite daily quotas. |
 | **OpenRouter** (`OR`) | `openrouter.ai/api/v1/credits` + `/api/v1/key` | Connect via OAuth (provisions a dedicated, revocable key) or paste a key; shows account credits when permitted, otherwise the key's limit/remaining balance or current-month spend. |
 | **DeepSeek** (`DS`) | `api.deepseek.com/user/balance` | Paste an API key; shows prepaid balance. |
@@ -33,8 +34,26 @@ Cx 5% · CxW 62% · Cu 20% · Cl 40% · OR $8.06
 | **Venice** (`Ve`) | Venice billing / key rate-limit APIs | Paste an Inference or Admin API key; shows USD/DIEM balance. Admin keys use the richer billing endpoint, while safer Inference keys use the rate-limits balance fallback. x402 wallet balances are not supported. |
 
 Subscription-style providers show percent-of-limit meters; pay-as-you-go
-(API-key) providers show the balance that remains, since there is no limit
+(API-key) providers show reported balance or spending, since there is no limit
 percentage to measure.
+
+### Claude API setup
+
+In **Settings → Providers → Claude API**, save an organization Admin API key
+or an eligible personal/service-account key that is not scoped to a workspace.
+AgentMeter stores the key in its own macOS Keychain item and only sends read-only
+report requests to Anthropic. Ordinary workspace keys and individual accounts
+cannot use the reporting API. These reports cover the organization, not just
+requests made with the saved key. Claude Code subscription limits remain in the
+separate **Claude** entry.
+
+Spending covers the current calendar month in UTC, excludes Priority Tier
+costs, and may take several minutes to appear. Reports are cached for five
+minutes. Input tokens exclude cache reads and cache creation, which have their
+own rows. **Prepaid credits are not inferred from spending**: use the billing
+link to see the actual credit balance. See Anthropic's
+[Usage & Cost API](https://platform.claude.com/docs/en/manage-claude/usage-cost-api)
+and [API billing guide](https://support.claude.com/en/articles/8977456-how-do-i-pay-for-my-claude-api-usage).
 
 Each provider can be set to **Auto** (show only if detected on this machine),
 **On**, or **Off** in Settings, and shown or hidden in the menu bar

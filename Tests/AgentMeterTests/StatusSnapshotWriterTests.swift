@@ -25,6 +25,49 @@ final class StatusSnapshotWriterTests: XCTestCase {
         XCTAssertEqual(status.asOf, usage.asOf)
     }
 
+    func testMapsClaudeAPIUsageForReadyAndStaleStatesWithoutInventingCredits() {
+        let periodStart = Date(timeIntervalSince1970: 1_800_000_000)
+        let periodEnd = Date(timeIntervalSince1970: 1_800_086_400)
+        let apiUsage = APIUsageSummary(
+            costUSD: 12.34,
+            inputTokens: 1_200,
+            outputTokens: 340,
+            cacheReadTokens: 500,
+            cacheCreationTokens: 60,
+            periodStart: periodStart,
+            periodEnd: periodEnd
+        )
+        let balance = BalanceInfo(remaining: 12.34, used: nil, currencySymbol: "$", kind: .spent)
+        let usage = ProviderUsage(planName: nil, windows: [], asOf: periodEnd, balance: balance, apiUsage: apiUsage)
+        let ready = StatusSnapshotWriter.mapProvider(
+            StatusSnapshotWriter.ProviderInput(id: "claude-api", displayName: "Claude API", state: .ready(usage))
+        )
+        let stale = StatusSnapshotWriter.mapProvider(
+            StatusSnapshotWriter.ProviderInput(
+                id: "claude-api",
+                displayName: "Claude API",
+                state: .stale(usage, error: "temporary API failure", since: periodEnd)
+            )
+        )
+
+        for status in [ready, stale] {
+            XCTAssertEqual(status.apiUsage?.costUSD, 12.34)
+            XCTAssertEqual(status.apiUsage?.inputTokens, 1_200)
+            XCTAssertEqual(status.apiUsage?.outputTokens, 340)
+            XCTAssertEqual(status.apiUsage?.cacheReadTokens, 500)
+            XCTAssertEqual(status.apiUsage?.cacheCreationTokens, 60)
+            XCTAssertEqual(status.apiUsage?.periodStart, periodStart)
+            XCTAssertEqual(status.apiUsage?.periodEnd, periodEnd)
+            XCTAssertEqual(status.apiUsage?.currency, "USD")
+            XCTAssertEqual(status.apiUsage?.prepaidCreditsStatus, "unavailable")
+            XCTAssertTrue(status.apiUsage?.costExcludesPriorityTier ?? false)
+            XCTAssertEqual(status.balance?.kind, "spent")
+            XCTAssertEqual(status.balance?.amount, 12.34)
+        }
+        XCTAssertEqual(ready.state, "ready")
+        XCTAssertEqual(stale.state, "stale")
+    }
+
     func testMapsStaleProviderWithRedactedError() {
         let usage = ProviderUsage(planName: nil, windows: [], asOf: nil)
         let since = Date(timeIntervalSince1970: 1_000_000)

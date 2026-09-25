@@ -124,6 +124,18 @@ struct BalanceInfo: Equatable {
     }
 }
 
+/// Organization API reporting for a UTC calendar-month interval. Token
+/// categories are disjoint; prepaid credits are not available in this report.
+struct APIUsageSummary: Equatable, Sendable {
+    let costUSD: Double
+    let inputTokens: Int
+    let outputTokens: Int
+    let cacheReadTokens: Int
+    let cacheCreationTokens: Int
+    let periodStart: Date
+    let periodEnd: Date
+}
+
 /// Normalized usage snapshot for one provider.
 struct ProviderUsage: Equatable {
     let planName: String?
@@ -132,12 +144,14 @@ struct ProviderUsage: Equatable {
     let asOf: Date?
     /// Balance readout for pay-as-you-go providers (may coexist with windows).
     var balance: BalanceInfo?
+    var apiUsage: APIUsageSummary?
 
-    init(planName: String?, windows: [UsageWindow], asOf: Date?, balance: BalanceInfo? = nil) {
+    init(planName: String?, windows: [UsageWindow], asOf: Date?, balance: BalanceInfo? = nil, apiUsage: APIUsageSummary? = nil) {
         self.planName = planName
         self.windows = windows
         self.asOf = asOf
         self.balance = balance
+        self.apiUsage = apiUsage
     }
 
     /// The most constrained window, used for the menu bar summary.

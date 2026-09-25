@@ -48,6 +48,35 @@ final class StatusJSONTests: XCTestCase {
         XCTAssertEqual(decoded, snapshot)
     }
 
+    func testRoundTripPreservesClaudeAPIUsageReport() throws {
+        let periodStart = Date(timeIntervalSince1970: 1_800_000_000)
+        let periodEnd = Date(timeIntervalSince1970: 1_800_086_400)
+        let apiUsage = APIUsageStatus(
+            costUSD: 12.34,
+            inputTokens: 1_200,
+            outputTokens: 340,
+            cacheReadTokens: 500,
+            cacheCreationTokens: 60,
+            periodStart: periodStart,
+            periodEnd: periodEnd
+        )
+        let snapshot = StatusSnapshot(
+            generatedAt: periodEnd,
+            appVersion: "1.12.0",
+            providers: [ProviderStatus(
+                id: "claude",
+                displayName: "Claude",
+                state: "ready",
+                apiUsage: apiUsage
+            )]
+        )
+
+        let decoded = try StatusJSON.decode(StatusJSON.encode(snapshot))
+        XCTAssertEqual(decoded, snapshot)
+        XCTAssertEqual(decoded.providers.first?.apiUsage?.prepaidCreditsStatus, "unavailable")
+        XCTAssertNil(decoded.providers.first?.balance)
+    }
+
     func testFixtureUsesExactSchemaV1KeyNames() throws {
         let data = try XCTUnwrap(schemaV1Fixture.data(using: .utf8))
         let object = try XCTUnwrap(JSONSerialization.jsonObject(with: data) as? [String: Any])
@@ -73,5 +102,6 @@ final class StatusJSONTests: XCTestCase {
         let decoded = try StatusJSON.decode(data)
         XCTAssertEqual(decoded.schemaVersion, 1)
         XCTAssertEqual(decoded.providers.first?.id, "codex")
+        XCTAssertNil(decoded.providers.first?.apiUsage)
     }
 }

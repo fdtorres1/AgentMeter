@@ -58,6 +58,36 @@ final class StatusTableTests: XCTestCase {
         XCTAssertTrue(table.contains("balance: $12.50 remaining"))
     }
 
+    func testRenderClaudeAPIUsageAndSuppressDuplicateSpentBalance() {
+        let now = Date(timeIntervalSince1970: 2_000_000_000)
+        let snapshot = StatusSnapshot(
+            generatedAt: now,
+            appVersion: "1.12.0",
+            providers: [ProviderStatus(
+                id: "claude",
+                displayName: "Claude",
+                state: "ready",
+                balance: BalanceStatus(amount: 12.34, currency: "$", kind: "spent"),
+                apiUsage: APIUsageStatus(
+                    costUSD: 12.34,
+                    inputTokens: 1_200,
+                    outputTokens: 340,
+                    cacheReadTokens: 500,
+                    cacheCreationTokens: 60,
+                    periodStart: now.addingTimeInterval(-86_400),
+                    periodEnd: now
+                )
+            )]
+        )
+
+        let table = StatusTable.renderStatusTable(snapshot, now: now)
+        XCTAssertTrue(table.contains("API spending (month to date, UTC): USD 12.34"))
+        XCTAssertTrue(table.contains("tokens: input 1200, output 340, cache read 500, cache creation 60"))
+        XCTAssertTrue(table.contains("prepaid credits: unavailable"))
+        XCTAssertTrue(table.contains("cost excludes Priority Tier: yes"))
+        XCTAssertFalse(table.contains("balance:"))
+    }
+
     func testStalenessWarningWhenOlderThanTenMinutes() {
         let now = Date(timeIntervalSince1970: 3_000_000_000)
         let snapshot = StatusSnapshot(

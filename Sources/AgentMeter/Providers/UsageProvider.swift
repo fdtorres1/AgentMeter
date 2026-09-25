@@ -24,6 +24,8 @@ protocol UsageProvider: Sendable {
     /// which never prompt).
     var isDetected: Bool { get }
     var authKind: ProviderAuthKind { get }
+    var credentialHelpText: String? { get }
+    var apiKeyPlaceholder: String { get }
     func fetch() async throws -> ProviderUsage
     var dashboardURL: URL? { get }
 }

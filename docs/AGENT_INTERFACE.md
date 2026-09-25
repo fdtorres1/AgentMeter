@@ -5,7 +5,7 @@ AgentMeter exposes a read-only local interface for scripts and coding agents. Th
 ## Security model
 
 - **Opt-in**: snapshot writing is disabled by default (`Settings → General → Enable agent & CLI access`).
-- **No credentials**: the snapshot contains usage percentages, balances, and redacted error strings only.
+- **No credentials**: the snapshot contains usage percentages, reported API spend/token counts, balances, and redacted error strings only.
 - **CLI is read-only**: `agentmeter` never imports Security/Keychain, never performs network I/O, and never reads provider credential files.
 - **App is sole handler**: only the running AgentMeter app refreshes usage and writes `status.json`.
 
@@ -46,6 +46,28 @@ Top-level object:
 | `accountEmail` | `String?` | Signed-in account email — Codex accounts only (added in 1.11.0) |
 | `planType` | `String?` | Plan / tier label as shown in the app's plan capsule (e.g. `Pro`, `Pro Lite`, `Ultra`, `Credits`, `Inference key`); present for any provider that reports one (added in 1.11.0) |
 | `renewal` | `RenewalStatus?` | User-entered subscription renewal — billing information, NOT a usage window; do not use it for quota decisions (Codex accounts; added in 1.11.0) |
+| `apiUsage` | `APIUsageStatus?` | Claude organization API usage report, when available; does not represent prepaid credits |
+
+`APIUsageStatus` (Claude organization API report):
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `costUSD` | `Number` | Reported cost in USD, excluding Priority Tier costs |
+| `inputTokens` | `Int` | Uncached input tokens; cache reads and cache creation are reported separately |
+| `outputTokens` | `Int` | Output tokens |
+| `cacheReadTokens` | `Int` | Cache-read input tokens |
+| `cacheCreationTokens` | `Int` | Cache-creation input tokens |
+| `periodStart` | `String` (ISO 8601) | Start of the current calendar month in UTC |
+| `periodEnd` | `String` (ISO 8601) | End of the reported period; the report may lag actual usage |
+| `currency` | `String` | `USD` |
+| `prepaidCreditsStatus` | `String` | `unavailable`; no actual available credit amount is exposed |
+| `costExcludesPriorityTier` | `Bool` | `true` for this report |
+
+The report is organization-wide and covers the current UTC calendar month
+through `periodEnd`. Token categories are separate: `inputTokens` excludes
+cache-read and cache-creation tokens. API reporting may lag; `prepaidCreditsStatus`
+does not imply a balance or remaining credit amount. The `claude-api`
+`balance` field remains a spend-style compatibility value (`kind: "spent"`).
 
 `RenewalStatus` (added in 1.11.0):
 
@@ -143,6 +165,7 @@ Within `schemaVersion` 1, changes are **additive only** (new optional fields). B
 |-------------|---------------|
 | 1.9.0 | Schema v1 introduced |
 | 1.11.0 | Added optional `accountEmail`, `planType`, `renewal` on `ProviderStatus`; extra Codex accounts appear as `codex:<uuid>` providers |
+| Unreleased | Added optional Claude API `apiUsage` report on `ProviderStatus` |
 
 ## URL schemes
 
