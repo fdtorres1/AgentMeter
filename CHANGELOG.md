@@ -3,6 +3,15 @@
 All notable changes to AgentMeter. Format follows [Keep a Changelog](https://keepachangelog.com);
 versions follow semantic-ish `MAJOR.MINOR.PATCH`.
 
+## [Unreleased]
+
+### Fixed
+- Load localization resources from inside the installed app. Previously, launch
+  could depend on a temporary build folder and crash after that folder vanished.
+- Packaging now fails if the required resource bundle is missing.
+- Synchronize the Codex executable cache so simultaneous account refreshes
+  cannot corrupt its stored path during startup.
+
 ## [1.11.5] — 2026-09-24
 
 ### Added

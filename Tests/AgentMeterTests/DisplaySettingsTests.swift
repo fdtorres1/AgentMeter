@@ -15,7 +15,9 @@ final class DisplaySettingsTests: XCTestCase {
     }
 
     func testResetDescriptionRelativeMatchesRemainingDescription() {
-        let resetsAt = Date().addingTimeInterval(7200)
+        // Stay away from a minute boundary: the two convenience calls each
+        // sample the clock independently.
+        let resetsAt = Date().addingTimeInterval(7230)
         let window = UsageWindow(label: "Weekly", usedPercent: 50, resetsAt: resetsAt)
         XCTAssertEqual(window.resetDescription(style: .relative), window.remainingDescription)
     }

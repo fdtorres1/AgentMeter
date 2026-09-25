@@ -68,6 +68,7 @@ enum CodexAppServerError: LocalizedError, Equatable {
 enum CodexAppServerClient {
     nonisolated static let pollInterval: TimeInterval = 300
 
+    private nonisolated static let executableCacheLock = NSLock()
     private nonisolated(unsafe) static var resolvedExecutableCache: URL??
 
     // MARK: - Public API
@@ -247,27 +248,31 @@ enum CodexAppServerClient {
     }
 
     nonisolated static func resolveCodexExecutable() -> URL? {
-        if let cached = resolvedExecutableCache {
-            return cached
-        }
-        let home = FileManager.default.homeDirectoryForCurrentUser.path
-        let pathEnv = ProcessInfo.processInfo.environment["PATH"]
-        for candidate in candidatePaths(home: home, pathEnv: pathEnv) {
-            if FileManager.default.isExecutableFile(atPath: candidate) {
-                let url = URL(fileURLWithPath: candidate)
-                resolvedExecutableCache = url
-                return url
+        executableCacheLock.withLock {
+            if let cached = resolvedExecutableCache {
+                return cached
             }
-        }
+            let home = FileManager.default.homeDirectoryForCurrentUser.path
+            let pathEnv = ProcessInfo.processInfo.environment["PATH"]
+            for candidate in candidatePaths(home: home, pathEnv: pathEnv) {
+                if FileManager.default.isExecutableFile(atPath: candidate) {
+                    let url = URL(fileURLWithPath: candidate)
+                    resolvedExecutableCache = url
+                    return url
+                }
+            }
 
-        let resolved = resolveCodexViaShell()
-        resolvedExecutableCache = resolved
-        return resolved
+            let resolved = resolveCodexViaShell()
+            resolvedExecutableCache = resolved
+            return resolved
+        }
     }
 
     /// Resets the shell-resolution cache (testing only).
     nonisolated static func resetExecutableCache() {
-        resolvedExecutableCache = nil
+        executableCacheLock.withLock {
+            resolvedExecutableCache = nil
+        }
     }
 
     nonisolated private static func resolveCodexViaShell() -> URL? {

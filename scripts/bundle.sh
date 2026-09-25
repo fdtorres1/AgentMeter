@@ -31,9 +31,12 @@ cp ".build/release/${APP_NAME}" "$APP/Contents/MacOS/${APP_NAME}"
 # collide on case-insensitive filesystems.
 mkdir -p "$APP/Contents/Helpers"
 cp ".build/release/agentmeter-cli" "$APP/Contents/Helpers/agentmeter"
-if [[ -d ".build/release/AgentMeter_AgentMeter.bundle" ]]; then
-    cp -R ".build/release/AgentMeter_AgentMeter.bundle" "$APP/Contents/Resources/"
+RESOURCE_BUNDLE=".build/release/AgentMeter_AgentMeter.bundle"
+if [[ ! -d "$RESOURCE_BUNDLE" ]]; then
+    echo "error: required resource bundle missing: $RESOURCE_BUNDLE" >&2
+    exit 1
 fi
+cp -R "$RESOURCE_BUNDLE" "$APP/Contents/Resources/"
 if [[ -f Resources/AppIcon.icns ]]; then
     cp Resources/AppIcon.icns "$APP/Contents/Resources/AppIcon.icns"
 fi

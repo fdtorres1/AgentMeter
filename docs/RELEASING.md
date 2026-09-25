@@ -130,6 +130,12 @@ PATCH for fixes and small UX follow-ups shipped the same day.
 - Verify the final bundle's signature and notarization, then launch the installed
   app and check `agentmeter doctor` plus a fresh `agentmeter refresh --wait 15`
   snapshot. A valid signature alone does not prove the app can launch.
+- Before the launch check, temporarily rename the staging checkout's `.build`
+  directory so SwiftPM's generated absolute resource fallback cannot resolve.
+  The installed app must launch and refresh using only its embedded resources.
+  Restore the directory afterward. `L()` resolves the packaged resource bundle
+  under `Contents/Resources`; SwiftPM's generated `Bundle.module` alone looks
+  in a different location and can mask a broken package while build files exist.
 
 ## Before first publish (historical — already done)
 
