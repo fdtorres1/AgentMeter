@@ -8,9 +8,9 @@ final class ClaudeAPIProviderTests: XCTestCase {
 
     func testReportsConvertCentsAndAggregateBothPages() async throws {
         let client = MockClaudeAPIClient()
-        await client.set("/v1/organizations/cost_report", page: nil, body: costPage("123.78912", more: true, next: "second"))
+        await client.set("/v1/organizations/cost_report", page: nil, body: costPage("123.78912", more: true, next: "second", endingAt: "2026-09-24T00:00:00Z"))
         await client.set("/v1/organizations/cost_report", page: "second", body: costPage("76.21088"))
-        await client.set("/v1/organizations/usage_report/messages", page: nil, body: tokenPage(input: 10, output: 20, read: 30, oneHour: 40, fiveMinutes: 50, more: true, next: "second"))
+        await client.set("/v1/organizations/usage_report/messages", page: nil, body: tokenPage(input: 10, output: 20, read: 30, oneHour: 40, fiveMinutes: 50, more: true, next: "second", endingAt: "2026-09-24T00:00:00Z"))
         await client.set("/v1/organizations/usage_report/messages", page: "second", body: tokenPage(input: 1, output: 2, read: 3, oneHour: 4, fiveMinutes: 5))
 
         let provider = makeProvider(client: client)
@@ -23,7 +23,8 @@ final class ClaudeAPIProviderTests: XCTestCase {
         XCTAssertEqual(summary.cacheReadTokens, 33)
         XCTAssertEqual(summary.cacheCreationTokens, 99)
         XCTAssertEqual(summary.periodStart, start)
-        XCTAssertEqual(summary.periodEnd, now)
+        XCTAssertEqual(summary.periodEnd, ISO8601DateFormatter().date(from: "2026-09-25T00:00:00Z"))
+        XCTAssertEqual(usage.asOf, now)
         XCTAssertEqual(usage.balance?.kind, .spent)
         XCTAssertEqual(usage.balance?.remaining, 2)
 
@@ -35,7 +36,7 @@ final class ClaudeAPIProviderTests: XCTestCase {
             XCTAssertEqual(url.scheme, "https")
             XCTAssertEqual(url.host, "api.anthropic.com")
             XCTAssertEqual(parts.queryItems?.first(where: { $0.name == "starting_at" })?.value, "2026-09-01T00:00:00Z")
-            XCTAssertEqual(parts.queryItems?.first(where: { $0.name == "ending_at" })?.value, "2026-09-26T00:00:01Z")
+            XCTAssertEqual(parts.queryItems?.first(where: { $0.name == "ending_at" })?.value, "2026-09-26T00:00:00Z")
             XCTAssertEqual(parts.queryItems?.first(where: { $0.name == "bucket_width" })?.value, "1d")
             XCTAssertEqual(parts.queryItems?.first(where: { $0.name == "limit" })?.value, "31")
             XCTAssertEqual(request.httpMethod, "GET")
@@ -80,6 +81,58 @@ final class ClaudeAPIProviderTests: XCTestCase {
         let usage = try await makeProvider(client: client).fetch()
         let summary = try XCTUnwrap(usage.apiUsage)
         XCTAssertEqual(summary.costUSD, 1.2378912, accuracy: 0.000000001)
+    }
+
+    func testCoverageUsesOlderCostOrTokenReportCutoff() async throws {
+        let client = MockClaudeAPIClient()
+        await client.set("/v1/organizations/cost_report", page: nil,
+                         body: costPage("200", endingAt: "2026-09-25T00:00:00Z"))
+        await client.set("/v1/organizations/usage_report/messages", page: nil,
+                         body: tokenPage(input: 10, output: 0, read: 0, oneHour: 0, fiveMinutes: 0,
+                                         endingAt: "2026-09-24T00:00:00Z"))
+
+        let usage = try await makeProvider(client: client).fetch()
+        let summary = try XCTUnwrap(usage.apiUsage)
+        XCTAssertEqual(summary.costUSD, 2)
+        XCTAssertEqual(summary.inputTokens, 10)
+        XCTAssertEqual(summary.periodEnd, ISO8601DateFormatter().date(from: "2026-09-24T00:00:00Z"))
+        XCTAssertEqual(usage.asOf, now)
+    }
+
+    func testEmptyReportHasNoCoveredBuckets() async throws {
+        let client = MockClaudeAPIClient()
+        await client.set("/v1/organizations/cost_report", page: nil,
+                         body: "{\"data\":[],\"has_more\":false,\"next_page\":null}")
+        await client.set("/v1/organizations/usage_report/messages", page: nil,
+                         body: tokenPage(input: 10, output: 0, read: 0, oneHour: 0, fiveMinutes: 0))
+
+        let usage = try await makeProvider(client: client).fetch()
+        let summary = try XCTUnwrap(usage.apiUsage)
+        XCTAssertEqual(summary.costUSD, 0)
+        XCTAssertEqual(summary.periodEnd, start)
+        XCTAssertEqual(usage.asOf, now)
+    }
+
+    func testFutureBucketEndIsClampedToCheckTime() async throws {
+        let client = MockClaudeAPIClient()
+        await client.set("/v1/organizations/cost_report", page: nil,
+                         body: costPage("100", endingAt: "2026-09-26T00:00:00Z"))
+        await client.set("/v1/organizations/usage_report/messages", page: nil,
+                         body: tokenPage(input: 1, output: 0, read: 0, oneHour: 0, fiveMinutes: 0,
+                                         endingAt: "2026-09-26T00:00:00Z"))
+
+        let usage = try await makeProvider(client: client).fetch()
+        XCTAssertEqual(usage.apiUsage?.periodEnd, now)
+        XCTAssertEqual(usage.asOf, now)
+    }
+
+    func testRejectsMalformedBucketEnd() async throws {
+        let client = MockClaudeAPIClient()
+        await client.set("/v1/organizations/cost_report", page: nil,
+                         body: costPage("100", endingAt: "not-a-date"))
+        await client.set("/v1/organizations/usage_report/messages", page: nil,
+                         body: tokenPage(input: 1, output: 0, read: 0, oneHour: 0, fiveMinutes: 0))
+        await XCTAssertMalformedReport(try await makeProvider(client: client).fetch())
     }
 
     func testRejectsNegativeAndOverflowTokens() async throws {
@@ -275,14 +328,17 @@ final class ClaudeAPIProviderTests: XCTestCase {
         )
     }
 
-    private func costPage(_ amount: String, currency: String = "USD", more: Bool = false, next: String? = nil) -> String {
+    private func costPage(_ amount: String, currency: String = "USD", more: Bool = false,
+                          next: String? = nil, endingAt: String = "2026-09-25T00:00:00Z") -> String {
         let token = next.map { "\"\($0)\"" } ?? "null"
-        return "{\"data\":[{\"results\":[{\"amount\":\"\(amount)\",\"currency\":\"\(currency)\"}]}],\"has_more\":\(more),\"next_page\":\(token)}"
+        return "{\"data\":[{\"ending_at\":\"\(endingAt)\",\"results\":[{\"amount\":\"\(amount)\",\"currency\":\"\(currency)\"}]}],\"has_more\":\(more),\"next_page\":\(token)}"
     }
 
-    private func tokenPage(input: Int, output: Int, read: Int, oneHour: Int, fiveMinutes: Int, more: Bool = false, next: String? = nil) -> String {
+    private func tokenPage(input: Int, output: Int, read: Int, oneHour: Int, fiveMinutes: Int,
+                           more: Bool = false, next: String? = nil,
+                           endingAt: String = "2026-09-25T00:00:00Z") -> String {
         let token = next.map { "\"\($0)\"" } ?? "null"
-        return "{\"data\":[{\"results\":[{\"uncached_input_tokens\":\(input),\"output_tokens\":\(output),\"cache_read_input_tokens\":\(read),\"cache_creation\":{\"ephemeral_1h_input_tokens\":\(oneHour),\"ephemeral_5m_input_tokens\":\(fiveMinutes)}}]}],\"has_more\":\(more),\"next_page\":\(token)}"
+        return "{\"data\":[{\"ending_at\":\"\(endingAt)\",\"results\":[{\"uncached_input_tokens\":\(input),\"output_tokens\":\(output),\"cache_read_input_tokens\":\(read),\"cache_creation\":{\"ephemeral_1h_input_tokens\":\(oneHour),\"ephemeral_5m_input_tokens\":\(fiveMinutes)}}]}],\"has_more\":\(more),\"next_page\":\(token)}"
     }
 }
 

@@ -36,6 +36,12 @@ public enum StatusTable {
                 lines.append("  tokens: input \(apiUsage.inputTokens), output \(apiUsage.outputTokens), cache read \(apiUsage.cacheReadTokens), cache creation \(apiUsage.cacheCreationTokens)")
                 lines.append("  prepaid credits: unavailable")
                 lines.append("  cost excludes Priority Tier: \(apiUsage.costExcludesPriorityTier ? "yes" : "no")")
+                lines.append("  report coverage ends: \(iso8601String(apiUsage.periodEnd)) (UTC, exclusive)")
+                var utc = Calendar(identifier: .gregorian)
+                utc.timeZone = TimeZone(secondsFromGMT: 0)!
+                if apiUsage.periodEnd <= utc.startOfDay(for: now) {
+                    lines.append("  Today's totals are not yet fully reported by Anthropic.")
+                }
             }
 
             if provider.apiUsage == nil, let balance = provider.balance {
@@ -44,7 +50,8 @@ public enum StatusTable {
             }
 
             if let asOf = provider.asOf {
-                lines.append("  as of \(iso8601String(asOf))")
+                let label = provider.apiUsage == nil ? "as of" : "last checked"
+                lines.append("  \(label) \(iso8601String(asOf))")
             }
 
             if let staleSince = provider.staleSince {

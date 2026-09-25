@@ -9,8 +9,8 @@ versions follow semantic-ish `MAJOR.MINOR.PATCH`.
 - Manual Refresh and CLI refresh request new Claude API reports instead of
   reusing the five-minute automatic-polling cache. Failed manual requests
   remain visible instead of being replaced by an older cached success.
-- Include the current UTC day's reporting bucket when querying Anthropic's
-  daily reports by putting the exclusive end boundary after its end.
+- Show the Claude API report cutoff and distinguish when it was checked from
+  how much usage Anthropic has reported. Flag when today's spending is absent.
 
 ## [1.12.0] — 2026-09-25
 

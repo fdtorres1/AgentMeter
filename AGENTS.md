@@ -4,7 +4,7 @@ macOS menu bar app (SwiftUI, Swift Package, macOS 14+) showing AI coding usage
 limits for Codex (multiple accounts), Cursor, Claude Code, Gemini, Claude API reporting, and
 pay-as-you-go balances for OpenRouter, DeepSeek, Kimi, Z.ai, and Venice.
 Public repo: https://github.com/fdtorres1/AgentMeter. Current release line:
-1.12.x (see CHANGELOG.md). Test suite: 159 tests (`swift test`).
+1.12.x (see CHANGELOG.md). Test suite: 164 tests (`swift test`).
 
 **If `HANDOFF.md` exists in the repo root, read it first.** It is the
 gitignored, machine-local session handoff (current state, pending work,
@@ -105,11 +105,14 @@ announcement drafts, environment specifics) and complements this file.
   Keychain API key must have organization reporting access. Read-only GET
   `/v1/organizations/cost_report` and `/v1/organizations/usage_report/messages`
   return organization-wide UTC monthly spend and token categories. Costs are
-  decimal-string cents; convert to USD. Daily report end is next UTC midnight + 1 second
+  decimal-string cents; convert to USD. Daily report end is next UTC midnight
   to include today's partial bucket. Paginate both reports. Cache for five
   minutes (60-second failure cooldown), keyed by credential digest and month;
   explicit menu/CLI refresh bypasses successful cached reports. Concurrent
   refreshes share a request; failed refreshes cannot reuse an old cached success.
+  Actual coverage `periodEnd` comes from returned bucket ends, capped at fetch
+  time, using the older of cost and token coverage. API `asOf` is last checked;
+  do not claim the current day is reported just because a fetch succeeded.
   do not log keys or response bodies. No public prepaid-credit endpoint:
   explicitly unavailable plus billing link, never an estimated balance.
   `ProviderUsage.apiUsage` holds the detail; `.spent` balance supports menu

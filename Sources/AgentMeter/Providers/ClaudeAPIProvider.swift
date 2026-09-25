@@ -49,9 +49,7 @@ struct ClaudeAPIProvider: UsageProvider {
         let monthStart = Self.utcMonthStart(for: now)
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = TimeZone(secondsFromGMT: 0)!
-        // Reports include only buckets ending strictly before ending_at.
-        // Move one second past next midnight to include today's UTC bucket.
-        let queryEnd = calendar.startOfDay(for: now).addingTimeInterval(86_401)
+        let queryEnd = calendar.startOfDay(for: now).addingTimeInterval(86_400)
         return try await cache.fetch(key: key, monthStart: monthStart, now: now, forceRefresh: forceRefresh) {
             try await Self.load(key: key, start: monthStart, queryEnd: queryEnd, observedAt: now, transport: transport)
         }
@@ -78,8 +76,11 @@ struct ClaudeAPIProvider: UsageProvider {
         )
 
         var cents = Decimal.zero
+        var latestCostEnd: Date?
         for page in costPages {
             for bucket in page.data {
+                let bucketEnd = try Self.reportBucketEnd(bucket.endingAt)
+                latestCostEnd = max(latestCostEnd ?? start, bucketEnd)
                 for result in bucket.results {
                     guard result.currency == "USD",
                           result.amount.range(of: #"^(?:0|[1-9][0-9]*)(?:\.[0-9]+)?$"#, options: .regularExpression) != nil,
@@ -99,8 +100,11 @@ struct ClaudeAPIProvider: UsageProvider {
         guard costUSD.isFinite else { throw ClaudeAPIError.malformedReport }
 
         var input = 0, output = 0, cacheRead = 0, cacheCreation = 0
+        var latestUsageEnd: Date?
         for page in usagePages {
             for bucket in page.data {
+                let bucketEnd = try Self.reportBucketEnd(bucket.endingAt)
+                latestUsageEnd = max(latestUsageEnd ?? start, bucketEnd)
                 for result in bucket.results {
                     try add(result.uncachedInputTokens, to: &input)
                     try add(result.outputTokens, to: &output)
@@ -111,10 +115,14 @@ struct ClaudeAPIProvider: UsageProvider {
             }
         }
 
+        // Show the older cutoff when spend and token reports differ. Empty
+        // reports have no covered buckets, and a future daily bucket end cannot
+        // extend coverage beyond the time this report was checked.
+        let periodEnd = max(start, min(latestCostEnd ?? start, latestUsageEnd ?? start, observedAt))
         let summary = APIUsageSummary(
             costUSD: costUSD, inputTokens: input, outputTokens: output,
             cacheReadTokens: cacheRead, cacheCreationTokens: cacheCreation,
-            periodStart: start, periodEnd: observedAt
+            periodStart: start, periodEnd: periodEnd
         )
         return ProviderUsage(
             planName: L("Organization"), windows: [], asOf: observedAt,
@@ -128,6 +136,14 @@ struct ClaudeAPIProvider: UsageProvider {
         let (sum, overflow) = total.addingReportingOverflow(value)
         guard !overflow else { throw ClaudeAPIError.malformedReport }
         total = sum
+    }
+
+    private static func reportBucketEnd(_ value: String) throws -> Date {
+        guard let date = ISO8601DateFormatter.flexible.date(from: value)
+            ?? ISO8601DateFormatter.plain.date(from: value) else {
+            throw ClaudeAPIError.malformedReport
+        }
+        return date
     }
 
     private static func pages<Page: ClaudeAPIPage>(
@@ -202,7 +218,11 @@ struct ClaudeAPIProvider: UsageProvider {
         let nextPage: String?
         enum CodingKeys: String, CodingKey { case data, hasMore = "has_more", nextPage = "next_page" }
     }
-    struct CostBucket: Decodable { let results: [CostResult] }
+    struct CostBucket: Decodable {
+        let endingAt: String
+        let results: [CostResult]
+        enum CodingKeys: String, CodingKey { case endingAt = "ending_at", results }
+    }
     struct CostResult: Decodable { let amount: String; let currency: String }
 
     struct TokenPage: ClaudeAPIPage {
@@ -211,7 +231,11 @@ struct ClaudeAPIProvider: UsageProvider {
         let nextPage: String?
         enum CodingKeys: String, CodingKey { case data, hasMore = "has_more", nextPage = "next_page" }
     }
-    struct TokenBucket: Decodable { let results: [TokenResult] }
+    struct TokenBucket: Decodable {
+        let endingAt: String
+        let results: [TokenResult]
+        enum CodingKeys: String, CodingKey { case endingAt = "ending_at", results }
+    }
     struct TokenResult: Decodable {
         let uncachedInputTokens: Int
         let outputTokens: Int

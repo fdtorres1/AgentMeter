@@ -15,7 +15,7 @@ final class APIUsagePresentationTests: XCTestCase {
 
         XCTAssertLessThanOrEqual(short.host.fittingSize.width, 320)
         XCTAssertLessThanOrEqual(repeated.host.fittingSize.width, 320)
-        XCTAssertLessThan(short.host.fittingSize.height, 350)
+        XCTAssertLessThan(short.host.fittingSize.height, 420)
 
         let scroll = try XCTUnwrap(findScrollView(in: repeated.host))
         let document = try XCTUnwrap(scroll.documentView)
@@ -81,7 +81,7 @@ private struct APIUsageLayoutProvider: UsageProvider {
                 cacheReadTokens: 45_678_901,
                 cacheCreationTokens: 12_345_678,
                 periodStart: now,
-                periodEnd: now
+                periodEnd: now.addingTimeInterval(-86_400)
             )
         )
     }

@@ -64,18 +64,19 @@ final class StatusTableTests: XCTestCase {
             generatedAt: now,
             appVersion: "1.12.0",
             providers: [ProviderStatus(
-                id: "claude",
-                displayName: "Claude",
+                id: "claude-api",
+                displayName: "Claude API",
                 state: "ready",
                 balance: BalanceStatus(amount: 12.34, currency: "$", kind: "spent"),
+                asOf: now,
                 apiUsage: APIUsageStatus(
                     costUSD: 12.34,
                     inputTokens: 1_200,
                     outputTokens: 340,
                     cacheReadTokens: 500,
                     cacheCreationTokens: 60,
-                    periodStart: now.addingTimeInterval(-86_400),
-                    periodEnd: now
+                    periodStart: now.addingTimeInterval(-172_800),
+                    periodEnd: now.addingTimeInterval(-86_400)
                 )
             )]
         )
@@ -85,6 +86,9 @@ final class StatusTableTests: XCTestCase {
         XCTAssertTrue(table.contains("tokens: input 1200, output 340, cache read 500, cache creation 60"))
         XCTAssertTrue(table.contains("prepaid credits: unavailable"))
         XCTAssertTrue(table.contains("cost excludes Priority Tier: yes"))
+        XCTAssertTrue(table.contains("report coverage ends:"))
+        XCTAssertTrue(table.contains("Today's totals are not yet fully reported by Anthropic."))
+        XCTAssertTrue(table.contains("last checked"))
         XCTAssertFalse(table.contains("balance:"))
     }
 

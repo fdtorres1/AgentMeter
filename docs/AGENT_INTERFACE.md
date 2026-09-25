@@ -40,7 +40,7 @@ Top-level object:
 | `state` | `String` | `ready`, `stale`, `error`, or `loading` |
 | `windows` | `[WindowStatus]` | Rate-limit windows |
 | `balance` | `BalanceStatus?` | Pay-as-you-go balance, if any |
-| `asOf` | `String?` (ISO 8601) | Provider-reported data timestamp |
+| `asOf` | `String?` (ISO 8601) | Data timestamp; for Claude API this is the last check time, not report coverage |
 | `staleSince` | `String?` (ISO 8601) | Present when `state` is `stale` |
 | `error` | `String?` | Redacted error message for `error` / `stale` |
 | `accountEmail` | `String?` | Signed-in account email — Codex accounts only (added in 1.11.0) |
@@ -58,13 +58,16 @@ Top-level object:
 | `cacheReadTokens` | `Int` | Cache-read input tokens |
 | `cacheCreationTokens` | `Int` | Cache-creation input tokens |
 | `periodStart` | `String` (ISO 8601) | Start of the current calendar month in UTC |
-| `periodEnd` | `String` (ISO 8601) | End of the reported period; the report may lag actual usage |
+| `periodEnd` | `String` (ISO 8601) | Exclusive coverage cutoff from returned cost/token bucket ends (older of the two), capped at fetch time; empty reports use periodStart |
 | `currency` | `String` | `USD` |
 | `prepaidCreditsStatus` | `String` | `unavailable`; no actual available credit amount is exposed |
 | `costExcludesPriorityTier` | `Bool` | `true` for this report |
 
-The report is organization-wide and covers the current UTC calendar month
-through `periodEnd`. Token categories are separate: `inputTokens` excludes
+The report is organization-wide and covers returned data for the current UTC
+calendar month. `periodEnd` is the shared cutoff; either endpoint may contain
+newer totals. If the cutoff is at or before today's UTC midnight, today's
+totals are not yet fully reported, even when `asOf` is recent. Token categories
+are separate: `inputTokens` excludes
 cache-read and cache-creation tokens. API reporting may lag; `prepaidCreditsStatus`
 does not imply a balance or remaining credit amount. The `claude-api`
 `balance` field remains a spend-style compatibility value (`kind: "spent"`).

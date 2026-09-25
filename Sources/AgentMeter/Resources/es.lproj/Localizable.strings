@@ -288,6 +288,8 @@
 	<string>Etiqueta</string>
 	<key>Label is required</key>
 	<string>La etiqueta es obligatoria</string>
+	<key>Last checked %@</key>
+	<string>Última consulta %@</string>
 	<key>Last confirmed %@</key>
 	<string>Última confirmación: %@</string>
 	<key>Launch at Login</key>
@@ -402,6 +404,10 @@
 	<string>Reportar un problema</string>
 	<key>Reporting may be delayed. Priority Tier costs excluded.</key>
 	<string>Los informes pueden demorarse. No incluyen los costos de Priority Tier.</string>
+	<key>Reporting may lag the Anthropic website. Priority Tier costs excluded.</key>
+	<string>Los informes pueden ir por detrás del sitio web de Anthropic. No incluyen los costos de Priority Tier.</string>
+	<key>Reports before %@ UTC</key>
+	<string>Datos anteriores a %@ UTC</string>
 	<key>Reset times</key>
 	<string>Tiempos de restablecimiento</string>
 	<key>Run from AgentMeter.app to install the command-line tool.</key>
@@ -452,6 +458,8 @@
 	<string>Esta clave permite que las apps llamen modelos de Kimi usando tu saldo prepagado. AgentMeter solo lee cuánto saldo queda; no puede gastar dinero ni cambiar tu cuenta.</string>
 	<key>Time quota</key>
 	<string>Cuota de tiempo</string>
+	<key>Today's totals are not yet fully reported by Anthropic.</key>
+	<string>Anthropic aún no ha informado todos los totales de hoy.</string>
 	<key>Token quota</key>
 	<string>Cuota de tokens</string>
 	<key>Track renewal date</key>

@@ -48,7 +48,10 @@ requests made with the saved key. Claude Code subscription limits remain in the
 separate **Claude** entry.
 
 Spending covers the current calendar month in UTC, excludes Priority Tier
-costs, and may take several minutes to appear. Reports are cached for five
+costs, and may lag the Anthropic website. AgentMeter shows the returned report
+cutoff and flags when today's totals are not yet fully reported. "Last checked"
+means when AgentMeter fetched the report, not how current Anthropic's data is.
+Reports are cached for five
 minutes during automatic polling. The Refresh button and `agentmeter refresh`
 bypass that cache; after an API failure, retries wait one minute. Input tokens
 exclude cache reads and cache creation, which have their

@@ -134,13 +134,20 @@ struct APIUsageSummary: Equatable, Sendable {
     let cacheCreationTokens: Int
     let periodStart: Date
     let periodEnd: Date
+
+    func isAwaitingCurrentDay(now: Date = Date()) -> Bool {
+        var utc = Calendar(identifier: .gregorian)
+        utc.timeZone = TimeZone(secondsFromGMT: 0)!
+        return periodEnd <= utc.startOfDay(for: now)
+    }
 }
 
 /// Normalized usage snapshot for one provider.
 struct ProviderUsage: Equatable {
     let planName: String?
     let windows: [UsageWindow]
-    /// When the underlying data was produced (not when we read it).
+    /// When the underlying data was produced. For API reports without a source
+    /// freshness timestamp, this is the last check; apiUsage.periodEnd is coverage.
     let asOf: Date?
     /// Balance readout for pay-as-you-go providers (may coexist with windows).
     var balance: BalanceInfo?

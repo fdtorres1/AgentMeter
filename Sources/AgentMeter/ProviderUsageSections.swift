@@ -191,7 +191,9 @@ struct UsageMetersView: View {
                 )
             }
             if let asOf = usage.asOf {
-                Text(L("Data as of \(asOf.formatted(date: .omitted, time: .shortened))"))
+                Text(usage.apiUsage == nil
+                     ? L("Data as of \(asOf.formatted(date: .omitted, time: .shortened))")
+                     : L("Last checked \(asOf.formatted(date: .omitted, time: .shortened))"))
                     .font(.caption2)
                     .foregroundStyle(.tertiary)
             }
@@ -216,11 +218,22 @@ private struct APIUsageRows: View {
             valueRow(label: L("Output tokens"), value: summary.outputTokens.formatted())
             valueRow(label: L("Cache read tokens"), value: summary.cacheReadTokens.formatted())
             valueRow(label: L("Cache creation tokens"), value: summary.cacheCreationTokens.formatted())
+            if summary.isAwaitingCurrentDay() {
+                Text(L("Today's totals are not yet fully reported by Anthropic."))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .accessibilityElement(children: .combine)
+            }
+            Text(L("Reports before \(summary.periodEnd.formatted(Date.FormatStyle(date: .abbreviated, time: .shortened, timeZone: TimeZone(secondsFromGMT: 0)!))) UTC"))
+                .font(.caption2)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
             valueRow(label: L("Prepaid credits"), value: L("Unavailable via API"))
             Link(L("View prepaid credits"), destination: Self.prepaidCreditsURL)
                 .font(.caption)
                 .fixedSize(horizontal: false, vertical: true)
-            Text(L("Reporting may be delayed. Priority Tier costs excluded."))
+            Text(L("Reporting may lag the Anthropic website. Priority Tier costs excluded."))
                 .font(.caption2)
                 .foregroundStyle(.tertiary)
                 .fixedSize(horizontal: false, vertical: true)

@@ -1,6 +1,70 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "Last checked %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last checked %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Última consulta %@"
+          }
+        }
+      }
+    },
+    "Reports before %@ UTC": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reports before %@ UTC"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Datos anteriores a %@ UTC"
+          }
+        }
+      }
+    },
+    "Today's totals are not yet fully reported by Anthropic.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Today's totals are not yet fully reported by Anthropic."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anthropic aún no ha informado todos los totales de hoy."
+          }
+        }
+      }
+    },
+    "Reporting may lag the Anthropic website. Priority Tier costs excluded.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reporting may lag the Anthropic website. Priority Tier costs excluded."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Los informes pueden ir por detrás del sitio web de Anthropic. No incluyen los costos de Priority Tier."
+          }
+        }
+      }
+    },
     "Organization": {
       "localizations": {
         "en": { "stringUnit": { "state": "translated", "value": "Organization" } },

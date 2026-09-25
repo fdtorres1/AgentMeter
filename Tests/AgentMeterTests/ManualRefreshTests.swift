@@ -2,6 +2,18 @@ import XCTest
 @testable import AgentMeter
 
 final class ManualRefreshTests: XCTestCase {
+    func testCurrentDayWarningUsesUTCReportCoverage() {
+        let now = ISO8601DateFormatter().date(from: "2026-09-25T18:00:00Z")!
+        let midnight = ISO8601DateFormatter().date(from: "2026-09-25T00:00:00Z")!
+        func report(endingAt end: Date) -> APIUsageSummary {
+            APIUsageSummary(costUSD: 1, inputTokens: 0, outputTokens: 0,
+                            cacheReadTokens: 0, cacheCreationTokens: 0,
+                            periodStart: midnight.addingTimeInterval(-86_400), periodEnd: end)
+        }
+        XCTAssertTrue(report(endingAt: midnight).isAwaitingCurrentDay(now: now))
+        XCTAssertFalse(report(endingAt: now).isAwaitingCurrentDay(now: now))
+    }
+
     @MainActor
     func testExplicitRefreshAndCLIRequestBypassProviderCache() async throws {
         let suite = "ManualRefreshTests.\(UUID().uuidString)"

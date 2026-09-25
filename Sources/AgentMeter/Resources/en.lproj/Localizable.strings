@@ -166,6 +166,8 @@
 	<string>Label</string>
 	<key>Label is required</key>
 	<string>Label is required</string>
+	<key>Last checked %@</key>
+	<string>Last checked %@</string>
 	<key>Last confirmed %@</key>
 	<string>Last confirmed %@</string>
 	<key>Limited key</key>
@@ -224,6 +226,10 @@
 	<string>Report an issue</string>
 	<key>Reporting may be delayed. Priority Tier costs excluded.</key>
 	<string>Reporting may be delayed. Priority Tier costs excluded.</string>
+	<key>Reporting may lag the Anthropic website. Priority Tier costs excluded.</key>
+	<string>Reporting may lag the Anthropic website. Priority Tier costs excluded.</string>
+	<key>Reports before %@ UTC</key>
+	<string>Reports before %@ UTC</string>
 	<key>Run from AgentMeter.app to install the command-line tool.</key>
 	<string>Run from AgentMeter.app to install the command-line tool.</string>
 	<key>Run this in Terminal to sign in that account. AgentMeter never handles your login or tokens — the Codex CLI does.</key>
@@ -254,6 +260,8 @@
 	<string>This key lets apps call DeepSeek models using your prepaid balance. AgentMeter only reads how much balance is left; it cannot spend money or change your account.</string>
 	<key>This key lets apps call Kimi models using your prepaid balance. AgentMeter only reads how much balance is left; it cannot spend money or change your account.</key>
 	<string>This key lets apps call Kimi models using your prepaid balance. AgentMeter only reads how much balance is left; it cannot spend money or change your account.</string>
+	<key>Today's totals are not yet fully reported by Anthropic.</key>
+	<string>Today's totals are not yet fully reported by Anthropic.</string>
 	<key>Track renewal date</key>
 	<string>Track renewal date</string>
 	<key>Unavailable via API</key>
