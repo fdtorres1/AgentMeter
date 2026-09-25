@@ -35,7 +35,7 @@ final class ClaudeAPIProviderTests: XCTestCase {
             XCTAssertEqual(url.scheme, "https")
             XCTAssertEqual(url.host, "api.anthropic.com")
             XCTAssertEqual(parts.queryItems?.first(where: { $0.name == "starting_at" })?.value, "2026-09-01T00:00:00Z")
-            XCTAssertEqual(parts.queryItems?.first(where: { $0.name == "ending_at" })?.value, "2026-09-26T00:00:00Z")
+            XCTAssertEqual(parts.queryItems?.first(where: { $0.name == "ending_at" })?.value, "2026-09-26T00:00:01Z")
             XCTAssertEqual(parts.queryItems?.first(where: { $0.name == "bucket_width" })?.value, "1d")
             XCTAssertEqual(parts.queryItems?.first(where: { $0.name == "limit" })?.value, "31")
             XCTAssertEqual(request.httpMethod, "GET")
@@ -174,6 +174,99 @@ final class ClaudeAPIProviderTests: XCTestCase {
         XCTAssertEqual(failureCount, 2)
     }
 
+    func testManualRefreshBypassesFiveMinuteSuccessCache() async throws {
+        let client = MockClaudeAPIClient()
+        await client.set("/v1/organizations/cost_report", page: nil, body: costPage("100"))
+        await client.set("/v1/organizations/usage_report/messages", page: nil, body: tokenPage(input: 1, output: 0, read: 0, oneHour: 0, fiveMinutes: 0))
+        let provider = makeProvider(client: client)
+
+        let initial = try await provider.fetch()
+        XCTAssertEqual(initial.apiUsage?.costUSD, 1)
+        await client.set("/v1/organizations/cost_report", page: nil, body: costPage("200"))
+        let automatic = try await provider.fetch()
+        XCTAssertEqual(automatic.apiUsage?.costUSD, 1)
+        let cachedRequestCount = await client.requestCount
+        XCTAssertEqual(cachedRequestCount, 2)
+
+        let forced = try await provider.fetch(forceRefresh: true)
+        XCTAssertEqual(forced.apiUsage?.costUSD, 2)
+        let forcedRequestCount = await client.requestCount
+        XCTAssertEqual(forcedRequestCount, 4)
+        let refreshedAutomatic = try await provider.fetch()
+        XCTAssertEqual(refreshedAutomatic.apiUsage?.costUSD, 2)
+        let finalRequestCount = await client.requestCount
+        XCTAssertEqual(finalRequestCount, 4)
+    }
+
+    func testAutomaticRefreshJoinsForcedRequestEvenWithCachedSuccess() async throws {
+        let client = MockClaudeAPIClient()
+        await client.set("/v1/organizations/cost_report", page: nil, body: costPage("100"))
+        await client.set("/v1/organizations/usage_report/messages", page: nil, body: tokenPage(input: 0, output: 0, read: 0, oneHour: 0, fiveMinutes: 0))
+        let provider = makeProvider(client: client)
+        let initial = try await provider.fetch()
+        XCTAssertEqual(initial.apiUsage?.costUSD, 1)
+
+        await client.set("/v1/organizations/cost_report", page: nil, body: costPage("200"))
+        await client.blockRequests()
+        let forced = Task { try await provider.fetch(forceRefresh: true) }
+        await client.waitForRequestCount(3)
+        let automatic = Task { try await provider.fetch() }
+        // Give the automatic fetch time to enter the cache while the forced
+        // request is blocked, so returning the old value fails this test.
+        try await Task.sleep(nanoseconds: 20_000_000)
+        await client.unblockRequests()
+
+        let forcedUsage = try await forced.value
+        let automaticUsage = try await automatic.value
+        XCTAssertEqual(forcedUsage.apiUsage?.costUSD, 2)
+        XCTAssertEqual(automaticUsage.apiUsage?.costUSD, 2)
+        let requestCount = await client.requestCount
+        XCTAssertEqual(requestCount, 4)
+    }
+
+    func testFailedManualRefreshInvalidatesSuccessAndAppliesCooldownToAutomaticRefresh() async throws {
+        let state = LockedState(key: "test-admin-key", now: now)
+        let client = MockClaudeAPIClient()
+        await client.set("/v1/organizations/cost_report", page: nil, body: costPage("100"))
+        await client.set("/v1/organizations/usage_report/messages", page: nil, body: tokenPage(input: 0, output: 0, read: 0, oneHour: 0, fiveMinutes: 0))
+        let provider = ClaudeAPIProvider(
+            keyReader: { state.key }, clock: { state.now },
+            transport: { request in try await client.send(request) },
+            cache: ClaudeAPIReportCache()
+        )
+        let initial = try await provider.fetch()
+        XCTAssertEqual(initial.apiUsage?.costUSD, 1)
+
+        await client.set("/v1/organizations/cost_report", page: nil, body: "{}", status: 429)
+        do {
+            _ = try await provider.fetch(forceRefresh: true)
+            XCTFail("Expected forced refresh to fail")
+        } catch ClaudeAPIError.rateLimited {
+            // The failure must become the visible state for this key and month.
+        }
+        do {
+            _ = try await provider.fetch(forceRefresh: true)
+            XCTFail("Expected manual refresh to respect the failure cooldown")
+        } catch ClaudeAPIError.rateLimited {
+            // Manual refresh must not hammer the reporting endpoint after 429.
+        }
+        do {
+            _ = try await provider.fetch()
+            XCTFail("Expected automatic refresh to keep the failure visible")
+        } catch ClaudeAPIError.rateLimited {
+            // During the cooldown, automatic refresh must not return old spend.
+        }
+        let cooldownRequestCount = await client.requestCount
+        XCTAssertEqual(cooldownRequestCount, 3)
+
+        state.now = state.now.addingTimeInterval(61)
+        await client.set("/v1/organizations/cost_report", page: nil, body: costPage("200"))
+        let recovered = try await provider.fetch()
+        XCTAssertEqual(recovered.apiUsage?.costUSD, 2)
+        let recoveredRequestCount = await client.requestCount
+        XCTAssertEqual(recoveredRequestCount, 5)
+    }
+
     private func makeProvider(client: MockClaudeAPIClient) -> ClaudeAPIProvider {
         ClaudeAPIProvider(
             keyReader: { "test-admin-key" }, clock: { self.now },
@@ -198,6 +291,9 @@ private actor MockClaudeAPIClient {
     private var replies: [String: Reply] = [:]
     private(set) var requests: [URLRequest] = []
     private var delay: UInt64 = 0
+    private var blocked = false
+    private var blockedRequests: [CheckedContinuation<Void, Never>] = []
+    private var requestWaiters: [(count: Int, continuation: CheckedContinuation<Void, Never>)] = []
     var requestCount: Int { requests.count }
 
     func set(_ path: String, page: String?, body: String, status: Int = 200) {
@@ -206,8 +302,32 @@ private actor MockClaudeAPIClient {
 
     func setDelay(_ nanos: UInt64) { delay = nanos }
 
+    func blockRequests() { blocked = true }
+
+    func unblockRequests() {
+        blocked = false
+        let pending = blockedRequests
+        blockedRequests.removeAll()
+        pending.forEach { $0.resume() }
+    }
+
+    func waitForRequestCount(_ count: Int) async {
+        if requests.count >= count { return }
+        await withCheckedContinuation { continuation in
+            requestWaiters.append((count, continuation))
+        }
+    }
+
     func send(_ request: URLRequest) async throws -> (Data, URLResponse) {
         requests.append(request)
+        let ready = requestWaiters.filter { requests.count >= $0.count }
+        requestWaiters.removeAll { requests.count >= $0.count }
+        ready.forEach { $0.continuation.resume() }
+        if blocked {
+            await withCheckedContinuation { continuation in
+                blockedRequests.append(continuation)
+            }
+        }
         if delay > 0 { try await Task.sleep(nanoseconds: delay) }
         let url = request.url!
         let page = URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems?.first(where: { $0.name == "page" })?.value

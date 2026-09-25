@@ -221,7 +221,9 @@ The app refreshes every 30 s / 1 min / 5 min (user setting) and on wake, and
 Codex updates instantly during CLI activity via a file watcher. Live Codex
 app-server reads are capped at one per 5 minutes per account regardless of the
 refresh interval; `agentmeter refresh` triggers a normal refresh, which reuses
-the cached app-server reading if it is younger than 5 minutes.
+the cached app-server reading if it is younger than 5 minutes. For Claude API,
+explicit menu/CLI refresh bypasses the five-minute report cache. Automatic
+polling retains caching; retries after reporting failures wait one minute.
 
 ### Debugging
 

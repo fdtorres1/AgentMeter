@@ -99,7 +99,7 @@ struct MenuContent: View {
                 }
                 Spacer()
                 Button {
-                    store.refresh()
+                    store.refresh(forceRefresh: true)
                 } label: {
                     Label(L("Refresh"), systemImage: "arrow.clockwise")
                         .labelStyle(.titleAndIcon)

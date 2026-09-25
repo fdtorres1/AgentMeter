@@ -3,6 +3,15 @@
 All notable changes to AgentMeter. Format follows [Keep a Changelog](https://keepachangelog.com);
 versions follow semantic-ish `MAJOR.MINOR.PATCH`.
 
+## [Unreleased]
+
+### Fixed
+- Manual Refresh and CLI refresh request new Claude API reports instead of
+  reusing the five-minute automatic-polling cache. Failed manual requests
+  remain visible instead of being replaced by an older cached success.
+- Include the current UTC day's reporting bucket when querying Anthropic's
+  daily reports by putting the exclusive end boundary after its end.
+
 ## [1.12.0] — 2026-09-25
 
 ### Added

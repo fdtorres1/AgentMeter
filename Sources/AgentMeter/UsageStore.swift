@@ -61,7 +61,7 @@ final class UsageStore: ObservableObject {
             object: nil,
             queue: .main
         ) { [weak self] _ in
-            Task { @MainActor in self?.refresh() }
+            Task { @MainActor in self?.refresh(forceRefresh: true) }
         }
     }
 
@@ -140,7 +140,7 @@ final class UsageStore: ObservableObject {
         refresh()
     }
 
-    func refresh() {
+    func refresh(forceRefresh: Bool = false) {
         let providers = visibleProviders
         watchNewestCodexSession()
         lastRefreshed = Date()
@@ -148,7 +148,7 @@ final class UsageStore: ObservableObject {
             await withTaskGroup(of: Void.self) { group in
                 for provider in providers {
                     group.addTask {
-                        await self.refreshProvider(provider)
+                        await self.refreshProvider(provider, forceRefresh: forceRefresh)
                         DebugLog.write("refresh: \(provider.id) done")
                     }
                 }
@@ -158,10 +158,10 @@ final class UsageStore: ObservableObject {
         }
     }
 
-    private func refreshProvider(_ provider: any UsageProvider) async {
+    private func refreshProvider(_ provider: any UsageProvider, forceRefresh: Bool) async {
         let generation = credentialGenerations[provider.id, default: 0]
         do {
-            let usage = try await provider.fetch()
+            let usage = try await provider.fetch(forceRefresh: forceRefresh)
             guard credentialGenerations[provider.id, default: 0] == generation else { return }
             states[provider.id] = .ready(usage)
             notificationManager.notifyIfNeeded(
@@ -349,7 +349,7 @@ final class UsageStore: ObservableObject {
         )
         source.setEventHandler { [weak self] in
             guard let self else { return }
-            Task { await self.refreshProvider(primaryCodex) }
+            Task { await self.refreshProvider(primaryCodex, forceRefresh: false) }
         }
         source.setCancelHandler {
             close(descriptor)

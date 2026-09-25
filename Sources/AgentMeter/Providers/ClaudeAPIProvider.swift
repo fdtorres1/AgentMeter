@@ -38,6 +38,10 @@ struct ClaudeAPIProvider: UsageProvider {
     }
 
     func fetch() async throws -> ProviderUsage {
+        try await fetch(forceRefresh: false)
+    }
+
+    func fetch(forceRefresh: Bool) async throws -> ProviderUsage {
         guard let key = keyReader()?.trimmingCharacters(in: .whitespacesAndNewlines), !key.isEmpty else {
             throw ProviderKeyError.missingKey(displayName)
         }
@@ -45,9 +49,11 @@ struct ClaudeAPIProvider: UsageProvider {
         let monthStart = Self.utcMonthStart(for: now)
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = TimeZone(secondsFromGMT: 0)!
-        let nextMidnight = calendar.startOfDay(for: now).addingTimeInterval(86_400)
-        return try await cache.fetch(key: key, monthStart: monthStart, now: now) {
-            try await Self.load(key: key, start: monthStart, queryEnd: nextMidnight, observedAt: now, transport: transport)
+        // Reports include only buckets ending strictly before ending_at.
+        // Move one second past next midnight to include today's UTC bucket.
+        let queryEnd = calendar.startOfDay(for: now).addingTimeInterval(86_401)
+        return try await cache.fetch(key: key, monthStart: monthStart, now: now, forceRefresh: forceRefresh) {
+            try await Self.load(key: key, start: monthStart, queryEnd: queryEnd, observedAt: now, transport: transport)
         }
     }
 
@@ -248,6 +254,7 @@ actor ClaudeAPIReportCache {
         key: String,
         monthStart: Date,
         now: Date,
+        forceRefresh: Bool = false,
         load: @escaping @Sendable () async throws -> ProviderUsage
     ) async throws -> ProviderUsage {
         let keyDigest = Data(SHA256.hash(data: Data(key.utf8)))
@@ -261,11 +268,11 @@ actor ClaudeAPIReportCache {
             lastFailure = nil
             failedAt = nil
         }
-        if let cached, let updatedAt, now.timeIntervalSince(updatedAt) < 300,
-           now >= updatedAt { return cached }
         if let inFlight { return try await inFlight.value }
         if let lastFailure, let failedAt, now.timeIntervalSince(failedAt) < 60,
            now >= failedAt { throw lastFailure }
+        if !forceRefresh, let cached, let updatedAt, now.timeIntervalSince(updatedAt) < 300,
+           now >= updatedAt { return cached }
 
         let currentGeneration = generation
         let task = Task { try await load() }
@@ -284,6 +291,8 @@ actor ClaudeAPIReportCache {
             let safe = (error as? ClaudeAPIError) ?? .connectionFailed
             if generation == currentGeneration {
                 inFlight = nil
+                cached = nil
+                updatedAt = nil
                 lastFailure = safe
                 failedAt = now
             }

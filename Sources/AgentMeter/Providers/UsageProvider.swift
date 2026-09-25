@@ -27,10 +27,14 @@ protocol UsageProvider: Sendable {
     var credentialHelpText: String? { get }
     var apiKeyPlaceholder: String { get }
     func fetch() async throws -> ProviderUsage
+    /// Explicit user refresh. Providers without a cache can use the default.
+    func fetch(forceRefresh: Bool) async throws -> ProviderUsage
     var dashboardURL: URL? { get }
 }
 
 extension UsageProvider {
+    func fetch(forceRefresh: Bool) async throws -> ProviderUsage { try await fetch() }
+
     var authKind: ProviderAuthKind { .localCredentials }
 
     /// Keychain account name for API-key providers.

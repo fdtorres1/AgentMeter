@@ -49,7 +49,9 @@ separate **Claude** entry.
 
 Spending covers the current calendar month in UTC, excludes Priority Tier
 costs, and may take several minutes to appear. Reports are cached for five
-minutes. Input tokens exclude cache reads and cache creation, which have their
+minutes during automatic polling. The Refresh button and `agentmeter refresh`
+bypass that cache; after an API failure, retries wait one minute. Input tokens
+exclude cache reads and cache creation, which have their
 own rows. **Prepaid credits are not inferred from spending**: use the billing
 link to see the actual credit balance. See Anthropic's
 [Usage & Cost API](https://platform.claude.com/docs/en/manage-claude/usage-cost-api)
