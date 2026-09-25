@@ -165,7 +165,7 @@ Within `schemaVersion` 1, changes are **additive only** (new optional fields). B
 |-------------|---------------|
 | 1.9.0 | Schema v1 introduced |
 | 1.11.0 | Added optional `accountEmail`, `planType`, `renewal` on `ProviderStatus`; extra Codex accounts appear as `codex:<uuid>` providers |
-| Unreleased | Added optional Claude API `apiUsage` report on `ProviderStatus` |
+| 1.12.0 | Added optional Claude API `apiUsage` report on `ProviderStatus` |
 
 ## URL schemes
 

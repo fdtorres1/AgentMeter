@@ -4,7 +4,7 @@ macOS menu bar app (SwiftUI, Swift Package, macOS 14+) showing AI coding usage
 limits for Codex (multiple accounts), Cursor, Claude Code, Gemini, Claude API reporting, and
 pay-as-you-go balances for OpenRouter, DeepSeek, Kimi, Z.ai, and Venice.
 Public repo: https://github.com/fdtorres1/AgentMeter. Current release line:
-1.11.x (see CHANGELOG.md). Test suite: 155 tests (`swift test`).
+1.12.x (see CHANGELOG.md). Test suite: 155 tests (`swift test`).
 
 **If `HANDOFF.md` exists in the repo root, read it first.** It is the
 gitignored, machine-local session handoff (current state, pending work,
@@ -101,7 +101,7 @@ announcement drafts, environment specifics) and complements this file.
   windows `five_hour`/`seven_day`/`seven_day_opus` with `utilization` percent
   and `resets_at` ISO8601. NOTE: the token endpoint rate-limits aggressively
   (HTTP 429 even for invalid tokens), so treat refresh failures gently.
-- **Claude API** (`claude-api`, unreleased): separate from subscription Claude.
+- **Claude API** (`claude-api`, v1.12.0): separate from subscription Claude.
   Keychain API key must have organization reporting access. Read-only GET
   `/v1/organizations/cost_report` and `/v1/organizations/usage_report/messages`
   return organization-wide UTC monthly spend and token categories. Costs are
